@@ -3,8 +3,6 @@ from glob import glob
 import subprocess
 import numpy as np
 import os
-from nipype.interfaces.ants import antsAtroposN4
-import ast
 
 # -*- coding: utf-8 -*-
 """patient.py 
