@@ -25,13 +25,13 @@ def apply_n4(path):
 
 
 def n4_bfc(path, n_dims, n_iters, out_path):
-    n4 = antsAtroposN4(output_image=out_path)
-    n4.inputs.dimension = n_dims
-    n4.inputs.input_image = path
-    n4.inputs.n_iterations = ast.literal_eval(n_iters)
-    print("running n4 bias correction for " + path);
-    n4.run()
-    print("finished")
+    inputImage = sitk.ReadImage(path)
+    maskImage = sitk.OtsuThreshold(inputImage,0,1,200)
+    inputImage = sitk.Cast(inputImage,sitk.sitkFloat32)
+    corrector = sitk.N4BiasFieldCorrectionImageFilter();
+    output = corrector.Execute(inputImage,maskImage)
+    sitk.WriteImage(output, out_path)
+    print("Finished N4 Bias Field Correction.....")
 
 
 def load_scans(path):
