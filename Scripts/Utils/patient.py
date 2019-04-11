@@ -3,7 +3,7 @@ from glob import glob
 import subprocess
 import numpy as np
 import os
-from nipype.interface.ants import N4BiasFieldCorrection
+from nipype.interfaces.ants import N4BiasFieldCorrection
 import ast
 
 # -*- coding: utf-8 -*-
