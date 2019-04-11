@@ -2,7 +2,7 @@ import SimpleITK as sitk
 from glob import glob
 import subprocess
 import numpy as np
-import config
+from .config import config
 import os
 
 # -*- coding: utf-8 -*-
