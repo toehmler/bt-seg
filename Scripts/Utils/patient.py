@@ -3,6 +3,8 @@ from glob import glob
 import subprocess
 import numpy as np
 import os
+from nipype.interface.ants import N4BiasFieldCorrection
+import ast
 
 # -*- coding: utf-8 -*-
 """patient.py 
@@ -23,7 +25,7 @@ def apply_n4(path):
 
 
 def n4_bfc(path, n_dims, n_iters, out_path):
-    n4 = n4biasfieldcorrection(output_image=out_path)
+    n4 = N4BiasFieldCorrection(output_image=out_path)
     n4.inputs.dimension = n_dims
     n4.input_image = path
     n4.inputs.n_iterations = ast.literal_eval(n_iters)
