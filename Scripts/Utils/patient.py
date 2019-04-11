@@ -19,7 +19,8 @@ def apply_n4(path):
     n_dims = 3
     n_iters = '[20,20,10,5]'
     out_path = path[:-4] + '_n4.mha'
-    n4_bfc(path, int(n_dims), n_iters, out_path)
+    n4_bfc(t1[0], int(n_dims), n_iters, out_path)
+    n4_bfc(t1c[0], int(n_dims), n_iters, out_path)
 
 
 def n4_bfc(path, n_dims, n_iters, out_path):
