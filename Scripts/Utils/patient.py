@@ -101,7 +101,7 @@ def save_strips(scans, patient_num):
             strip /= abs(np.min(strip))
         strip = 255 * strip
         img = strip.astype(np.uint8)
-        out_path = config.root + '/strips/pat' + str(patient_num) +'.png')
+        out_path = config.root + '/strips/pat' + str(patient_num) +'.png'
         imageio.imwrite(out_path, img)
             
     
