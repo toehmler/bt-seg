@@ -13,6 +13,6 @@ for i, path in enumerate(paths):
     patient.apply_n4(path)
     scans = patient.load_scans(path)
     norm_scans = patient.normalize(scans)
-    patient.save_strips(norm_scans, i)
+    patient.save_strips(norm_scans, i, config.root)
     print('Finished processing patient ' + str(i))
 

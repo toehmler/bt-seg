@@ -2,7 +2,6 @@ import SimpleITK as sitk
 from glob import glob
 import subprocess
 import numpy as np
-from config import *
 import os
 
 # -*- coding: utf-8 -*-
@@ -87,7 +86,7 @@ def norm_slice(slice):
         return normed_slice
 
 
-def save_strips(scans, patient_num):
+def save_strips(scans, patient_num, root):
     """
     Expecting input shape of (155, 5, 240, 240)
     Generates 155 x (1200, 240) stips
@@ -101,7 +100,7 @@ def save_strips(scans, patient_num):
             strip /= abs(np.min(strip))
         strip = 255 * strip
         img = strip.astype(np.uint8)
-        out_path = config.root + '/strips/pat' + str(patient_num) +'.png'
+        out_path = root + '/strips/pat' + str(patient_num) +'.png'
         imageio.imwrite(out_path, img)
             
     
