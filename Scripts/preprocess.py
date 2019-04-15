@@ -9,6 +9,7 @@ paths =  data.patient_paths(config.root)
 out_path = '/home/trey/data/processed'
 #out_path = '/Users/treyoehmler/dev/tumors/data/processed'
 
+
 for patient_no, path in enumerate(paths):
     print("Processing patient " + str(patient_no))
     scans = patient.load_scans(path)
@@ -27,14 +28,25 @@ for patient_no, path in enumerate(paths):
             strip *= (255 / np.max(strip) - np.min(strip))
         
         strip_img = strip.astype(np.uint8)
-        imageio.imwrite(out_path + '/data/pat{}_{}_data.png'.format(patient_no, slice_no), strip_img)
+        if patient_no < 190:
+            imageio.imwrite(out_path + '/data/train/pat{}_{}_data.png'.format(patient_no, slice_no), strip_img)
+        else:
+            imageio.imwrite(out_path + '/data/test/pat{}_{}_data.png'.format(patient_no, slice_no), strip_img)
+
+
 
     for slice_no, label_slice in enumerate(patient_labels):
         if np.max(label_slice) != 0:
             label_slice /= (np.max(label_slice) - np.min(label_slice))
         label_slice = 255 * label_slice
         label_img = label_slice.astype(np.uint8)
-        imageio.imwrite(out_path + '/labels/pat{}_{}_label.png'.format(patient_no, slice_no), label_img)
+
+        if patient_no < 190:
+            imageio.imwrite(out_path + '/labels/train/pat{}_{}_label.png'.format(patient_no, slice_no), label_img)
+        else:
+            imageio.imwrite(out_path + '/labels/test/pat{}_{}_label.png'.format(patient_no, slice_no), label_img)
+
+
 
     
 
