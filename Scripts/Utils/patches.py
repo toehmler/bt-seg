@@ -33,6 +33,8 @@ def generate_train(num, root, size):
     patches = []
     labels = []
 
+    classes = [0.0, 1.0, 2.0, 3.0]
+
     for i in range(5):
 
         count = 0
@@ -40,9 +42,11 @@ def generate_train(num, root, size):
             slice_path = random.choice(label_paths)
             label_img = Image.open(root + 'labels/train/' + slice_path)
             slice_label = np.asarray(label_img)
-            slice_label = slice_label.astype(np.uint8)
-            slice_label = slice_label / 255
-            slice_label = slice_label * 4
+
+            if np.max(slice_label) != 0:
+                slice_label /= (np.max(slice_label) - np.min(slice_label))
+            
+            slice_label = 4 * slice_label
             print(np.min(slice_label))
             print(np.max(slice_label))
 
