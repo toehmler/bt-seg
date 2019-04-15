@@ -40,6 +40,7 @@ def generate_train(num, root, size):
             slice_path = random.choice(label_paths)
             label_img = Image.open(root + 'labels/train/' + slice_path)
             slice_label = np.asarray(label_img)
+            slice_label = slice_label.astype(np.uint8)
             slice_label = slice_label / 255
             slice_label = slice_label * 4
             print(np.min(slice_label))
