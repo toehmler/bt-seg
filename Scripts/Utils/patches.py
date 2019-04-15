@@ -39,6 +39,7 @@ def generate_train(num, root, size):
             slice_path = random.choice(label_paths)
             slice_label = imageio.imread(root + 'labels/train/' + slice_path)
             
+            print(type(slice_label))
             slice_label = slice_label / 255
             slice_label = slice_label * 4
             print(np.max(slice_label))
