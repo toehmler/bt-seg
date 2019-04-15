@@ -39,16 +39,8 @@ def generate_train(num, root, size):
             slice_path = random.choice(label_paths)
             label_img = imageio.imread(root + 'labels/train/' + slice_path)
             slice_label = np.array(label_img)
-
-            
             slice_label = slice_label / 255
             slice_label = slice_label * 4
-            print(np.max(slice_label))
-            print(np.min(slice_label))
-
-            if len(np.argwhere(slice_label == i)) < 10:
-                print('hello')
-                continue
 
             center = random.choice(np.argwhere(slice_label == i))
             print(center)
