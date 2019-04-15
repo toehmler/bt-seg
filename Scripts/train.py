@@ -7,6 +7,7 @@ from Models import m1
 from keras.utils import np_utils
 import random
 
+keras.backend.set_image_data_format('channels_first')
 root = '/Users/treyoehmler/dev/tumors/seg/'
 data_root = config.processed_root + 'data/'
 print(data_root)
