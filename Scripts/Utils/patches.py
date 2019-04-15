@@ -57,7 +57,7 @@ def generate_train(num, root, size):
             print(patch.shape)
 
             if len(np.argwhere(patch == 0)) > (size * size):
-                print(len(np.argwhere(patch == 0))
+                print(len(np.argwhere(patch == 0)))
                 continue
 
             if patch.shape != (4, size, size):
