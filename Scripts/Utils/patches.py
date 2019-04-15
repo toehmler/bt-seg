@@ -51,6 +51,8 @@ def generate_train(num, root, size):
             slice_data = slice_data.reshape(4, 240, 240)
             p = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
             patch = np.zeros((33,33,4))
+            print(p.shape)
+            print(patch.shape)
             for j in range(4):
                 patch[:,:,j] = p[j,:,:]
 
