@@ -42,18 +42,9 @@ def generate_train(num, root, size):
             slice_path = random.choice(label_paths)
             label_img = Image.open(root + 'labels/train/' + slice_path)
             slice_np = np.asarray(label_img)
-
-            if np.max(slice_np) != 0:
-                slice_label = slice_np / (np.max(slice_np) - np.min(slice_np))
-            else:
-                continue
-
             slice_label = slice_label.astype(int)
-            
-            slice_label = 4 * slice_label
             print(np.min(slice_label))
             print(np.max(slice_label))
-
             print(i)
             center = random.choice(np.argwhere(slice_label == i))
             bounds = find_bounds(center, size)
