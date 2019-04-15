@@ -42,6 +42,8 @@ def generate_train(num, root, size):
             slice_label = np.asarray(label_img)
             slice_label = slice_label / 255
             slice_label = slice_label * 4
+            print(np.min(slice_label))
+            print(np.max(slice_label))
 
             print(i)
             center = random.choice(np.argwhere(slice_label == i))
