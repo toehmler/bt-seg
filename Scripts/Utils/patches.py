@@ -43,6 +43,7 @@ def generate_train(num, root, size):
             slice_label = slice_label / 255
             slice_label = slice_label * 4
 
+            print(i)
             center = random.choice(np.argwhere(slice_label == i))
             print(center)
             bounds = find_bounds(center, size)
