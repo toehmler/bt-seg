@@ -25,7 +25,7 @@ x_train = np.array(X)
 y_train = np.array(Y)
 
 model = m1.compile()
-print(m1.summary())
+print(model.summary())
 #model.fit(x_train, y_train, batch_size=128, epochs=7, validation_split=0.1, verbose=1) 
 
 #model.save('/home/trey/seg/Outputs/Models/m1.h5')
