@@ -12,7 +12,7 @@ data_root = config.processed_root + 'data/'
 print(data_root)
 
 
-#training_patches = patches.generate_train(1, config.train_root, 33)
+training_patches = patches.generate_train(1, config.train_root, 33)
 
 patches = training_patches[0]
 labels = np_utils.to_categorical(training_patches[1])
