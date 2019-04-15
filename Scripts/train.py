@@ -6,9 +6,7 @@ from Utils import patches
 from Models import m1
 from keras.utils import np_utils
 import random
-import keras
 
-keras.backend.set_image_data_format('channels_first')
 root = '/Users/treyoehmler/dev/tumors/seg/'
 data_root = config.processed_root + 'data/'
 print(data_root)
@@ -27,7 +25,8 @@ x_train = np.array(X)
 y_train = np.array(Y)
 
 model = m1.compile()
-model.fit(x_train, y_train, batch_size=128, epochs=7, validation_split=0.1, verbose=1) 
+print(m1.summary())
+#model.fit(x_train, y_train, batch_size=128, epochs=7, validation_split=0.1, verbose=1) 
 
 #model.save('/home/trey/seg/Outputs/Models/m1.h5')
 
