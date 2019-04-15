@@ -29,7 +29,7 @@ for patient_no, path in enumerate(paths):
         imageio.imwrite(out_path + '/pat{}_{}_data.png'.format(patient_no, slice_no), strip_img)
 
     for slice_no, label_slice in enumerate(patient_labels):
-        label_img = 255 * label_img
+        label_slice = 255 * label_slice 
         label_img = label_slice.astype(np.uint8)
         imageio.imwrite(out_path + '/pat{}_{}_label.png'.format(patient_no, slice_no), label_img)
 
