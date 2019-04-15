@@ -1,3 +1,8 @@
+update:
+	git add .
+	git commit -m 'quick fix'
+	git push
+
 pre:
 	python3 Scripts/preprocess.py
 
