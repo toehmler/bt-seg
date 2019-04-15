@@ -41,10 +41,10 @@ def generate_train(num, root, size):
         while count < num:
             slice_path = random.choice(label_paths)
             label_img = Image.open(root + 'labels/train/' + slice_path)
-            slice_label = np.asarray(label_img)
+            slice_np = np.asarray(label_img)
 
-            if np.max(slice_label) != 0:
-                slice_label /= (np.max(slice_label) - np.min(slice_label))
+            if np.max(slice_np) != 0:
+                slice_label /= (np.max(slice_np) - np.min(slice_np))
             
             slice_label = 4 * slice_label
             print(np.min(slice_label))
