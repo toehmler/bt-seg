@@ -16,14 +16,12 @@ TODO
 def apply_n4(path):
     t1 = glob(path + '/*T1.*/*.mha')
     t1c = glob(path + '/*T1c*/*.mha')
-    n_dims = 3
-    n_iters = '[20,20,10,5]'
     out_path = path[:-4] + '_n4.mha'
-    n4_bfc(t1[0], int(n_dims), n_iters, out_path)
-    n4_bfc(t1c[0], int(n_dims), n_iters, out_path)
+    n4_bfc(t1[0], out_path)
+    n4_bfc(t1c[0], out_path)
 
 
-def n4_bfc(path, n_dims, n_iters, out_path):
+def n4_bfc(path, out_path):
     inputImage = sitk.ReadImage(path)
     maskImage = sitk.OtsuThreshold(inputImage,0,1,200)
     inputImage = sitk.Cast(inputImage,sitk.sitkFloat32)
@@ -39,10 +37,11 @@ def load_scans(path):
     output shape: (155, 5, 240, 240)
     """
     flair = glob(path + '/*Flair*/*.mha')
-    t1 = glob(path + '/*T1_n4*/*.mha')
-    t1c = glob(path + '/*T1c_n4*/*.mha')
+    t1 = glob(path + '/*T1*/*.mha')
+    t1c = glob(path + '/*T1c*/*.mha')
     t2 = glob(path + '/*T2*/*.mha')
     gt = glob(path + '/*OT*/*.mha')
+
     mod_paths = [flair[0], t1[0], t1c[0], t2[0], gt[0]]
     mods = []
     for mod_path in mod_paths:
@@ -57,6 +56,7 @@ def load_scans(path):
             data_slices[i,j,:,:] = data_mods[j][i,:,:]
 
     return data_slices
+
 
 def normalize(scans):
     """
@@ -81,6 +81,7 @@ def norm_slice(slice):
     b, t = np.percentile(slice, (0.5,99.5))
     slice = np.clip(slice, b, t)
     if np.std(slice) == 0:
+        np.std(slice)
         return slice
     else:
         normed_slice = (slice - np.mean(slice)) / np.std(slice)
