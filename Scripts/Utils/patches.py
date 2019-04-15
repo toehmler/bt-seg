@@ -42,8 +42,8 @@ def generate_train(num, root, size):
             slice_path = random.choice(label_paths)
             label_img = Image.open(root + 'labels/train/' + slice_path)
             slice_label = np.asarray(label_img)
-            slice_label = slice_label.astype(int)
-            print(i)
+            print(np.min(slice_label))
+            print(np.max(slice_label))
             center = random.choice(np.argwhere(slice_label == i))
             bounds = find_bounds(center, size)
             data_path = root + 'data/train/' + slice_path[:-9] + 'data.png'
