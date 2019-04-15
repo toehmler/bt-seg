@@ -33,8 +33,6 @@ def generate_train(num, root, size):
     patches = []
     labels = []
 
-    classes = [0.0, 1.0, 2.0, 3.0]
-
     for i in range(5):
 
         count = 0
@@ -51,10 +49,14 @@ def generate_train(num, root, size):
             slice_img = Image.open(data_path)
             slice_data = np.asarray(slice_img)
             slice_data = slice_data.reshape(4, 240, 240)
-            patch = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
+            p = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
+            patch = np.zeros((33,33,4))
+            for j in range(4):
+                patch[:,:,j] = p[j,:,:]
+
             if len(np.argwhere(patch == 0)) > (size * size):
                 continue
-            if patch.shape != (4, size, size):
+            if patch.shape != (size, size, 4):
                 continue
             patches.append(patch)
             labels.append(i)
