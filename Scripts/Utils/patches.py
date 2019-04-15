@@ -42,6 +42,7 @@ def generate_train(num, root, size):
             slice_label = slice_label * 4
 
             if len(np.argwhere(slice_label == i)) < 10:
+                print('hellooo')
                 continue
 
             center = random.choice(np.argwhere(slice_label == i))
