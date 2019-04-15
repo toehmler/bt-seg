@@ -43,8 +43,6 @@ def generate_train(num, root, size):
             label_img = Image.open(root + 'labels/train/' + slice_path)
             slice_label = np.asarray(label_img)
             slice_label = slice_label.astype(int)
-            print(np.min(slice_label))
-            print(np.max(slice_label))
             print(i)
             center = random.choice(np.argwhere(slice_label == i))
             bounds = find_bounds(center, size)
@@ -57,7 +55,6 @@ def generate_train(num, root, size):
                 continue
 
             if patch.shape != (4, size, size):
-                print('hello')
                 continue
             patches.append(patch)
             labels.append(i)
