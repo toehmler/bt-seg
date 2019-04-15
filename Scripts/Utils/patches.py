@@ -48,16 +48,12 @@ def generate_train(num, root, size):
 
             print(i * 1.0)
             center = random.choice(np.argwhere(slice_label == i))
-            print(center)
             bounds = find_bounds(center, size)
             data_path = root + 'data/train/' + slice_path[:-9] + 'data.png'
-            print(data_path)
             slice_img = Image.open(data_path)
             slice_data = np.asarray(slice_img)
             slice_data = slice_data.reshape(4, 240, 240)
-            print(slice_data.shape)
             patch = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
-            print(patch.shape)
             if len(np.argwhere(patch == 0)) > (size * size):
                 continue
 
@@ -67,7 +63,6 @@ def generate_train(num, root, size):
             patches.append(patch)
             labels.append(i)
             count += 1
-            print(count)
 
     return np.array(patches), np.array(labels)
         
