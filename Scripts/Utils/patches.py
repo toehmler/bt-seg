@@ -54,7 +54,6 @@ def generate_train(num, root, size):
             patch = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
             if len(np.argwhere(patch == 0)) > (size * size):
                 continue
-
             if patch.shape != (4, size, size):
                 continue
             patches.append(patch)

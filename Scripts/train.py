@@ -9,6 +9,8 @@ data_root = config.processed_root + 'data/'
 print(data_root)
 
 training_patches = patches.generate_train(1, config.train_root, 33)
+print(training_patches[0].shape)
+print(training_patches[1].shape)
 
 
 # load compiled model
