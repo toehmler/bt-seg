@@ -6,6 +6,7 @@ from Utils import patches
 from Models import m1
 from keras.utils import np_utils
 import random
+import keras
 
 keras.backend.set_image_data_format('channels_first')
 root = '/Users/treyoehmler/dev/tumors/seg/'
