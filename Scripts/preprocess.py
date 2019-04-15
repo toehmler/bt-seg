@@ -36,9 +36,6 @@ for patient_no, path in enumerate(paths):
 
 
     for slice_no, label_slice in enumerate(patient_labels):
-        if np.max(label_slice) != 0:
-            label_slice /= (np.max(label_slice) - np.min(label_slice))
-        label_slice = 255 * label_slice
         label_img = label_slice.astype(np.uint8)
 
         if patient_no < 190:
