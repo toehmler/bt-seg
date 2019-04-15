@@ -56,14 +56,12 @@ def generate_train(num, root, size):
             print(slice_data.shape)
             patch = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
             print(patch.shape)
-
             if len(np.argwhere(patch == 0)) > (size * size):
-                print(len(np.argwhere(patch == 0)))
                 continue
 
             if patch.shape != (4, size, size):
+                print('hello')
                 continue
-
             patches.append(patch)
             labels.append(i)
             count += 1
