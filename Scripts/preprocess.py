@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 paths =  data.patient_paths(config.root)
-out_path = '/Users/treyoehmler/dev/tumors/data'
+out_path = '/home/trey/data'
 
 for patient_no, path in enumerate(paths):
     print("Processing patient " + str(patient_no))
