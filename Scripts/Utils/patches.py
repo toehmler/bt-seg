@@ -46,7 +46,7 @@ def generate_train(num, root, size):
             print(np.min(slice_label))
             print(np.max(slice_label))
 
-            print(i)
+            print(i * 1.0)
             center = random.choice(np.argwhere(slice_label == i))
             print(center)
             bounds = find_bounds(center, size)
