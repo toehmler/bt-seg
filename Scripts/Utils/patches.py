@@ -47,6 +47,8 @@ def generate_train(num, root, size):
                 slice_label = slice_np / (np.max(slice_np) - np.min(slice_np))
             else:
                 continue
+
+            slice_label = slice_label.astype(int)
             
             slice_label = 4 * slice_label
             print(np.min(slice_label))
