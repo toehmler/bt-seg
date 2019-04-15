@@ -11,7 +11,7 @@ root = '/Users/treyoehmler/dev/tumors/seg/'
 data_root = config.processed_root + 'data/'
 
 
-print("Generating patches..."
+print("Generating patches...")
 training_patches = patches.generate_train(10000, config.train_root, 33)
 
 patches = training_patches[0]
