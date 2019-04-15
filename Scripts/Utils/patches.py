@@ -41,6 +41,8 @@ def generate_train(num, root, size):
             
             slice_label = slice_label / 255
             slice_label = slice_label * 4
+            print(np.max(slice_label))
+            print(np.min(slice_label))
 
             if len(np.argwhere(slice_label == i)) < 10:
                 print('hello')
