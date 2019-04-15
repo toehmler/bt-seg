@@ -2,6 +2,7 @@ import os
 import random
 import numpy as np
 from skimage import io
+import imageio
 
 
 # -*- coding: utf-8 -*-
@@ -36,7 +37,7 @@ def generate_train(num, root, size):
         count = 0
         while count < num:
             slice_path = random.choice(label_paths)
-            slice_label = io.imread(root + 'labels/train/' + slice_path, as_gray=True)
+            slice_label = imageio.imread(root + 'labels/train/' + slice_path)
             
             slice_label = slice_label / 255
             slice_label = slice_label * 4
@@ -49,7 +50,7 @@ def generate_train(num, root, size):
             bounds = find_bounds(center, size)
             data_path = root + 'data/train/' + slice_path[:-9] + 'data.png'
             print(data_path)
-            slice_img = io.imread(data_path, as_gray=True)
+            slice_img = imageio.imread(data_path)
             print(slice_img.shape)
             slice_data = slice_img.reshape(4, 240, 240)
             print(slice_data.shape)
