@@ -66,6 +66,7 @@ def generate_train(num, root, size):
             patches.append(patch)
             labels.append(i)
             count += 1
+            print(count)
 
     return np.array(patches), np.array(labels)
         
