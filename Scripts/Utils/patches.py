@@ -42,7 +42,6 @@ def generate_train(num, root, size):
             slice_label = slice_label * 4
 
             if len(np.argwhere(slice_label == i)) < 10:
-                print('hellooo')
                 continue
 
             center = random.choice(np.argwhere(slice_label == i))
@@ -57,12 +56,10 @@ def generate_train(num, root, size):
             patch = slice_data[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
             print(patch.shape)
 
-            if len(np.argwhere(patch) == 0) > (size * size):
-                print('hello')
+            if len(np.argwhere(patch == 0)) > (size * size):
                 continue
 
             if patch.shape != (4, size, size):
-                print('nope')
                 continue
 
             patches.append(patch)
