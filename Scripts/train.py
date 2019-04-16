@@ -29,7 +29,7 @@ print("Training...")
 model = m1.compile()
 model.fit(x_train, y_train, batch_size=128, epochs=7, validation_split=0.1, verbose=1) 
 
-model.save('/home/trey/seg/Outputs/Models/m1.h5')
+model.save('/home/trey/m1.h5')
 
 
 
