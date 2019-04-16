@@ -3,6 +3,9 @@ update:
 	git commit -m 'quick fix'
 	git push
 
+predict: 
+	python3 Scripts/predict.py
+
 pre:
 	python3 Scripts/preprocess.py
 
