@@ -9,7 +9,7 @@ from Utils import config
 """
 
 data_img = Image.open(config.train_root + 'data/test/pat200_50_data.png')
-test_data = np.asarray(datA_img)
+test_data = np.asarray(data_img)
 
 test_patches = extract_patches_2d(test_data, (33,33))
 
