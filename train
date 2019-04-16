@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd /home/trey/bt-seg
+git pull
+make train
+

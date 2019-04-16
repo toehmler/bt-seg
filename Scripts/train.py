@@ -1,4 +1,3 @@
-from skimage import io
 from glob import glob
 import numpy as np
 from Utils import config
