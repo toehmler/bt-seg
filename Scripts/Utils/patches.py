@@ -58,8 +58,8 @@ def generate_train(num, root, size):
                 patch[:,:,j] = p[j,:,:]
 
             if len(np.argwhere(patch == 0)) > (3 * ((size * size) / 4)):
-
                 continue
+
             patches.append(patch)
             labels.append(i)
             count += 1
