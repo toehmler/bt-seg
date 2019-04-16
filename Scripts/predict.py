@@ -2,6 +2,7 @@ from PIL import Image
 from keras.models import load_model
 from sklearn.feature_extraction.image import extract_patches_2d
 import numpy as np
+from Utils import config
 
 # -*- coding: utf-8 -*-
 """predict.py 
