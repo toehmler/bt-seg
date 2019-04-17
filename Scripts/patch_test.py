@@ -18,7 +18,7 @@ for i, patch in enumerate(patches):
     print(np.max(strip_img))
     print(strip_img.shape)
 #    strip_img = strip.astype(np.uint8)
-#    imageio.imwrite(out_path + '{}_patch.png'.format(i), strip_img)
+    imageio.imwrite(out_path + '{}_patch.png'.format(i), strip_img)
 
 # reshape patches to strips
 
