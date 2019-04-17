@@ -57,7 +57,7 @@ def generate_train(num, root, size):
             for j in range(4):
                 patch[:,:,j] = p[j,:,:]
 
-            if len(np.argwhere(patch == 0)) < (3*33*33): 
+            if len(np.argwhere(patch == 0)) < (2*33*33): 
                 continue
 
             patches.append(patch)
