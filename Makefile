@@ -3,6 +3,11 @@ update:
 	git commit -m 'quick fix'
 	git push
 
+ptest:
+	python3 Scripts/patch_test.py
+
+
+
 predict: 
 	python3 Scripts/predict.py
 
