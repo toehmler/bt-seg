@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report, precision_score, recall_score
 
 root = '/Users/treyoehmler/dev/tumors/seg/'
 
-prediction = np.load(root + '200_50.npy')
+prediction = np.load(root + 'Outputs/210_55_2.npy')
 pred = prediction.reshape(208, 208)
 p = np.pad(pred, (16, 16), mode='edge')
 
@@ -33,11 +33,11 @@ for i in range(len(fours)):
     new[fours[i][0]][fours[i][1]] = 255
 
 new_img = new.astype(np.uint8)
-imageio.imwrite('maybe3.png', new_img)
+imageio.imwrite('200_50.png', new_img)
 
-#y = label[15:223, 15:223]
-#truth = y.reshape(43264,)
-#print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
+y = label[15:223, 15:223]
+truth = y.reshape(43264,)
+print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
 
 
 

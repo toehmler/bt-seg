@@ -8,7 +8,7 @@ from Utils import config
 """predict.py 
 """
 
-data_img = Image.open(config.train_root + 'data/test/pat200_50_data.png')
+data_img = Image.open(config.train_root + 'data/test/pat210_60_data.png')
 test_data = np.asarray(data_img)
 test_data = test_data.reshape(4, 240, 240)
 
@@ -21,7 +21,7 @@ test_patches = extract_patches_2d(data, (33,33))
 model = load_model('/home/trey/bt-seg/Outputs/Models/Trained/m1_2.h5')
 
 prediction = model.predict_classes(test_patches)
-np.save('/home/trey/bt-seg/Outputs/210_55_2.npy', prediction)
+np.save('/home/trey/bt-seg/Outputs/210_60.npy', prediction)
 
 
 
