@@ -14,7 +14,7 @@ patches = test_patches[0]
 for i in range(len(test_patches[0])):
     patch = test_patches[0][i]
     label = test_patches[1][i]
-    strip = np.zeros((33, 33, 4))
+    strip = np.zeros((4, 33, 33))
     for j in range(4):
         strip[j,:,:] = patch[:,:,j]
     
