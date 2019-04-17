@@ -1,5 +1,7 @@
 from Utils import config
 from Utils import patches
+import numpy as np
+import imageio
 
 out_path = '/home/trey/bt-seg/Outputs/Patches/test1/'
 test_patches = patches.generate_train(10, config.train_root, 33)
