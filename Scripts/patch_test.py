@@ -17,7 +17,7 @@ for i, patch in enumerate(patches):
     print(np.min(strip_img))
     print(np.max(strip_img))
     print(strip_img.shape)
-    label = i / 5
+    label = i // 5
 #    strip_img = strip.astype(np.uint8)
     imageio.imwrite(out_path + 'label{}_patch{}.png'.format(label, i), strip_img)
 
