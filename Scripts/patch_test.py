@@ -4,7 +4,7 @@ import numpy as np
 import imageio
 
 
-patches_per = 10
+patches_per = 100
 
 out_path = '/home/trey/bt-seg/Outputs/Patches/test1/'
 test_patches = patches.generate_train(patches_per, config.train_root, 33)
