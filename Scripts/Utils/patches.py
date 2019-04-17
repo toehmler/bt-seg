@@ -57,12 +57,14 @@ def generate_train(num, root, size):
             for j in range(4):
                 patch[:,:,j] = p[j,:,:]
 
+            print(len(np.argwhere(patch == 0))
             if len(np.argwhere(patch == 0)) > 800:
                 continue
 
             patches.append(patch)
             labels.append(i)
             count += 1
+        break         
 
     return np.array(patches), np.array(labels)
         
