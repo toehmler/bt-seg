@@ -14,8 +14,14 @@ patches = test_patches[0]
 for i in range(len(test_patches[0])):
     patch = test_patches[0][i]
     label = test_patches[1][i]
-    print(label)
-    '''
+    strip = np.zeros((33, 33, 4))
+    for j in range(4):
+        strip[j,:,:] = patch[:,:,j]
+    
+    strip_img = strip.reshape(132,33)
+    imageio.imwrite(out_path + 'label_{}_patch_{}.png'.format(label, i), strip_img)
+
+'''
 for i, patch in enumerate(patches):
     # (4, 33, 33) -> (33, 33, 4)
     strip = np.zeros((4, 33, 33))
