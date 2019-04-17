@@ -3,10 +3,19 @@ from Utils import patches
 import numpy as np
 import imageio
 
+
+patches_per = 1
+
 out_path = '/home/trey/bt-seg/Outputs/Patches/test1/'
-test_patches = patches.generate_train(50, config.train_root, 33)
+test_patches = patches.generate_train(patches_per, config.train_root, 33)
 
 patches = test_patches[0]
+
+for i in range(len(test_patches[0])):
+    patch = test_patches[0][i]
+    label = test_patches[1][i]
+    print(label)
+    '''
 for i, patch in enumerate(patches):
     # (4, 33, 33) -> (33, 33, 4)
     strip = np.zeros((4, 33, 33))
@@ -24,3 +33,4 @@ for i, patch in enumerate(patches):
 # reshape patches to strips
 
 # save as pngs
+'''
