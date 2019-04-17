@@ -57,7 +57,7 @@ def generate_train(num, root, size):
             for j in range(4):
                 patch[:,:,j] = p[j,:,:]
 
-            print(len(np.argwhere(patch == 0))
+            print(len(np.argwhere(patch == 0)))
             if len(np.argwhere(patch == 0)) > 800:
                 continue
 
