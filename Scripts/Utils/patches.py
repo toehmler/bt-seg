@@ -34,7 +34,7 @@ def generate_train(num, root, size):
     labels = []
 
     for i in range(5):
-
+        print("Finding patches: " + str(i))
         count = 0
         while count < num:
             slice_path = random.choice(label_paths)
