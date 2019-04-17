@@ -18,10 +18,10 @@ for i in range(4):
 
 test_patches = extract_patches_2d(data, (33,33))
 
-model = load_model('/home/trey/bt-seg/Outputs/Models/Trained/m1.h5')
+model = load_model('/home/trey/bt-seg/Outputs/Models/Trained/m1_2.h5')
 
 prediction = model.predict_classes(test_patches)
-np.save('210_55.npy', prediction)
+np.save('/home/trey/bt-seg/Outputs/210_55_2.npy', prediction)
 
 
 
