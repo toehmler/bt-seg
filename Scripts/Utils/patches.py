@@ -57,8 +57,8 @@ def generate_train(num, root, size):
             for j in range(4):
                 patch[:,:,j] = p[j,:,:]
 
-#            if len(np.argwhere(patch == 0)) > ((size * size) / 4):
-#                continue
+            if len(np.argwhere(patch == 0)) > (size * size):
+                continue
 
             patches.append(patch)
             labels.append(i)
