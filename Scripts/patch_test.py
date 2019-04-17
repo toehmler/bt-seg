@@ -1,8 +1,8 @@
 from Utils import config
 from Utils import patches
 
-out_path = '/home/trey/bt-seg/Outputs/Patches/'
-test_patches = patches.generate(10, config.train_root, 33)
+out_path = '/home/trey/bt-seg/Outputs/Patches/test1/'
+test_patches = patches.generate_train(10, config.train_root, 33)
 
 patches = training_patches[0]
 for i, patch in enumerate(patches):
