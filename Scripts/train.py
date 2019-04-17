@@ -25,7 +25,7 @@ y_train = np.array(Y)
 print("Training...")
 model = m1.compile()
 print(model.summary())
-model.fit(x_train, y_train, batch_size=128, epochs=7, validation_split=0.1, verbose=1) 
+model.fit(x_train, y_train, batch_size=128, epochs=6, validation_split=0.1, verbose=1) 
 
 model.save('/home/trey/bt-seg/Outputs/Models/Trained/m1_2.h5')
 
