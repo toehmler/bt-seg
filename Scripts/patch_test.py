@@ -4,7 +4,7 @@ import numpy as np
 import imageio
 
 out_path = '/home/trey/bt-seg/Outputs/Patches/test1/'
-test_patches = patches.generate_train(10, config.train_root, 33)
+test_patches = patches.generate_train(1, config.train_root, 33)
 
 patches = test_patches[0]
 for i, patch in enumerate(patches):
@@ -14,6 +14,7 @@ for i, patch in enumerate(patches):
         strip[j:,:] = patch[:,:,j]
 
     strip_img = strip.reshape(132, 33)
+    print(strip_img.shape)
     strip_img = strip.astype(np.uint8)
     imageio.imwrite(out_path + '{}_patch.png'.format(i), strip_img)
 
