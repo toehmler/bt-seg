@@ -9,17 +9,14 @@ def compile():
 
     single.add(Conv2D(64, (7,7), strides=(1,1), padding='valid', activation='relu', input_shape=(33,33,4), kernel_regularizer=l1_l2(l1=0.01, l2=0.01)))
     single.add(BatchNormalization())
-    single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', activation='relu', kernel_regularizer=l1_l2(l1=0.01, l2=0.01)))
     single.add(BatchNormalization())
-    single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', activation='relu', kernel_regularizer=l1_l2(l1=0.01, l2=0.01)))
     single.add(BatchNormalization())
-    single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', activation='relu', kernel_regularizer=l1_l2(l1=0.01, l2=0.01)))

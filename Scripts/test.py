@@ -10,11 +10,11 @@ from sklearn.metrics import classification_report, precision_score, recall_score
 
 root = '/Users/treyoehmler/dev/tumors/seg/'
 
-prediction = np.load(root + 'Outputs/210_55_2.npy')
+prediction = np.load(root + 'Outputs/210_60.npy')
 pred = prediction.reshape(208, 208)
 p = np.pad(pred, (16, 16), mode='edge')
 
-label_img = Image.open(root  + 'pat200_50_label.png')
+label_img = Image.open(root  + 'pat210_60_label.png')
 label = np.asarray(label_img)
 
 ones = np.argwhere(p == 1)
