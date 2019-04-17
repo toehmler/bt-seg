@@ -10,13 +10,14 @@ Description of tests:
     - test2: resample if len(np.argwhere(patch == 0)) > (33*33)
     - test3: resample if len(np.argwhere(patch == 0)) > ((33*33) / 4)
     - test4: resample if len(np.argwhere(patch == 0)) > 3 * ((33*33) / 4)
+    - test5: resample if len(np.argwhere(patch == 0)) > 200)
 
 '''
 
 
 patches_per = 100
 
-out_path = '/home/trey/bt-seg/Outputs/Patches/test4/'
+out_path = '/home/trey/bt-seg/Outputs/Patches/test5/'
 test_patches = patches.generate_train(patches_per, config.train_root, 33)
 
 patches = test_patches[0]
