@@ -79,7 +79,7 @@ plt.imshow(p,cmap='gray')
 
 plt.show()
 
-plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no)
+plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no))
 
 y = label[15:223, 15:223]
 truth = y.reshape(43264,)
