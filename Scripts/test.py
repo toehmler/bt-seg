@@ -25,7 +25,7 @@ slice_no = sys.argv[4]
 
 model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
 
-full_patch = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
+full_path = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
 data_img = Image.open(full_path)
 test_data = np.asarray(data_img)
 test_data = reshape(4, 240, 240)
