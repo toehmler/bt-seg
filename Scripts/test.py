@@ -66,7 +66,7 @@ label = np.asarray(label_img)
 plt.figure(figsize=(15,10))
 
 plt.subplot(131)
-plt.title('Input'))
+plt.title('Input')
 plt.imshow(data, cmap='gray')
 
 plt.subplot(132)
