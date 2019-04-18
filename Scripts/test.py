@@ -57,7 +57,7 @@ for i in range(len(fours)):
     new[fours[i][0]][fours[i][1]] = 255
 
 new_img = new.astype(np.uint8)
-imageio.imwrite('Outputs/Segmentations/{}_{}_{}.png'.format(model_name, patient_no), new_img)
+imageio.imwrite('Outputs/Segmentations/{}_{}_{}.png'.format(model_name, patient_no, slice_no), new_img)
 
 '''
 y = label[15:223, 15:223]
