@@ -5,6 +5,7 @@ import imageio
 from PIL import Image
 from sklearn.metrics import classification_report, precision_score, recall_score
 import sys
+import matplotlib.pyplot as plt
 
 ''' 
 Command line arguments:
@@ -17,12 +18,12 @@ Command line arguments:
 # -*- coding: utf-8 -*-
 """test.py 
 """
-
 data_path = sys.argv[1]
 model_name = sys.argv[2]
 patient_no = sys.argv[3]
 slice_no = sys.argv[4]
 
+'''
 model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
 
 full_path = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
@@ -59,9 +60,15 @@ for i in range(len(fours)):
 new_img = new.astype(np.uint8)
 imageio.imwrite('Outputs/Segmentations/{}_{}_{}.png'.format(model_name, patient_no, slice_no), new_img)
 
+'''
+
 label_path = data_path + 'labels/test/pat' + patient_no + '_' + slice_no + '_label.png'
 label_img = Image.open(label_path)
 label = np.asarray(label_img)
+plt.imshow(label)
+plt.show()
+plt.savefig('testmatplot.png')
+'''
 y = label[15:223, 15:223]
 truth = y.reshape(43264,)
 print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
