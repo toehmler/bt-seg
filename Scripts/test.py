@@ -23,7 +23,7 @@ model_name = sys.argv[2]
 patient_no = sys.argv[3]
 slice_no = sys.argv[4]
 
-model = load_model('Models/Outputs/Trained/' + model_name + '.h5')
+model = load_model('/home/yb/bt-seg/Models/Outputs/Trained/' + model_name + '.h5')
 
 full_patch = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
 data_img = Image.open(full_path)
