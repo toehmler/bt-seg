@@ -1,4 +1,5 @@
 import numpy as np
+
 from keras.models import load_model
 from sklearn.feature_extraction.image import extract_patches_2d
 import imageio
@@ -87,6 +88,5 @@ print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
 
 
 
-'''
 
 
