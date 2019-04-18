@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 Scripts/train.py /home/yb/data/ 10000 128 6 m1_4
+python3 Scripts/train.py /home/yb/brats/ 10000 128 6 m1_4

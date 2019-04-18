@@ -3,6 +3,11 @@ import imageio
 from PIL import Image
 from sklearn.metrics import classification_report, precision_score, recall_score
 
+''' 
+Command line arguments:
+    - path to data
+    - patient no  (for prediction)
+    - slice no (for prediction)
 
 # -*- coding: utf-8 -*-
 """test.py 
