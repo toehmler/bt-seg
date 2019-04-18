@@ -54,7 +54,7 @@ def generate_train(num, root, size):
             if p.shape != (4, size, size):
                 continue
 
-            if len(np.argwhere(patch == 0)) > (33 * 33): 
+            if len(np.argwhere(p == 0)) > (33 * 33): 
                 continue
 
             patch = np.zeros((size,size,4))
