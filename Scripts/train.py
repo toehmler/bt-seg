@@ -13,7 +13,7 @@ if len(sys.argv) == 1:
 training_path = sys.argv[1]
 num_per = int(sys.argv[2])
 bs = int(sys.argv[3])
-training_epochs = int(sys.argv[4]
+training_epochs = int(sys.argv[4])
 save_name = sys.argv[5]
 '''
 Command line arguments:
