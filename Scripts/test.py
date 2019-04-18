@@ -23,8 +23,7 @@ model_name = sys.argv[2]
 patient_no = sys.argv[3]
 slice_no = sys.argv[4]
 
-'''
-model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
+#model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
 
 full_path = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
 data_img = Image.open(full_path)
@@ -60,15 +59,28 @@ for i in range(len(fours)):
 new_img = new.astype(np.uint8)
 imageio.imwrite('Outputs/Segmentations/{}_{}_{}.png'.format(model_name, patient_no, slice_no), new_img)
 
-'''
-
 label_path = data_path + 'labels/test/pat' + patient_no + '_' + slice_no + '_label.png'
 label_img = Image.open(label_path)
 label = np.asarray(label_img)
-plt.imshow(label)
+
+plt.figure(figsize=(15,10))
+
+plt.subplot(131)
+plt.title('Input'))
+plt.imshow(data, cmap='gray')
+
+plt.subplot(132)
+plt.title('Ground Truth')
+plt.imshow(label,cmap='gray')
+
+plt.subplot(133)
+plt.title('Prediction')
+plt.imshow(p,cmap='gray')
+
 plt.show()
-plt.savefig('testmatplot.png')
-'''
+
+plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no)
+
 y = label[15:223, 15:223]
 truth = y.reshape(43264,)
 print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
