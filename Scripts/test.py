@@ -1,4 +1,6 @@
 import numpy as np
+from keras.models import load_model
+from sklearn.feature_extraction.image import extract_patches_2d
 import imageio
 from PIL import Image
 #from sklearn.metrics import classification_report, precision_score, recall_score
