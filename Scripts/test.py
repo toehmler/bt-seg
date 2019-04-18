@@ -37,7 +37,7 @@ test_patches = extract_patches_2d(input_data, (33,33))
 prediction = model.predict_classes(test_patches)
 np.save('Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no))
 
-pred_sq = prediction_reshape(208,208)
+pred_sq = prediction.reshape(208,208)
 p = np.pad(pred_sq, (16, 16), mode='edge')
 
 ones = np.argwhere(p == 1)
