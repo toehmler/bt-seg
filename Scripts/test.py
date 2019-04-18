@@ -1,7 +1,7 @@
 import numpy as np
 import imageio
 from PIL import Image
-from sklearn.metrics import classification_report, precision_score, recall_score
+#from sklearn.metrics import classification_report, precision_score, recall_score
 import sys
 
 ''' 
