@@ -36,7 +36,7 @@ for i in range(4):
 
 test_patches = extract_patches_2d(input_data, (33,33))
 prediction = model.predict_classes(test_patches)
-np.save('/home/yb/bt-seg/Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), prediction)
+np.save('/home/trey/bt-seg/Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), prediction)
 
 pred_sq = prediction.reshape(208,208)
 p = np.pad(pred_sq, (16, 16), mode='edge')
