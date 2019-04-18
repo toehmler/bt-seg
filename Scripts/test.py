@@ -27,8 +27,8 @@ model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
 
 full_path = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
 data_img = Image.open(full_path)
-test_data = np.asarray(data_img)
-test_data = reshape(4, 240, 240)
+data = np.asarray(data_img)
+test_data = data.reshape(4, 240, 240)
 input_data = np.zeros((240, 240, 4))
 for i in range(4):
     input_data[:,:,i] = test_data[i,:,:]
