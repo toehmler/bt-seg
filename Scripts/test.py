@@ -59,7 +59,7 @@ for i in range(len(fours)):
 new_img = new.astype(np.uint8)
 imageio.imwrite('Outputs/Segmentations/{}_{}_{}.png'.format(model_name, patient_no, slice_no), new_img)
 
-label_path = data_path + 'labels/test/pat' + patient_no + '_' + slice_no + '_data.png'
+label_path = data_path + 'labels/test/pat' + patient_no + '_' + slice_no + '_label.png'
 label_img = Image.open(label_path)
 label = np.asarray(label_img)
 y = label[15:223, 15:223]
