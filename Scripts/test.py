@@ -66,9 +66,11 @@ label = np.asarray(label_img)
 
 plt.figure(figsize=(15,10))
 
+
+data_figure = test_data[1]
 plt.subplot(131)
 plt.title('Input')
-plt.imshow(data, cmap='gray')
+plt.imshow(data_figure, cmap='gray')
 
 plt.subplot(132)
 plt.title('Ground Truth')
@@ -80,7 +82,7 @@ plt.imshow(p,cmap='gray')
 
 plt.show()
 
-plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no))
+plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no), bbox_inches='tight')
 
 y = label[15:223, 15:223]
 truth = y.reshape(43264,)
