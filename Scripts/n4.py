@@ -15,6 +15,7 @@ Usage:  n4.py
 '''
 
 config = configparser.ConfigParser()
+config.read('config.ini')
 root = config['DEFAULT']['brats']
 paths = os.listdir(root)
 paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
