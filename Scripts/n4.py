@@ -2,6 +2,7 @@
 from Utils import patient
 import configparser
 import os
+import json
 '''
 ==================== n4.py ====================  
 Applies n4 bias field correction to t1 and t1c
@@ -15,14 +16,12 @@ Usage:  n4.py
 ===============================================
 '''
 
-'''
-config = configparser.ConfigParser()
-config.read('config.ini')
-config.sections()
-print(config.sections())
-#root = config['default']['brats']
-'''
-root = '/home/trey/data/BRATS2015_Training/HGG'
+# load and parse config file
+
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+root = config['brats']
 paths = os.listdir(root)
 paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
 
@@ -32,6 +31,7 @@ for patient_no, path in enumerate(paths):
     patient.apply_n4(path)
     break
 
+'''
 
 
 
