@@ -31,7 +31,6 @@ for patient_no, path in enumerate(paths):
     break
 
 
-'''
 
 
 
