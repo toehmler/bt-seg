@@ -31,7 +31,6 @@ for patient_no, path in enumerate(paths):
     patient.apply_n4(path)
     break
 
-'''
 
 
 
