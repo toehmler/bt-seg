@@ -1,6 +1,7 @@
 # Author: Trey Oehmler
 from Utils import patient
 import configparser
+import os
 '''
 ==================== n4.py ====================  
 Applies n4 bias field correction to t1 and t1c
