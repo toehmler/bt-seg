@@ -14,10 +14,14 @@ Usage:  n4.py
 ===============================================
 '''
 
+'''
 config = configparser.ConfigParser()
 config.read('config.ini')
 config.sections()
-root = config['default']['brats']
+print(config.sections())
+#root = config['default']['brats']
+'''
+root = '/home/trey/data/BRATS2015_Training/HGG'
 paths = os.listdir(root)
 paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
 
@@ -27,7 +31,7 @@ for patient_no, path in enumerate(paths):
     break
 
 
-
+'''
 
 
 
