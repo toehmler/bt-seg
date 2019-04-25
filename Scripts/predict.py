@@ -1,12 +1,41 @@
+# @author: Trey Oehmler
+
 from PIL import Image
 from keras.models import load_model
 from sklearn.feature_extraction.image import extract_patches_2d
 import numpy as np
-from Utils import config
+import configparser
+import sys    
 
-# -*- coding: utf-8 -*-
-"""predict.py 
-"""
+'''
+==================== predict.py ==================== 
+Makes a prediction using a given model, patient no and slice no
+
+Input:  (1) name of model to use (eg. m1_5)
+        (2) patient number       
+        (3) slice number 
+
+
+Output: (1) .npy file representing prediction as numpy array 
+        (2) img of prediction with mri and gt 
+        (3) saves text file with metrics (dice score, etc)
+
+Shape:  [Out] (43264,)
+
+Usage:  predict.py [model_name] [patient_no] [slice_no]
+==================================================== 
+
+TODO
+- use test.py as model
+'''
+
+config = configparser.ConfigParser()
+root_path = config['paths']['processed']
+path = root_path
+
+model_name = sys.srgv[1]
+patient_no = sys.argv[2]
+slice_no = sys.argv[3]
 
 data_img = Image.open(config.train_root + 'data/test/pat210_60_data.png')
 test_data = np.asarray(data_img)

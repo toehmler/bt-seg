@@ -1,6 +1,24 @@
 import matplotlib.animation as animation
+from glob import glob
+from Utils import patient
+import sys
+
+
+
+root = sys.argv[1]
+patient_no = sys.argv[2]
+
+
+
+
+
+
+
+fig = plt.figure()
+anim = plt.imshow(
+
+
 def animate(pat, gifname):
-    # Based on @Zombie's code
     fig = plt.figure()
     anim = plt.imshow(pat[50])
     def update(i):

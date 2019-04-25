@@ -28,7 +28,7 @@ def generate_train(num, root, size):
     Generates a set of patches (num of each class)
     Output: num * 5 patches
     """
-    label_paths = os.listdir(root + 'labels/train/')
+    label_paths = os.listdir(root + '/labels/train/')
 
     patches = []
     labels = []
@@ -38,14 +38,14 @@ def generate_train(num, root, size):
         count = 0
         while count < num:
             slice_path = random.choice(label_paths)
-            label_img = Image.open(root + 'labels/train/' + slice_path)
+            label_img = Image.open(root + '/labels/train/' + slice_path)
             slice_label = np.asarray(label_img)
             if len(np.argwhere(slice_label == i)) < 10:
                 continue
 
             center = random.choice(np.argwhere(slice_label == i))
             bounds = find_bounds(center, size)
-            data_path = root + 'data/train/' + slice_path[:-9] + 'data.png'
+            data_path = root + '/data/train/' + slice_path[:-9] + 'data.png'
             slice_img = Image.open(data_path)
             slice_data = np.asarray(slice_img)
             slice_data = slice_data.reshape(4, 240, 240)

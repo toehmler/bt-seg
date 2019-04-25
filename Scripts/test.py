@@ -1,32 +1,48 @@
-import numpy as np
+# Author: Trey Oehmler
 
+import numpy as np
 from keras.models import load_model
 from sklearn.feature_extraction.image import extract_patches_2d
+'''
+===============================================================
+'''
 import imageio
 from PIL import Image
-from sklearn.metrics import classification_report, precision_score, recall_score
 import sys
 import matplotlib.pyplot as plt
+import configparser
 
 ''' 
-Command line arguments:
-    - path to data
-    - name of model (eg m1_4)
-    - patient no  (for prediction)
-    - slice no (for prediction)
+==================== test.py ============================ 
+Tests a given model on a given patient
+
+Input:  (1) name of model to test (eg. m1_5) 
+        (2) patient number to test (eg. 205)
+
+Output: (1) saves txt file of dice score for entire brain 
+
+Usage: test.py [patient_number]
+========================================================= 
+
+TODO
+- switch to make prediction for an entire brain
+- add function to calculate dice score
+- save dice score output to text file
 '''
 
-# -*- coding: utf-8 -*-
-"""test.py 
-"""
-data_path = sys.argv[1]
-model_name = sys.argv[2]
-patient_no = sys.argv[3]
-slice_no = sys.argv[4]
+# parse the command life arguments and config file
+model_name = sys.argv[1]
+patient_no = sys.argv[2]
+
+config = configparser.ConfigParser()
+data_path = config['paths']['processed']
+for i in rang 
+full_path = data_path+'data/test/pat'+patient_no+ '_'+slice_no+'_data.png'
+
+
 
 model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
 
-full_path = data_path + 'data/test/pat' + patient_no + '_' + slice_no + '_data.png'
 data_img = Image.open(full_path)
 data = np.asarray(data_img)
 test_data = data.reshape(4, 240, 240)
@@ -36,7 +52,7 @@ for i in range(4):
 
 test_patches = extract_patches_2d(input_data, (33,33))
 prediction = model.predict_classes(test_patches)
-np.save('/home/trey/bt-seg/Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), prediction)
+np.save('Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), prediction)
 
 pred_sq = prediction.reshape(208,208)
 p = np.pad(pred_sq, (16, 16), mode='edge')

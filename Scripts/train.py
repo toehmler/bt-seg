@@ -1,3 +1,5 @@
+# @author: Trey Oehmler
+
 from glob import glob
 import numpy as np
 from Utils import config
@@ -6,23 +8,32 @@ from Models import m1
 from keras.utils import np_utils
 import random
 import sys
+import configparser
 
+'''
+==================== train.py ==================== 
+Trains a model on processed data and save .h5 file
+
+Input:  (1) number of patches per class to train on
+        (2) batch size
+        (3) number of epochs to train for
+        (4) name to save model under
+
+Output: (1) h5 file representing model
+
+Usage: train.py [num_per] [batch_size] [epochs] [name]
+================================================== 
+'''
+
+config = configparser.ConfigParser();
+training_path = config['paths']['processed']
 if len(sys.argv) == 1:
-    print('training_path num_per bs epochs save_name')
+    print('num_per bs epochs save_name')
 
-training_path = sys.argv[1]
-num_per = int(sys.argv[2])
-bs = int(sys.argv[3])
-training_epochs = int(sys.argv[4])
-save_name = sys.argv[5]
-'''
-Command line arguments:
-    - path to training data
-    - number of each class of patches
-    - batch size
-    - epochs
-    - name to save under
-'''
+num_per = int(sys.argv[1])
+bs = int(sys.argv[2])
+training_epochs = int(sys.argv[3])
+save_name = sys.argv[4]
 
 print("Generating patches...")
 
