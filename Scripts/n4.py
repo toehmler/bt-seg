@@ -27,7 +27,7 @@ paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
 
 for patient_no, path in enumerate(paths):
     print('Applying n4 bias field correction on patient: ' + str(patient_no))
-    print('Path: '+ + str(path))
+    print('Path: ' + str(path))
     patient.apply_n4(path)
     break
 
