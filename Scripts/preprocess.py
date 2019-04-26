@@ -26,19 +26,18 @@ for patient_no, path in enumerate(paths):
             strip /= (np.max(strip)        
         if np.min(strip) <= -1: # set values > -1
             strip /= abs(np.min(strip))             
+            
         
-        strip_img = strip.astype(np.uint8)
         if patient_no < 190:
-            imageio.imwrite(out_path + '/data/train/pat{}_{}_data.png'.format(patient_no, slice_no), strip_img)
+            np.save(out_path + '/data/train/pat{}_{}_data.npy'.format(patient_no, slice_no), strip)
         else:
-            imageio.imwrite(out_path + '/data/test/pat{}_{}_data.png'.format(patient_no, slice_no), strip_img)
-
+            np.save(out_path + '/data/test/pat{}_{}_data.npy'.format(patient_no, slice_no), strip)
 
 
     for slice_no, label_slice in enumerate(patient_labels):
-        label_img = label_slice.astype(np.uint8)
 
         if patient_no < 190:
+            np.save(out_path + '/labels/train/pat{}_{}_label.npy'.format(patient_no, slice_no), label_slice
             imageio.imwrite(out_path + '/labels/train/pat{}_{}_label.png'.format(patient_no, slice_no), label_img)
         else:
             imageio.imwrite(out_path + '/labels/test/pat{}_{}_label.png'.format(patient_no, slice_no), label_img)

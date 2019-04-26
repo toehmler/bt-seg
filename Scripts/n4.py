@@ -29,7 +29,6 @@ for patient_no, path in enumerate(paths):
     print('Applying n4 bias field correction on patient: ' + str(patient_no))
     print('Path: ' + str(path))
     patient.apply_n4(path)
-    break
 
 
 

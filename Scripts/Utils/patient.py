@@ -41,8 +41,7 @@ def load_scans(path):
     mods = []
     for mod_path in mod_paths:
         mod_img = io.imread(mod_path, plugin='simpleitk').astype('float')
-        mod_img = sitk.ReadImage(mod_path)
-        mod_array = sitk.GetArrayFromImage(mod_img)
+        mod_array = np.array(mod_img)
         mods.append(mod_array)
 
     data_mods = np.array(mods)
@@ -55,9 +54,6 @@ def load_scans(path):
 
 
 def normalize(scans):
-    """
-    Expecting input shape of (155, 5, 240, 240)
-    """
     normed_scans = np.zeros((155, 5, 240, 240))
     
     #exclude gt from normalization
