@@ -10,12 +10,17 @@ from skimage import io
 def apply_n4(path):
     t1 = glob(path + '/*T1.*/*.mha')
     t1c = glob(path + '/*T1c*/*.mha')
-    out_path = path[:-4] + '_n4.mha'
-    n4_bfc(t1[0], out_path)
-    n4_bfc(t1c[0], out_path)
+    t1_out = t1[0][:-4] + '_n4.mha'
+    t1c_out = t1c[0][:-4] + '_n4.mha'
+    n4_bfc(t1[0], t1_out)
+    n4_bfc(t1c[0], t1c_out)
+
 
 
 def n4_bfc(path, out_path):
+    print("Starting N4 Bias Field Correction.....")
+    print("Input: " + path)
+    print("Ouput: " + out_path)
     inputImage = sitk.ReadImage(path)
     maskImage = sitk.OtsuThreshold(inputImage,0,1,200)
     inputImage = sitk.Cast(inputImage,sitk.sitkFloat32)
