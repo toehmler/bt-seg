@@ -1,11 +1,11 @@
 #!/bin/sh
-python3 Scripts/test.py /home/yb/brats/ m1_4 190 50
-python3 Scripts/test.py /home/yb/brats/ m1_4 191 55
-python3 Scripts/test.py /home/yb/brats/ m1_4 192 60 
-python3 Scripts/test.py /home/yb/brats/ m1_4 193 65 
-python3 Scripts/test.py /home/yb/brats/ m1_4 194 60  
-python3 Scripts/test.py /home/yb/brats/ m1_4 195 55 
-python3 Scripts/test.py /home/yb/brats/ m1_4 196 50
-python3 Scripts/test.py /home/yb/brats/ m1_4 197 55 
-python3 Scripts/test.py /home/yb/brats/ m1_4 198 60 
-python3 Scripts/test.py /home/yb/brats/ m1_4 199 65
+python3 Scripts/predict.py m1_6 190 50
+python3 Scripts/predict.py m1_6 191 55
+python3 Scripts/predict.py m1_6 192 60
+python3 Scripts/predict.py m1_6 193 65  
+python3 Scripts/predict.py m1_6 194 60 
+python3 Scripts/predict.py m1_6 195 55 
+python3 Scripts/predict.py m1_6 196 50 
+python3 Scripts/predict.py m1_6 197 55 
+python3 Scripts/predict.py m1_6 198 60 
+python3 Scripts/predict.py m1_6 199 65 

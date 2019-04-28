@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import imageio
 from skimage import io
 import skimage
+from sklearn.metrics import classification_report
 
 '''
 ==================== predict.py ==================== 
@@ -86,7 +87,7 @@ plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, p
 
 truth = label[15:223,15:223]
 truth = truth.reshape(43264,)
-print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
+print(classification_report(truth, pred, labels=[0,1,2,3,4]))
 
 
 
