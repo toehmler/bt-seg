@@ -6,9 +6,11 @@ from Utils import config
 from Utils import patches
 from Models import m1
 from keras.utils import np_utils
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 import random
 import sys
 import configparser
+import json
 
 '''
 ==================== train.py ==================== 
@@ -25,8 +27,11 @@ Usage: train.py [num_per] [batch_size] [epochs] [name]
 ================================================== 
 '''
 
-config = configparser.ConfigParser();
-training_path = config['paths']['processed']
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+root = config['processed']
+
 if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
 
@@ -37,6 +42,22 @@ save_name = sys.argv[4]
 
 print("Generating patches...")
 
+train_patches = patches.generate_train(num_per, root, 33)
+x, y = patches.generate_train(num_per, root, 33)
+
+model = m1.compile()
+print(model.summary())
+
+es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
+
+checkpointer = ModelCheckpoint(filepath="Outputs/Models/Trained/"+save_name+"{epoch:02d}-{val_loss:.2f}.hdf5", verbose=1)
+history = model.fit(x, y, batch_size=bs, epochs=training_epochs, validation_split=0.1, verbose=1, callbacks=[checkpointer])
+model.save('Outputs/Models/Trained/' + save_name + '.h5')
+with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
+    json.dump(history.history, f)
+
+
+'''
 training_patches = patches.generate_train(num_per, training_path, 33)
 
 patches = training_patches[0]
@@ -55,6 +76,7 @@ print(model.summary())
 model.fit(x_train, y_train, batch_size=bs, epochs=training_epochs, validation_split=0.1, verbose=1) 
 
 model.save('Outputs/Models/Trained/' + save_name + '.h5')
+'''
 
 
 

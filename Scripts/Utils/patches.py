@@ -4,6 +4,10 @@ import numpy as np
 from skimage import io
 from PIL import Image
 import imageio
+from tqdm import tqdm
+from glob import glob
+import skimage
+from keras.utils import np_utils
 
 
 # -*- coding: utf-8 -*-
@@ -28,10 +32,50 @@ def generate_train(num, root, size):
     Generates a set of patches (num of each class)
     Output: num * 5 patches
     """
-    label_paths = os.listdir(root + '/labels/train/')
+
+    y_paths = glob(root + '/train/*_label.png')
 
     patches = []
     labels = []
+
+    for i in tqdm(range(num)):
+        class_label = 0
+        while class_label < 5:
+            # pick a random label
+            y_path = random.choice(y_paths)
+            y_img = io.imread(y_path).astype('float') 
+            y = np.array(y_img)
+            # resample if label is not in random choice
+            if len(np.argwhere(y == class_label)) < 10:
+                continue
+            # load corresponding strip and reshape
+            slice_path = y_path[:-9] + 'data.png'
+            slice_img = io.imread(slice_path)
+            slice_img = skimage.img_as_float(slice_img)
+            slice = np.array(slice_img)
+            slice = slice.reshape(4,240,240)
+            # find patch boundaries
+            center = random.choice(np.argwhere(y == class_label))
+            bounds = find_bounds(center, size)
+            patch = slice[:,bounds[0]:bounds[1],bounds[2]:bounds[3]]
+            # resample if patch is near an edge
+            if patch.shape != (4, size, size):
+               continue
+            # resample if patch is > 75% background
+            if len(np.argwhere(patch == 0)) > (size * size):
+                continue
+            # reshape patch (4,240,240) ==> (240,240,4) 
+            x = np.zeros((size,size,4))
+            for z in range(4):
+                x[:,:,z] = patch[z,:,:]
+            patches.append(x)
+            labels.append(float(class_label))
+            class_label += 1 
+    labels = np.array(labels)
+    y = np_utils.to_categorical(labels)
+    return np.array(patches), y
+
+    '''
 
     for i in range(5):
         print("Finding patches: " + str(i))
@@ -67,7 +111,7 @@ def generate_train(num, root, size):
 
     return np.array(patches), np.array(labels)
         
-
+    '''
     
 
     #labels_paths = os.listdir(root + 'data/train/')

@@ -45,28 +45,28 @@ def load_scans(path):
     mod_paths = [flair[0], t1[0], t1c[0], t2[0], gt[0]]
     mods = []
     for mod_path in mod_paths:
-        mod_img = io.imread(mod_path, plugin='simpleitk').astype(np.float16)
+        mod_img = io.imread(mod_path, plugin='simpleitk').astype('float')
         mod_array = np.array(mod_img)
         mods.append(mod_array)
 
     data_mods = np.array(mods)
-    data_slices = np.zeros((155, 240, 240, 5))
+    data_slices = np.zeros((155, 5, 240, 240))
     for i in range(155):
         for j in range(5):
-            data_slices[i,:,:,j] = data_mods[j][i,:,:]
+            data_slices[i,j,:,:] = data_mods[j][i,:,:]
 
     return data_slices
 
 
 def normalize(scans):
-    normed_scans = np.zeros((155, 240, 240, 5))
+    normed_scans = np.zeros((155, 5, 240, 240))
     #exclude gt from normalization
-    gt = scans[:,:,:,4]
+    gt = scans[:,4,:,:]
     for i in range(155):
         for j in range(4):
-            normed_slice = norm_slice(scans[i][:,:,j])
-            normed_scans[i,:,:,j] = normed_slice
-    normed_scans[:,:,:,4] = gt
+            normed_slice = norm_slice(scans[i][j,:,:])
+            normed_scans[i,j,:,:] = normed_slice
+    normed_scans[:,4,:,:] = gt
     return normed_scans
 
     
