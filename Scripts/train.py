@@ -2,7 +2,6 @@
 
 from glob import glob
 import numpy as np
-from Utils import config
 from Utils import patches
 from Models import m1
 from keras.utils import np_utils
