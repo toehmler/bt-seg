@@ -39,7 +39,7 @@ root = config['processed']
 if len(sys.argv) == 1:
     print('[model name] [patient_no] [slice_no]')
 
-model_name = sys.srgv[1]
+model_name = sys.argv[1]
 patient_no = sys.argv[2]
 slice_no = sys.argv[3]
 
