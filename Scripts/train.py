@@ -41,7 +41,6 @@ save_name = sys.argv[4]
 
 print("Generating patches...")
 
-train_patches = patches.generate_train(num_per, root, 33)
 x, y = patches.generate_train(num_per, root, 33)
 
 model = m1.compile()
