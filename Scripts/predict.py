@@ -48,7 +48,7 @@ slice_img = skimage.img_as_float(slice_img)
 slice = np.array(slice_img)
 slice = slice.reshape(4,240,240)
 
-input_data = np.zeroes((240,240,4))
+input_data = np.zeros((240,240,4))
 
 for i in range(4):
     input_data[:,:,i] = slice[i,:,:]
