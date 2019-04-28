@@ -35,5 +35,5 @@ for patient_no, path in enumerate(paths):
             np.save(out_path + '/train/pat{}_{}.npy'.format(patient_no, slice_no), out_strip)
         else:
             np.save(out_path + '/test/pat{}_{}.npy'.format(patient_no, slice_no), out_strip)
-        
+    break        
 

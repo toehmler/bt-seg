@@ -45,7 +45,7 @@ def load_scans(path):
     mod_paths = [flair[0], t1[0], t1c[0], t2[0], gt[0]]
     mods = []
     for mod_path in mod_paths:
-        mod_img = io.imread(mod_path, plugin='simpleitk').astype('float')
+        mod_img = io.imread(mod_path, plugin='simpleitk').astype(np.float16)
         mod_array = np.array(mod_img)
         mods.append(mod_array)
 
