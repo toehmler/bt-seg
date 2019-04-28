@@ -56,7 +56,7 @@ for i in range(4):
 input_patches = extract_patches_2d(input_data, (33,33))
 model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
 pred = model.predict_classes(input_patches)
-np.save('Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), prediction)
+np.save('Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), pred)
 pred = pred.reshape(208, 208)
 prediction = np.pad(pred, (16,16), mode='edge')
 
