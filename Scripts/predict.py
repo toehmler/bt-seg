@@ -6,6 +6,11 @@ from sklearn.feature_extraction.image import extract_patches_2d
 import numpy as np
 import configparser
 import sys    
+import json
+import matplotlib.pyplot as plt
+import imageio
+from skimage import io
+import skimage
 
 '''
 ==================== predict.py ==================== 
@@ -24,33 +29,64 @@ Shape:  [Out] (43264,)
 
 Usage:  predict.py [model_name] [patient_no] [slice_no]
 ==================================================== 
-
-TODO
-- use test.py as model
 '''
 
-config = configparser.ConfigParser()
-root_path = config['paths']['processed']
-path = root_path
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
+root = config['processed']
+
+if len(sys.argv) == 1:
+    print('[model name] [patient_no] [slice_no]')
 
 model_name = sys.srgv[1]
 patient_no = sys.argv[2]
 slice_no = sys.argv[3]
 
-data_img = Image.open(config.train_root + 'data/test/pat210_60_data.png')
-test_data = np.asarray(data_img)
-test_data = test_data.reshape(4, 240, 240)
+slice_img = io.imread(root+'/test/pat'+str(patient_no)+'_'+str(slice_no)+'_data.png')
+slice_img = skimage.img_as_float(slice_img)
+slice = np.array(slice_img)
+slice = slice.reshape(4,240,240)
 
-data = np.zeros((240, 240, 4))
+input_data = np.zeroes((240,240,4))
+
 for i in range(4):
-    data[:,:,i] = test_data[i,:,:]
+    input_data[:,:,i] = slice[i,:,:]
 
-test_patches = extract_patches_2d(data, (33,33))
+input_patches = extract_patches_2d(input_data, (33,33))
+model = load_model('Outputs/Models/Trained/' + model_name + '.h5')
+pred = model.predict_classes(input_patches)
+np.save('Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_no), prediction)
+pred = pred.reshape(208, 208)
+prediction = np.pad(pred, (16,16), mode='edge')
 
-model = load_model('/home/trey/bt-seg/Outputs/Models/Trained/m1_3.h5')
+label_img = io.imread(root+'/test/pat'+str(patient_no)+'_'+str(slice_no)+'_label.png')
+label_img = skimage.img_as_float(label_img)
+label = np.array(label_img)
 
-prediction = model.predict_classes(test_patches)
-np.save('/home/trey/bt-seg/Outputs/210_60_m3.npy', prediction)
+scan = slice[1]
+
+plt.figure(figsize=(15,10))
+
+plt.subplot(131)
+plt.title('Input')
+plt.imshow(scan, cmap='gray')
+
+plt.subplot(132)
+plt.title('Ground Truth')
+plt.imshow(label,cmap='gray')
+
+plt.subplot(133)
+plt.title('Prediction')
+plt.imshow(prediction,cmap='gray')
+
+plt.show()
+
+plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no), bbox_inches='tight')
+
+truth = label[15:223,15:223]
+truth = truth.reshape(43264,)
+print(classification_report(truth, prediction, labels=[0,1,2,3,4]))
 
 
 
