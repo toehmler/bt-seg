@@ -42,8 +42,8 @@ def generate_train(num, root, size):
         while class_label < 5:
             # pick random patient
             path = random.choice(patients)
-            print(path)
             data = np.load(path)
+            print(data.shape)
             # pick random slice
             slice = random.choice(data)
             y = slice[:,:,4]
