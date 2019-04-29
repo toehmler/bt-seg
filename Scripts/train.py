@@ -15,12 +15,10 @@ import json
 ==================== train.py ==================== 
 Trains a model on processed data and save .h5 file
 
-Input:  (1) number of patches per class to train on
+Args:   (1) number of patches per class to train on
         (2) batch size
         (3) number of epochs to train for
         (4) name to save model under
-
-Output: (1) h5 file representing model
 
 Usage: train.py [num_per] [batch_size] [epochs] [name]
 ================================================== 

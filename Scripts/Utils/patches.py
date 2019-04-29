@@ -32,12 +32,41 @@ def generate_train(num, root, size):
     Generates a set of patches (num of each class)
     Output: num * 5 patches
     """
-
-    y_paths = glob(root + '/train/*_label.png')
+    patients = glob(root + '/train/*.npy')
 
     patches = []
     labels = []
 
+    for i in tqdm(range(num)):
+        class_label = 0
+        while class_label < 5:
+            # pick random patient
+            path = random.choice(patients)
+            data = np.load(path)
+            # pick random slice
+            slice = random.choice(data)
+            y = slice[:,:,4]
+            x = slice[:,:,:4]
+            # resample if label not in slice
+            if len(np.argwhere(y == class_label)) < 10:
+                continue;
+            center = random.choice(np.argwhere(y == class_label))
+            bounds = find_bounds(center, size)
+            patch = x[bounds[0]:bounds[1],bounds[2]:bounds[3],:]
+            # resample if patch is on an edge
+            if patch.shape != (size, size, 4):
+                continue
+            # resample if patch is > 75% background
+            if len(np.argwhere(patch == 0)) > (size * size):
+                continue
+            patches.append(patch)
+            labels.append(class_label)
+            class_label += 1
+    labels = np.array(labels).astype(np.float16)
+    patches = np.array(patches)
+    return patches, labels
+
+'''
     for i in tqdm(range(num)):
         class_label = 0
         while class_label < 5:
@@ -74,6 +103,7 @@ def generate_train(num, root, size):
     labels = np.array(labels)
     y = np_utils.to_categorical(labels)
     return np.array(patches), y
+'''
 
     '''
 
