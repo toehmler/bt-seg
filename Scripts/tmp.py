@@ -16,7 +16,8 @@ x, y = patches.generate_train(1, root, 33)
 print(x.shape)
 print(y.shape)
 print(x)
-print(y[2])
+print(y)
+
 
 
 
