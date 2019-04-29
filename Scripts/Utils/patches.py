@@ -105,7 +105,7 @@ def generate_train(num, root, size):
     return np.array(patches), y
 '''
 
-    '''
+'''
 
     for i in range(5):
         print("Finding patches: " + str(i))
@@ -141,21 +141,21 @@ def generate_train(num, root, size):
 
     return np.array(patches), np.array(labels)
         
-    '''
+'''
     
 
-    #labels_paths = os.listdir(root + 'data/train/')
+#labels_paths = os.listdir(root + 'data/train/')
 
-    # find balanced classes ( call find_patch())
+# find balanced classes ( call find_patch())
 
 
-    # randomly select a path
+# randomly select a path
 
-    # check if class label is in slice
+# check if class label is in slice
 
-    # check that patch is of the right size
+# check that patch is of the right size
 
-    # check that patch is not 25% empty 
+# check that patch is not 25% empty 
 
 
     
