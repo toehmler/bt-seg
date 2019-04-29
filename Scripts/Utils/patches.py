@@ -57,10 +57,15 @@ def generate_train(num, root, size):
             # resample if patch is > 75% background
             if len(np.argwhere(patch == 0)) > (size * size):
                 continue
+            # set pixel intensity between 0 and 1
+            for j in range(4):
+                if np.max(patch[:,:,j]) != 0:
+                    patch[:,:,j] /= np.max(patch[:,:,j])
+
             patches.append(patch)
             labels.append(class_label)
             class_label += 1
-    labels = np.array(labels).astype(np.float16)
+    labels = np.array(labels).astype(np.float16).reshape(5)
     patches = np.array(patches)
     return patches, labels
 
