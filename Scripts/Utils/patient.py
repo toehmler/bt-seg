@@ -4,32 +4,39 @@ import subprocess
 import numpy as np
 import os
 from skimage import io
+from nipype.interfaces.ants.segmentation import N4BiasFieldCorrection
 
 # -*- coding: utf-8 -*-
 
 def apply_n4(path):
     t1 = glob(path + '/*T1.*/*.mha')
     t1c = glob(path + '/*T1c*/*.mha')
-    t1_out = t1[0][:-4] + '_n4.mha'
-    t1c_out = t1c[0][:-4] + '_n4.mha'
-    n4_bfc(t1[0], t1_out)
-    n4_bfc(t1c[0], t1c_out)
+    n4_bfc(t1[0])
+    n4_bfc(t1c[0])
 
 
+def n4_bfc(input_path):
+    n4 = N4BiasFieldCorrection()
+    n4.inputs.dimension = 3
+    n4.inputs.input_image = input_path
+    n4.inputs.bspline_fitting_distance = 300
+    n4.inputs.shrink_factor = 3
+    n4.inputs.n_iterations = [50, 50, 30, 20]
+    n4.inputs.output_image = input_path.replace('.mha', '_n4.mha')
+    n4.run()
 
-def n4_bfc(path, out_path):
-    print("Starting N4 Bias Field Correction.....")
-    print("Input: " + path)
-    print("Ouput: " + out_path)
-    inputImage = sitk.ReadImage(path)
-    maskImage = sitk.OtsuThreshold(inputImage,0,1,200)
-    inputImage = sitk.Cast(inputImage,sitk.sitkFloat32)
-    corrector = sitk.N4BiasFieldCorrectionImageFilter();
-    output = corrector.Execute(inputImage,maskImage)
-    sitk.WriteImage(output, out_path)
-    print("Finished N4 Bias Field Correction.....")
+'''
+def n4_correction(im_input):
+    n4 = N4BiasFieldCorrection()
+    n4.inputs.dimension = 3
+    n4.inputs.input_image = im_input
+    n4.inputs.bspline_fitting_distance = 300
+    n4.inputs.shrink_factor = 3
+    n4.inputs.n_iterations = [50, 50, 30, 20]
+    n4.inputs.output_image = im_input.replace('.nii.gz', '_corrected.nii.gz')
+    n4.run()
 
-
+'''
 # updating to look for n4 suffixed scans
 def load_scans(path):
     """

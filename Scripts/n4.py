@@ -27,6 +27,7 @@ paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
 
 for patient_no, path in enumerate(paths):
     patient.apply_n4(path)
+    break
 
 
 
