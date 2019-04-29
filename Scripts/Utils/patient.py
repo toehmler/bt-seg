@@ -16,6 +16,8 @@ def apply_n4(path):
 
 
 def n4_bfc(input_path):
+    print("Applying bias correction...")
+    print("Input: {}".format(input_path))
     n4 = N4BiasFieldCorrection()
     n4.inputs.dimension = 3
     n4.inputs.input_image = input_path
