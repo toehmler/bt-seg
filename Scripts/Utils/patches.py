@@ -38,12 +38,9 @@ def generate_train(num, root, size):
     labels = []
 
     for i in tqdm(range(num)):
+        data = np.load(patients[i])
         class_label = 0
         while class_label < 5:
-            # pick random patient
-            path = random.choice(patients)
-            data = np.load(path)
-            print(data.shape)
             # pick random slice
             slice = random.choice(data)
             y = slice[:,:,4]
