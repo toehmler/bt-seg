@@ -65,7 +65,7 @@ def generate_train(num, root, size):
             patches.append(patch)
             labels.append(class_label)
             class_label += 1
-    labels = np.array(labels).astype(np.float16).reshape(5)
+    labels = np.array(labels).astype(np.float16)
     labels = np_utils.to_categorical(labels)
     patches = np.array(patches)
     return patches, labels
