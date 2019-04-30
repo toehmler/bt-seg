@@ -34,36 +34,35 @@ def generate_train(num, num_per_class, root, size):
     labels = []
 
     for i in tqdm(range(num)):
-        with np.load(patients[i]) as data:
-            scans = data['scans']
-            data = np.load(patients[i])
-            scans = data['scans']
-            for z in tqdm(range(num_per_class)):
-                class_label = 0
-                while class_label < 5:
-                    # pick random slice
-                    slice = random.choice(scans)
-                    y = slice[:,:,4]
-                    x = slice[:,:,:4]
-                    # resample if label is not in slice
-                    if len(np.argwhere(y == class_label)) < 10:
-                        continue;
-                    center = random.choice(np.argwhere(y == class_label))
-                    bounds = find_bounds(center, size)
-                    patch = x[bounds[0]:bounds[1],bounds[2]:bounds[3],:]
-                    # resample if patch is on an edge
-                    if patch.shape != (size, size, 4):
-                        continue
-                    # resample if patch is > 75% background
-                    if len(np.argwhere(patch == 0)) > (size * size):
-                        continue
-                    # set pixel intensity between 0 and 1
-                    for j in range(4):
-                        if np.max(patch[:,:,j]) != 0:
-                            patch[:,:,j] /= np.max(patch[:,:,j])
-                    patches.append(patch)
-                    labels.append(class_label)
-                    class_label += 1
+        scans = np.load(patients[i])
+        for z in tqdm(range(num_per_class)):
+            class_label = 0
+            while class_label < 5:
+                # pick random slice
+                slice = random.choice(scans)
+                y = slice[:,:,4]
+                x = slice[:,:,:4]
+                # resample if label is not in slice
+                if len(np.argwhere(y == class_label)) < 10:
+                    continue;
+                center = random.choice(np.argwhere(y == class_label))
+                bounds = find_bounds(center, size)
+                patch = x[bounds[0]:bounds[1],bounds[2]:bounds[3],:]
+                # resample if patch is on an edge
+                if patch.shape != (size, size, 4):
+                    continue
+                # resample if patch is > 75% background
+                if len(np.argwhere(patch == 0)) > (size * size):
+                    continue
+                # set pixel intensity between 0 and 1
+                for j in range(4):
+                    if np.max(patch[:,:,j]) != 0:
+                        patch[:,:,j] /= np.max(patch[:,:,j])
+                patches.append(patch)
+                labels.append(class_label)
+                class_label += 1
+        del scans.f
+        scans.close()
     labels = np.array(labels).astype(np.float16)
     labels = np_utils.to_categorical(labels)
     patches = np.array(patches)

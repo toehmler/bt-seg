@@ -37,6 +37,7 @@ for i in tqdm(range(len(paths))):
         np.savez(out_path + '/train/pat_{}.npz'.format(i), scans=patient_data)
     else:
         np.savez(out_path + '/test/pat_{}.npz'.format(i), scans=patient_data)
+    break
 
 
 
