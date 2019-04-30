@@ -33,7 +33,7 @@ def generate_class_patches(path, num, size, class_num):
         if len(np.argwhere(slice_label == class_num)) < 10:
             continue
         center = random.choice(np.argwhere(slice_label == class_num))
-        bounds = find_bounds(center)
+        bounds = find_bounds(center, size)
         patch = scans[idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
         if patch.shape != (size, size, 4):
             continue
