@@ -44,7 +44,8 @@ def generate_train(num, num_per_class, root, size):
             class_label = 0
             while class_label < 5:
                 # pick random slice
-                slice = random.choice(data_x)
+                pick = random.choice(data_x)
+                slice = pick.copy()
                 y = slice[:,:,4]
                 x = slice[:,:,:4]
                 # resample if label is not in slice
