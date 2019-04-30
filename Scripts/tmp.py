@@ -6,6 +6,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import imageio
 from Utils import patches
+from memory_profiler import profile
 
 with open('config.json') as config_file:
     config = json.load(config_file)

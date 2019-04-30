@@ -8,6 +8,7 @@ from tqdm import tqdm
 from glob import glob
 import skimage
 from keras.utils import np_utils
+from memory_profiler import profile
 
 
 def find_bounds(center, size):
@@ -23,6 +24,7 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
+@profile
 def generate_class_patches(path, num, size, class_num):
     patches = np.zeros((num, size, size, 4), dtype='float32')
     labels = np.full(num, class_num ,'float32')
@@ -47,6 +49,7 @@ def generate_class_patches(path, num, size, class_num):
     return patches, labels
 
 
+@profile
 def generate_patient_patches(path, num_per, size):
     patches = np.zeros((5, num_per, size, size, 4), dtype='float32')
     labels = []
@@ -59,6 +62,7 @@ def generate_patient_patches(path, num_per, size):
     return patches, labels
 
 
+@profile
 def generate_train_batch(start, num_patients, num_per, root, size):
     batch_patches = np.zeros((num_patients,5*num_per,size,size,4),dtype='float32')
     batch_labels = []
@@ -68,6 +72,9 @@ def generate_train_batch(start, num_patients, num_per, root, size):
         batch_patches[i] = pat_patches
         batch_labels.append(pat_labels)
     return batch_patches.reshape(num_patients*5*num_per,size,size,4), np.array(batch_labels)         
+
+if __name__ == '__main__':
+    x, y = generate_train_batch(0, 5, 75, root, 33)
 
 
 '''
