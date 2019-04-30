@@ -28,14 +28,13 @@ def generate_train(num, num_per_class, root, size):
     Generates a set of patches (num of each class)
     Output: num * 5 patches
     """
-    patients = glob(root + '/train/*.npz')
+    patients = glob(root + '/train/*.dat')
 
     patches = []
     labels = []
 
     for i in tqdm(range(num)):
-        data = np.load(patients[i])
-        scans = data['scans']
+        scans = np.memmap(patients[i], dtype='float32', mode='c', shape=(155,240,240,5))
         for z in tqdm(range(num_per_class)):
             class_label = 0
             while class_label < 5:
@@ -62,8 +61,7 @@ def generate_train(num, num_per_class, root, size):
                 patches.append(patch)
                 labels.append(class_label)
                 class_label += 1
-        data.close()
-        del data
+        del scans
     labels = np.array(labels).astype(np.float16)
     labels = np_utils.to_categorical(labels)
     patches = np.array(patches)

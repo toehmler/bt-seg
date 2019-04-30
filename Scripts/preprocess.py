@@ -33,11 +33,13 @@ out_path = config['processed']
 for i in tqdm(range(len(paths))):
     scans = patient.load_scans(paths[i]) # (5, 155, 240, 240)
     patient_data = patient.normalize(scans) # (155, 240, 240, 5)
+    # split patients into training and testing sets
     if i < 190:
-        np.savez(out_path + '/train/pat_{}.npz'.format(i), scans=patient_data)
+        train_data = np.memmap(out_path + '/train/pat_{}.dat'.format(i), dtype='float32', mode='w+', shape=(155,240,240,5))
+        train_data[:,:,:,:] = patient_data[:,:,:,:]
+        del train_data
     else:
-        np.savez(out_path + '/test/pat_{}.npz'.format(i), scans=patient_data)
+        test_data = np.memmap(out_path + '/test/pat_{}.dat'.format(i), dtype='float32', mode='w+', shape=(155,240,240,5))
+        test_data[:,:,:,:] = patient_data[:,:,:,:]
+        del test_data
     break
-
-
-
