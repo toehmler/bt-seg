@@ -30,26 +30,27 @@ def generate_class_patches(path, num, size, class_num):
     patches = np.zeros((num, size, size, 4), dtype='float32')
     labels = np.full(num, class_num ,'float32')
     scans = np.memmap(path, dtype='float32', mode='r', shape=(155,240,240,5))
-    for count in tqdm(range(num)):
+    slice_label = np.zeros((240, 240), dtype='float32')
+    slice = np.zeros((240,240,4), dtype='float32')
+    count = 0
+    while count < num:
         idx = random.randint(0,154)
-        slice_label = scans[idx,:,:,4]
+        slice_label[:,:] = scans[idx,:,:,4]
+        slice[:,:,:] = scans[idx,:,:,:4]
         if len(np.argwhere(slice_label == class_num)) < 10:
-            del slice_label
             continue
         center = random.choice(np.argwhere(slice_label == class_num))
         bounds = find_bounds(center, size)
-        patch = scans[idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4].copy()
+        patch = slice[bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
         if patch.shape != (size, size, 4):
-            del patch
             continue
         if len(np.argwhere(patch == 0)) > (size * size):
-            del patch
             continue
         for mod in range(4):
             if np.max(patch[:,:,mod]) != 0:
                 patch[:,:,mod] /= np.max(patch[:,:,mod])
-        patches[count] = patch
-    del scans
+        patches[count,:,:,:] = patch[:,:,:]
+        count += 1
     return patches, labels
 
 
@@ -59,14 +60,12 @@ def generate_patient_patches(path, num_per, size):
     labels = []
     for class_num in tqdm(range(5)):
         class_patches = generate_class_patches(path, num_per, size, class_num)
-        patches[class_num] = class_patches[0]
+        patches[class_num,:,:,:,:] = class_patches[0]
         labels.append(class_patches[1])
     patches = patches.reshape(5 * num_per, size, size, 4)
     labels = np_utils.to_categorical(labels)
     return patches, labels
 
-
-@profile
 def generate_train_batch(start, num_patients, num_per, root, size):
     batch_patches = np.zeros((num_patients,5*num_per,size,size,4),dtype='float32')
     batch_labels = []

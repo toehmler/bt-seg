@@ -5,18 +5,53 @@ from skimage import io
 from PIL import Image
 import matplotlib.pyplot as plt
 import imageio
-from Utils import patches
+#from Utils import patches
 from memory_profiler import profile
+import gc, sys
+import random
 
+'''
 with open('config.json') as config_file:
     config = json.load(config_file)
 
 root = config['processed']
+'''
+@profile
+def my_func():
+    with open('config.json') as config_file:
+        config = json.load(config_file)
+    root = config['processed']
+    path = '{}/train/pat_{}.dat'.format(root, 0)
+    tmp = np.zeros((240,240,5), dtype='float32')
+    scans = np.memmap(path, dtype='float32', mode='c', shape=(155,240,240,5))
+    rand_idx = random.randint(0,154)
+    tmp[:,:,:] = scans[rand_idx,:,:,:]
+    check = np.argwhere(tmp == 0)
+    return 1
 
 
-x, y = patches.generate_train_batch(0, 5, 75, root, 33)
-print(x.shape)
-print(y.shape)
+def test_func():
+    a = [1] * (10 ** 6)
+    b = [2] * (2 * 10 ** 7)
+    del b
+    return a
+
+if __name__ == '__main__':
+    for i in range(10):
+        my_func()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
