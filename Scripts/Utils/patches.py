@@ -23,11 +23,99 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
+def generate_class_patches(path, num, size, class_num):
+    patches = np.zeros((num, size, size, 4), dtype='float32')
+    labels = np.full(num, class_num ,'float32')
+    scans = np.memmap(path, dtype='float32', mode='r', shape=(155,240,240,5))
+    for count in tqdm(range(num)):
+        idx = random.randint(0,154)
+        slice_label = scans[idx,:,:,4]
+        if len(np.argwhere(slice_label == class_num)) < 10:
+            continue
+        center = random.choice(np.argwhere(slice_label == class_num))
+        bounds = find_bounds(center)
+        patch = scans[idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
+        if patch.shape != (size, size, 4):
+            continue
+        if len(np.argwhere(patch == 0)) > (size * size):
+            continue
+        for mod in range(4):
+            if np.max(patch[:,:,mod]) != 0:
+                patch[:,:,mod] /= np.max(patch[:,:,j])
+        patches[count] = patch
+    del scans
+    return patches, labels
+
+
+def generate_patient_patches(path, num_per, size):
+    patches = np.zeros((5, num_per, size, size, 4), dtype='float32')
+    labels = []
+    for class_num in tqdm(range(5)):
+        class_patches = generate_class_patches(path, num_per, size, class_num)
+        patches[class_num] = class_patches[0]
+        labels.append(class_patches[1])
+    patches = patches.reshape(5 * num_per, size, size, 4)
+    labels = np_utils.to_categorical(labels)
+    return patches, labels
+
+
+def generate_train_batch(start, num_patients, num_per, root, size):
+    batch_patches = np.zeros((num_patients,5*num_per,size,size,4),dtype='float32')
+    batch_labels = []
+    for i in tqdm(range(num_patients)):
+        path = '{}/train/pat_{}.dat'.format(root, start + i)
+        pat_patches, pat_labels = generate_patient_patches(path, num_per, size)
+        batch_patches[i] = pat_patches
+        batch_labels.append(pat_labels)
+    return batch_patches.reshape(num_patients*5*num_per,size,size,4), np.array(batch_labels)         
+
+
+'''
+
+    patches = np.zeros((num_per*5, size, size 4), dtype='float32')
+    labels = np.zeros((num_per, size, size), dtype='float32')
+    scans = np.memmap(path, dtype='float32', mode='r', shape=(155,240,240,5))
+    for i in tqdm(range(num_per)):
+        class_label = 0
+        while class_label < 5:
+            idx = random.randint(0,154)
+            slice_label = scans[idx,:,:,4]
+            if len(np.argwhere(slice_label == class_label)) < 10:
+                continue
+            center = random.choice(np.argwhere(slice_label == class_label))
+            bounds = find_bounds(center)
+            patch = scans[idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
+            if patch.shape != (size,size,4):
+                continue
+            if len(np.argwhere(patch == 0)) > (size * size):
+                continue
+            for j in range(4):
+                if np.max(patch[:,:,j]) != 0:
+                    patch[:,:,j] /= np.max(patch[:,:,j])
+            
+            patches.append(patch)
+            labels.append(class_label)
+            class_label += 1
+    del scans
+    labels = np.array(labels).astype(np.float16)
+    labels = np_utils.
+======================================== 
+TODO:
+    - finish batch patch generation
+    - train model 1 again using new format
+    - predict a couple slices (predict.py)
+    - predict a few brains (test.py)
+    - get some dice scokre
+
+
+
+def generate_train_batch(start, num_patients, num_per, root, size):
+    for i in tqdm(range(num_patients)):
+        path = '{}/train/pat_{}.dat'.format(root, start + i)
+
 def generate_train(num, num_per_class, root, size):
-    """
     Generates a set of patches (num of each class)
     Output: num * 5 patches
-    """
     patients = glob(root + '/train/*.dat')
 
     patches = []
@@ -39,6 +127,12 @@ def generate_train(num, num_per_class, root, size):
             class_label = 0
             while class_label < 5:
                 # pick random slice
+                idx = random.randint(0,154)
+                if len(np.argwhere(scans[idx,:,:,4] == class_label)) < 10:
+
+
+
+
                 slice = random.choice(scans)
                 y = slice[:,:,4]
                 x = slice[:,:,:4]
@@ -67,7 +161,9 @@ def generate_train(num, num_per_class, root, size):
     patches = np.array(patches)
     return patches, labels
 
-'''
+
+
+
     for i in tqdm(range(num)):
         class_label = 0
         while class_label < 5:

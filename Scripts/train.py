@@ -40,6 +40,14 @@ save_name = sys.argv[4]
 print("Generating patches...")
 
 # total patches = 160*75*5 = 60,000
+
+patches = []
+labels = []
+
+for i in range(32):
+    training_patches = patches.generate_train_batch(i*5, 5, 75, root, 33)
+
+
 training_patches = patches.generate_train(160, 75, root, 33)
 shuffle = list(zip(training_patches))
 

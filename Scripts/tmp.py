@@ -12,11 +12,9 @@ with open('config.json') as config_file:
 
 root = config['processed']
 
-x, y = patches.generate_train(5,  root, 33)
+x, y = patches.generate_train_batch(0, 5, 75, root, 33)
 print(x.shape)
 print(y.shape)
-print(x)
-print(y)
 
 
 
