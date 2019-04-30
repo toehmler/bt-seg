@@ -9,11 +9,6 @@ from glob import glob
 import skimage
 from keras.utils import np_utils
 
-
-# -*- coding: utf-8 -*-
-"""patches.py 
-"""
-
 def find_bounds(center, size):
     '''
     finds the bounding indices for a patch
@@ -32,43 +27,42 @@ def generate_train(num, num_per_class, root, size):
     Generates a set of patches (num of each class)
     Output: num * 5 patches
     """
-    patients = glob(root + '/train/*.npy')
+    patients = glob(root + '/train/*.npz')
 
     patches = []
     labels = []
 
     for i in tqdm(range(num)):
-        data = np.load(patients[i], mmap_mode='r')
-        data_x = data[:,:,:]
-        for z in tqdm(range(num_per_class)):
-            class_label = 0
-            while class_label < 5:
-                # pick random slice
-                pick = random.choice(data_x)
-                slice = pick.copy()
-                y = slice[:,:,4]
-                x = slice[:,:,:4]
-                # resample if label is not in slice
-                if len(np.argwhere(y == class_label)) < 10:
-                    continue;
-                center = random.choice(np.argwhere(y == class_label))
-                bounds = find_bounds(center, size)
-                patch = x[bounds[0]:bounds[1],bounds[2]:bounds[3],:]
-                # resample if patch is on an edge
-                if patch.shape != (size, size, 4):
-                    continue
-                # resample if patch is > 75% background
-                if len(np.argwhere(patch == 0)) > (size * size):
-                    continue
-                # set pixel intensity between 0 and 1
-                for j in range(4):
-                    if np.max(patch[:,:,j]) != 0:
-                        patch[:,:,j] /= np.max(patch[:,:,j])
-
-                patches.append(patch)
-                labels.append(class_label)
-                class_label += 1
-        gc.collect()            
+        with load(patients[i]) as data:
+            scans = data['scans']
+            data = np.load(patients[i])
+            scans = data['scans']
+            for z in tqdm(range(num_per_class)):
+                class_label = 0
+                while class_label < 5:
+                    # pick random slice
+                    slice = random.choice(scans)
+                    y = slice[:,:,4]
+                    x = slice[:,:,:4]
+                    # resample if label is not in slice
+                    if len(np.argwhere(y == class_label)) < 10:
+                        continue;
+                    center = random.choice(np.argwhere(y == class_label))
+                    bounds = find_bounds(center, size)
+                    patch = x[bounds[0]:bounds[1],bounds[2]:bounds[3],:]
+                    # resample if patch is on an edge
+                    if patch.shape != (size, size, 4):
+                        continue
+                    # resample if patch is > 75% background
+                    if len(np.argwhere(patch == 0)) > (size * size):
+                        continue
+                    # set pixel intensity between 0 and 1
+                    for j in range(4):
+                        if np.max(patch[:,:,j]) != 0:
+                            patch[:,:,j] /= np.max(patch[:,:,j])
+                    patches.append(patch)
+                    labels.append(class_label)
+                    class_label += 1
     labels = np.array(labels).astype(np.float16)
     labels = np_utils.to_categorical(labels)
     patches = np.array(patches)

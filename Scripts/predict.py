@@ -86,8 +86,6 @@ plt.show()
 plt.savefig('Outputs/Segmentations/{}_{}_{}_prediction.png'.format(model_name, patient_no, slice_no), bbox_inches='tight')
 
 truth = label[15:223,15:223]
-truth = truth.reshape(43264,)
-print(classification_report(truth, pred, labels=[0,1,2,3,4]))
 
 
 
