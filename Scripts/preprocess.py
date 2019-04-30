@@ -34,9 +34,9 @@ for i in tqdm(range(len(paths))):
     scans = patient.load_scans(paths[i]) # (5, 155, 240, 240)
     patient_data = patient.normalize(scans) # (155, 240, 240, 5)
     if i < 190:
-        np.save(out_path + '/train/pat_{}.npy'.format(i), patient_data)
+        np.savez(out_path + '/train/pat_{}.npz'.format(i), scans=patient_data)
     else:
-        np.save(out_path + '/test/pat_{}.npy'.format(i), patient_data)
+        np.savez(out_path + '/test/pat_{}.npz'.format(i), scans=patient_data)
 
 
 
