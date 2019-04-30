@@ -39,7 +39,8 @@ save_name = sys.argv[4]
 
 print("Generating patches...")
 
-x, y = patches.generate_train(num_per, root, 33)
+# total patches = 160*75*5 = 60,000
+x, y = patches.generate_train(160, 75, root, 33)
 
 model = m1.compile()
 print(model.summary())
