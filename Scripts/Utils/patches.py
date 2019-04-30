@@ -45,7 +45,7 @@ def generate_train(num, num_per_class, root, size):
                 x = slice[:,:,:4]
                 # resample if label is not in slice
                 if len(np.argwhere(y == class_label)) < 10:
-                    continue;
+                    continue
                 center = random.choice(np.argwhere(y == class_label))
                 bounds = find_bounds(center, size)
                 patch = x[bounds[0]:bounds[1],bounds[2]:bounds[3],:]
