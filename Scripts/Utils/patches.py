@@ -9,6 +9,7 @@ from glob import glob
 import skimage
 from keras.utils import np_utils
 
+
 def find_bounds(center, size):
     '''
     finds the bounding indices for a patch
@@ -33,7 +34,7 @@ def generate_train(num, num_per_class, root, size):
     labels = []
 
     for i in tqdm(range(num)):
-        with load(patients[i]) as data:
+        with np.load(patients[i]) as data:
             scans = data['scans']
             data = np.load(patients[i])
             scans = data['scans']
