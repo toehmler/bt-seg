@@ -9,6 +9,7 @@ from glob import glob
 import skimage
 from keras.utils import np_utils
 from memory_profiler import profile
+import json
 
 
 def find_bounds(center, size):
@@ -74,6 +75,10 @@ def generate_train_batch(start, num_patients, num_per, root, size):
     return batch_patches.reshape(num_patients*5*num_per,size,size,4), np.array(batch_labels)         
 
 if __name__ == '__main__':
+    with open('config.json') as config_file:
+        config = json.load(config_file)
+
+    root = config['processed']
     x, y = generate_train_batch(0, 5, 75, root, 33)
 
 
