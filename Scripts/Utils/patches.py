@@ -41,7 +41,7 @@ def generate_class_patches(path, num, size, class_num):
             continue
         for mod in range(4):
             if np.max(patch[:,:,mod]) != 0:
-                patch[:,:,mod] /= np.max(patch[:,:,j])
+                patch[:,:,mod] /= np.max(patch[:,:,mod])
         patches[count] = patch
     del scans
     return patches, labels
