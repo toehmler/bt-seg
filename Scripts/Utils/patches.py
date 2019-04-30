@@ -34,7 +34,7 @@ def generate_class_patches(path, num, size, class_num):
             continue
         center = random.choice(np.argwhere(slice_label == class_num))
         bounds = find_bounds(center, size)
-        patch = scans[idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
+        patch = scans[idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4].copy()
         if patch.shape != (size, size, 4):
             continue
         if len(np.argwhere(patch == 0)) > (size * size):
