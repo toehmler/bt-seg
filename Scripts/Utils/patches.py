@@ -79,7 +79,7 @@ if __name__ == '__main__':
         config = json.load(config_file)
 
     root = config['processed']
-    x, y = generate_train_batch(0, 5, 75, root, 33)
+    x, y = generate_train_batch(0, 1, 75, root, 33)
 
 
 '''
