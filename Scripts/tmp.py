@@ -21,13 +21,22 @@ def my_func():
     with open('config.json') as config_file:
         config = json.load(config_file)
     root = config['processed']
+    for i in range(5):
+        with np.load('{}/train/pat_{}.npz'.format(root, i)) as patient:
+            data = patient['data']
+            scans = data[:,:,:,:4]
+            labels = data[:,:,:,4]
+            print(np.min(labels))
+            print(np.max(labels))
+        '''
     path = '{}/train/pat_{}.dat'.format(root, 0)
     tmp = np.zeros((240,240,5), dtype='float32')
     scans = np.memmap(path, dtype='float32', mode='c', shape=(155,240,240,5))
     rand_idx = random.randint(0,154)
     tmp[:,:,:] = scans[rand_idx,:,:,:]
-    check = np.argwhere(tmp == 0)
-    return 1
+    print(np.min(tmp))
+    print(np.max(tmp))
+    '''
 
 
 def test_func():
@@ -37,8 +46,7 @@ def test_func():
     return a
 
 if __name__ == '__main__':
-    for i in range(10):
-        my_func()
+    my_func()
 
 
 

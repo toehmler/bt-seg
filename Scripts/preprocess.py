@@ -35,10 +35,6 @@ for i in tqdm(range(len(paths))):
     patient_data = patient.normalize(scans) # (155, 240, 240, 5)
     # split patients into training and testing sets
     if i < 190:
-        train_data = np.memmap(out_path + '/train/pat_{}.dat'.format(i), dtype='float32', mode='w+', shape=(155,240,240,5))
-        train_data[:,:,:,:] = patient_data[:,:,:,:]
-        del train_data
+        np.savez('{}/train/pat_{}.npz'.format(out_path, i), data=patient_data)
     else:
-        test_data = np.memmap(out_path + '/test/pat_{}.dat'.format(i), dtype='float32', mode='w+', shape=(155,240,240,5))
-        test_data[:,:,:,:] = patient_data[:,:,:,:]
-        del test_data
+        np.savez('{}/train/pat_{}.npz'.format(out_path, i), data=patient_data)
