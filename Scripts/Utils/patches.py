@@ -34,7 +34,8 @@ def generate_train(num, num_per_class, root, size):
     labels = []
 
     for i in tqdm(range(num)):
-        scans = np.load(patients[i])
+        data = np.load(patients[i])
+        scans = data['scans']
         for z in tqdm(range(num_per_class)):
             class_label = 0
             while class_label < 5:
@@ -61,8 +62,8 @@ def generate_train(num, num_per_class, root, size):
                 patches.append(patch)
                 labels.append(class_label)
                 class_label += 1
-        del scans.f
-        scans.close()
+        del data.f
+        data.close()
     labels = np.array(labels).astype(np.float16)
     labels = np_utils.to_categorical(labels)
     patches = np.array(patches)
