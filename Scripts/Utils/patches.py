@@ -62,7 +62,7 @@ def generate_train(num, num_per_class, root, size):
                 patches.append(patch)
                 labels.append(class_label)
                 class_label += 1
-        del data.f
+        del data
         data.close()
     labels = np.array(labels).astype(np.float16)
     labels = np_utils.to_categorical(labels)
