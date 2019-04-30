@@ -38,12 +38,13 @@ def generate_train(num, num_per_class, root, size):
     labels = []
 
     for i in tqdm(range(num)):
-        data = np.load(patients[i])
+        data = np.load(patients[i], mmap_mode='r')
+        data_x = data[:,:,:]
         for z in tqdm(range(num_per_class)):
             class_label = 0
             while class_label < 5:
                 # pick random slice
-                slice = random.choice(data)
+                slice = random.choice(data_x)
                 y = slice[:,:,4]
                 x = slice[:,:,:4]
                 # resample if label is not in slice
