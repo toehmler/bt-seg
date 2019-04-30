@@ -42,4 +42,3 @@ for i in tqdm(range(len(paths))):
         test_data = np.memmap(out_path + '/test/pat_{}.dat'.format(i), dtype='float32', mode='w+', shape=(155,240,240,5))
         test_data[:,:,:,:] = patient_data[:,:,:,:]
         del test_data
-    break
