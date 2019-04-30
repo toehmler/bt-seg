@@ -40,7 +40,14 @@ save_name = sys.argv[4]
 print("Generating patches...")
 
 # total patches = 160*75*5 = 60,000
-x, y = patches.generate_train(160, 75, root, 33)
+training_patches = patches.generate_train(160, 75, root, 33)
+shuffle = list(zip(training_patches))
+
+np.random.shuffle(shuffle)
+
+x_train, y_train = zip(*shuffle)
+x = np.array(x_train)
+y = np.array(y_train)
 
 model = m1.compile()
 print(model.summary())
