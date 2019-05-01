@@ -75,6 +75,7 @@ def generate_class_patches(path, num, size, class_num):
     print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
     print(sys.getrefcount(patient))
+    objgraph.show_refs(patient, filename='patient-refs.png')
 
     return patches, labels
 
