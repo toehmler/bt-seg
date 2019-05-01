@@ -36,6 +36,7 @@ def find_bounds(center, size):
 
 def generate_class_patches(path, num, size, class_num):
 
+    snapshot1 = tracemalloc.take_snapshot()
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
     labels = np.full(num, class_num, 'float').astype(np.float32)
 
@@ -68,8 +69,15 @@ def generate_class_patches(path, num, size, class_num):
         patches[count] = patch
         count += 1
 
-    del data, patient
+    del data
+    patient.close()
     gc.collect()
+
+    top_stats = snapshot2.compare_to(snapshot1, 'lineno')
+
+    print("[ Top 10 differences ]")
+    for stat in top_stats[:10]:
+    print(stat)
     '''
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
@@ -86,15 +94,9 @@ def generate_patient_patches(path, num_per, size):
     patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
     labels = np.zeros((5, num_per))
     for i in range(5):
-        snapshot1 = tracemalloc.take_snapshot()
 
         class_patches = generate_class_patches(path, num_per, size, i)
 
-        snapshot2 = tracemalloc.take_snapshot()
-        top_stats = snapshot2.compare_to(snapshot1, 'lineno')
-        print("[ Top 10 differences ]")
-        for stat in top_stats[:10]:
-            print(stat)
         
         patches[i] = class_patches[0]
         labels[i] = class_patches[1]
