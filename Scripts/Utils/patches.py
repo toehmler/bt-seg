@@ -94,7 +94,7 @@ def generate_train_batch(root, num_per, size, start, num_patients):
 
 @profile
 def batch_wrapper(root):
-    test_batch = generate_train_batch(root, 75, 33, 0, 10)  
+    test_batch = generate_train_batch(root, 75, 33, 0, 5)  
     print(test_batch[0].shape)
     print(test_batch[1].shape)
 
