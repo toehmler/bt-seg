@@ -148,6 +148,7 @@ if __name__=='__main__':
     with open('config.json') as config_file:
         config = json.load(config_file)
     root = config['processed']
+    tracemalloc.start()
     batch_wrapper(root)
 
 
