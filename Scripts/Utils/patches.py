@@ -15,6 +15,7 @@ from pympler.tracker import SummaryTracker
 from mem_top import mem_top
 import tracemalloc
 import sys
+import objgraph
 
 def find_bounds(center, size):
     '''
@@ -61,8 +62,7 @@ def generate_class_patches(path, num, size, class_num):
 
         patches[count] = patch
         count += 1
-    print (sys.getrefcount(data))
-    print (sys.getrefcount(patient))
+    objgraph.show_refs([data], filename='ref-graph.png') 
     del data
     del patient
 
