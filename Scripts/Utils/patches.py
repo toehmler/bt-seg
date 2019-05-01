@@ -46,7 +46,7 @@ def generate_class_patches(path, num, size, class_num):
     while count < num:
 
         slice_idx = random.randint(0,154)
-        slice_label = data[slice_idx,:,:,4]
+        slice_label = data[slice_idx,:,:,4].copy()
         if len(np.argwhere(slice_label == class_num)) < 10:
             del slice_label
             continue
