@@ -10,7 +10,7 @@ import skimage
 from keras.utils import np_utils
 from memory_profiler import profile
 import json
-
+from pympler.tracker import SummaryTracker
 
 def find_bounds(center, size):
     '''
@@ -26,6 +26,8 @@ def find_bounds(center, size):
     return bounds
 
 def generate_class_patches(path, num, size, class_num):
+
+    tracker = SummaryTracker()
 
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
     labels = np.full(num, class_num, 'float').astype(np.float32)
@@ -56,6 +58,8 @@ def generate_class_patches(path, num, size, class_num):
 
         patches[count] = patch
         count += 1
+    
+    tracker.print_diff()
     return patches, labels
 
 
@@ -92,11 +96,10 @@ def generate_train_batch(root, num_per, size, start, num_patients):
 
     return patches, labels
 
-@profile
 def batch_wrapper(root):
     train_x = np.zeros((5, 3*5*50, 33, 33, 4)).astype(np.float32)
     train_y = np.zeros((5, 3*5*50, 5)).astype(np.float32)
-    for i in range(5):
+    for i in range(1):
 
         patches, labels = generate_train_batch(
                         root=root, num_per=50, size=33, 
