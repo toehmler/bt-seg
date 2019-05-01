@@ -30,32 +30,30 @@ def generate_class_patches(path, num, size, class_num):
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
     labels = np.full(num, class_num, 'float').astype(np.float32)
 
-    with np.load(path) as patient:
-        data = patient['data']
+    data = np.load(path)
+    count = 0
+    while count < num:
+        slice_idx = random.randint(0,154)
+        slice_label = data[slice_idx,:,:,4]
+        if len(np.argwhere(slice_label == class_num)) < 10:
+            continue
 
-        count = 0
-        while count < num:
-            slice_idx = random.randint(0,154)
-            slice_label = data[slice_idx,:,:,4]
-            if len(np.argwhere(slice_label == class_num)) < 10:
-                continue
+        center = random.choice(np.argwhere(slice_label == class_num))
+        bounds = find_bounds(center, size)
+        patch = data[slice_idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
 
-            center = random.choice(np.argwhere(slice_label == class_num))
-            bounds = find_bounds(center, size)
-            patch = data[slice_idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
+        if patch.shape != (size, size, 4):
+            continue
 
-            if patch.shape != (size, size, 4):
-                continue
+        if len(np.argwhere(patch == 0)) > (size * size):
+            continue
 
-            if len(np.argwhere(patch == 0)) > (size * size):
-                continue
+        for mod in range(4):
+            if np.max(patch) != 0:
+                patch[:,:,mod] /= np.max(patch[:,:,mod])
 
-            for mod in range(4):
-                if np.max(patch) != 0:
-                    patch[:,:,mod] /= np.max(patch[:,:,mod])
-
-            patches[count] = patch
-            count += 1
+        patches[count] = patch
+        count += 1
     return patches, labels
 
 
