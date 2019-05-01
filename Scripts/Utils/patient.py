@@ -45,7 +45,7 @@ def load_scans(path):
 
     mod_paths = [flair[0], t1[0], t1c[0], t2[0], gt[0]]
     mods = []
-    for i in tqdm(range(5)):
+    for i in range(5):
         mod_path = mod_paths[i]
         mod_img = io.imread(mod_path, plugin='simpleitk').astype(np.float32)
         mod_array = np.array(mod_img)
@@ -57,15 +57,16 @@ def load_scans(path):
 
 def normalize(scans):
     '''
-    output shape: (155, 240, 240, 5)
+    output shape: (155, 5, 240, 240)
     '''
-    normed_scans = np.zeros((155, 240, 240, 5))
+    normed_scans = np.zeros((155, 5, 240, 240))
     # exclude ground truth
-    normed_scans[:,:,:,4] = scans[4] 
+    normed_scans[:,4,:,:] = scans[4] 
     for i in range(4):
         norm_mod = normalize_mod(scans[i])
-        normed_scans[:,:,:,i] = norm_mod
+        normed_scans[:,i,:,:] = norm_mod
     return normed_scans
+
 
 
 def normalize_mod(mod):

@@ -9,43 +9,23 @@ import imageio
 from memory_profiler import profile
 import gc, sys
 import random
+import skimage
 
-'''
 with open('config.json') as config_file:
     config = json.load(config_file)
 
 root = config['processed']
-'''
-def my_func():
-    with open('config.json') as config_file:
-        config = json.load(config_file)
-    root = config['processed']
-    for i in range(5):
-        with np.load('{}/train/pat_{}.npz'.format(root, i)) as patient:
-            data = patient['data']
-            scans = data[:,:,:,:4]
-            labels = data[:,:,:,4]
-            print(np.min(labels))
-            print(np.max(labels))
-        '''
-    path = '{}/train/pat_{}.dat'.format(root, 0)
-    tmp = np.zeros((240,240,5), dtype='float32')
-    scans = np.memmap(path, dtype='float32', mode='c', shape=(155,240,240,5))
-    rand_idx = random.randint(0,154)
-    tmp[:,:,:] = scans[rand_idx,:,:,:]
-    print(np.min(tmp))
-    print(np.max(tmp))
-    '''
+
+strip = io.imread('{}/train/pat_{}_{}_strip.png'.format(root,0,100))
+strip = skimage.img_as_float(strip)
+strip = strip.reshape(4,240,240)
+label = io.imread('{}/train/pat_{}_{}_label.png'.format(root,0,100)).astype(float)
+print(np.min(label))
+print(np.max(label))
 
 
-def test_func():
-    a = [1] * (10 ** 6)
-    b = [2] * (2 * 10 ** 7)
-    del b
-    return a
 
-if __name__ == '__main__':
-    my_func()
+
 
 
 
