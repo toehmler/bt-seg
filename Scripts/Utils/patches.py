@@ -62,7 +62,7 @@ def generate_class_patches(path, num, size, class_num):
 
         patches[count] = patch
         count += 1
-    objgraph.show_refs([data], filename='ref-graph.png') 
+    objgraph.show_backrefs([data], filename='backrefs.png')
     del data
     del patient
 
