@@ -102,7 +102,7 @@ def batch_wrapper(root):
                         root=root, num_per=50, size=33, 
                         start=i*3, num_patients=3)
 
-        shuffle = list(zip(patches, labels)
+        shuffle = list(zip(patches, labels))
         np.random.shuffle(shuffle)
         x, y = zip(*shuffle)
         x = np.array(x)
