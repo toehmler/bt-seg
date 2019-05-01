@@ -72,7 +72,7 @@ def generate_class_patches(path, num, size, class_num):
     del data
     patient.close()
     gc.collect()
-
+    snapshot1 = tracemalloc.take_snapshot()
     top_stats = snapshot2.compare_to(snapshot1, 'lineno')
 
     print("[ Top 10 differences ]")
