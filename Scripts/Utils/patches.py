@@ -85,8 +85,17 @@ def generate_class_patches(path, num, size, class_num):
 def generate_patient_patches(path, num_per, size):
     patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
     labels = np.zeros((5, num_per))
-    for i in tqdm(range(5)):
+    for i in range(5):
+        snapshot1 = tracemalloc.take_snapshot()
+
         class_patches = generate_class_patches(path, num_per, size, i)
+
+        snapshot2 = tracemalloc.take_snapshot()
+        top_stats = snapshot2.compare_to(snapshot1, 'lineno')
+        print("[ Top 10 differences ]")
+        for stat in top_stats[:10]:
+            print(stat)
+        
         patches[i] = class_patches[0]
         labels[i] = class_patches[1]
     patches = patches.reshape(5 * num_per, size, size, 4)
@@ -102,7 +111,7 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     patches = np.zeros((num_patients,5*num_per,size,size,4)).astype(np.float32)
     labels = np.zeros((num_patients,5*num_per,5)).astype(np.float32)
 
-    for i in tqdm(range(num_patients)):
+    for i in range(num_patients):
         path = '{}/train/pat_{}.npz'.format(root, start + i)
         patient = generate_patient_patches(path, num_per, size)
         patches[i] = patient[0]
@@ -115,13 +124,13 @@ def generate_train_batch(root, num_per, size, start, num_patients):
 
 def batch_wrapper(root):
     num_batches = 1
-    train_x = np.zeros((num_batches, 5*5*50, 33, 33, 4)).astype(np.float32)
-    train_y = np.zeros((num_batches, 5*5*50, 5)).astype(np.float32)
+    train_x = np.zeros((num_batches, 1*5*50, 33, 33, 4)).astype(np.float32)
+    train_y = np.zeros((num_batches, 1*5*50, 5)).astype(np.float32)
     for i in range(num_batches):
 
         patches, labels = generate_train_batch(
                         root=root, num_per=50, size=33, 
-                        start=i*num_batches, num_patients=5)
+                        start=i*num_batches, num_patients=1)
         shuffle = list(zip(patches, labels))
         np.random.shuffle(shuffle)
         x, y = zip(*shuffle)
@@ -129,7 +138,7 @@ def batch_wrapper(root):
         y = np.array(y)
         train_x[i] = x
         train_y[i] = y # CHECK SHAPE OF LABELS
-    train_x = train_x.reshape(num_batches*5*5*50, 33, 33, 4)
+    train_x = train_x.reshape(num_batches*1*5*50, 33, 33, 4)
     print(train_x.shape)
     print(train_y.shape)
 
