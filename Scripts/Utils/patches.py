@@ -69,12 +69,14 @@ def generate_class_patches(path, num, size, class_num):
         count += 1
 
     data_addr = id(data)
-    data = None
+    patient_addr = id(patient)
+    del data, patient
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
-    print(sys.getrefcount(patient))
-    objgraph.show_backrefs(patient, filename='patient-refs.png')
+    print(PyObject.from_address(patient_addr).refcnt)
+    #print(sys.getrefcount(patient))
+    #objgraph.show_backrefs(patient, filename='patient-refs.png')
 
     return patches, labels
 
