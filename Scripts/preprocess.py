@@ -43,20 +43,20 @@ for i in tqdm(range(len(paths))):
         strip = strip.reshape(960,240)
         if (np.max(strip)) != 0:
             strip /= np.max(strip)
-        if (np.min(strip)) != 0:
+        if (np.min(strip)) <= -1:
             strip /= abs(np.min(strip))
         strip_img = skimage.img_as_uint(strip)
-        label = label.astype(np.uint8)
+        label_img = label.astype(np.uint8)
         if i < 190:
             io.imsave('{}/train/pat_{}_{}_strip.png'
                       .format(out, i, j), strip_img)
             io.imsave('{}/train/pat_{}_{}_label.png'
-                      .format(out, i, j), label)
+                      .format(out, i, j), label_img)
         else:
             io.imsave('{}/test/pat_{}_{}_strip.png'
                       .format(out, i, j), strip_img)
             io.imsave('{}/test/pat_{}_{}_label.png'
-                      .format(out, i, j), label)
+                      .format(out, i, j), label_img)
 
 
 

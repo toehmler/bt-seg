@@ -8,18 +8,7 @@ from tqdm import tqdm
 from glob import glob
 import skimage
 from keras.utils import np_utils
-from memory_profiler import profile
 import json
-import types
-from pympler.tracker import SummaryTracker
-from mem_top import mem_top
-import tracemalloc
-import sys
-import objgraph
-
-
-class PyObject(ctypes.Structure):
-    _fields_ = [("refcnt", ctypes.c_long)]
 
 def find_bounds(center, size):
     '''
@@ -34,124 +23,51 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
-def generate_class_patches(path, num, size, class_num):
 
-    snapshot1 = tracemalloc.take_snapshot()
-    patches = np.zeros((num, size, size, 4)).astype(np.float32)
-    labels = np.full(num, class_num, 'float').astype(np.float32)
+def generate_training(root, num, size):
+    label_paths = glob(root + '/train/*_label.png')
+    patches = []
+    labels = []
+    for i in tqdm(range(num)):
+        class_label = 0
+        while class_label < 5:
+            path = random.choice(label_paths)
+            label = imageio.imread(path)
+            if len(np.argwhere(label == class_label)) < 10:
+                continue
+            strip_path = path.replace('_label.png', '_strip.png')
+            strip = imageio.imread(strip_path)
+            strip = skimage.img_as_float(strip)
+            strip = strip.reshape(4, 240, 240)
+            center = random.choice(np.argwhere(label == class_label))
+            bounds = find_bounds(center, size)
+            sample = strip[:,bounds[0]:bounds[1],bounds[2]:bounds[3]]
+            if sample.shape != (4, size, size):
+                continue
+            if len(np.argwhere(sample == 0)) > (size * size):
+                continue
+            patch = np.zeros((size, size, 4))
+            for mod in range(4):
+                patch[:,:,mod] = sample[mod,:,:]
+            patches.append(patch)
+            labels.append(class_label)
+            class_label += 1
+    labels = np.array(labels)
+    y = np_utils.to_categorical(labels)
+    return np.array(patches), y
 
-    patient = np.load(path)
-    data = patient['data']
-    count = 0
-
-    while count < num:
-
-        slice_idx = random.randint(0,154)
-        slice_label = data[slice_idx,:,:,4].copy()
-        if len(np.argwhere(slice_label == class_num)) < 10:
-            del slice_label
-            continue
-
-        center = random.choice(np.argwhere(slice_label == class_num))
-        bounds = find_bounds(center, size)
-        patch = data[slice_idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
-
-        if patch.shape != (size, size, 4):
-            continue
-
-        if len(np.argwhere(patch == 0)) > (size * size):
-            continue
-
-        for mod in range(4):
-            if np.max(patch) != 0:
-                patch[:,:,mod] /= np.max(patch[:,:,mod])
-
-        patches[count] = patch
-        count += 1
-
-    del data
-    patient.close()
-    gc.collect()
-    snapshot2 = tracemalloc.take_snapshot()
-    top_stats = snapshot2.compare_to(snapshot1, 'lineno')
-
-    print("[ Top 10 differences ]")
-    for stat in top_stats[:10]:
-        print(stat)
-    '''
-    print('data ref count:')
-    print(PyObject.from_address(data_addr).refcnt)
-    print('patient ref count:')
-    print(PyObject.from_address(patient_addr).refcnt)
-    '''
-    #print(sys.getrefcount(patient))
-    #objgraph.show_backrefs(patient, filename='patient-refs.png')
-
-    return patches, labels
-
-
-def generate_patient_patches(path, num_per, size):
-    patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
-    labels = np.zeros((5, num_per))
-    for i in range(5):
-
-        class_patches = generate_class_patches(path, num_per, size, i)
-
-        
-        patches[i] = class_patches[0]
-        labels[i] = class_patches[1]
-    patches = patches.reshape(5 * num_per, size, size, 4)
-    # CHECK SIZE TRANSFORMATION
-    labels = np_utils.to_categorical(labels)
-    labels = labels.reshape(5*num_per, 5)
-    return patches, labels
-
-def generate_train_batch(root, num_per, size, start, num_patients):
-    '''
-    output: (num_patients, num_per*5, size, size, 4)
-    '''
-    patches = np.zeros((num_patients,5*num_per,size,size,4)).astype(np.float32)
-    labels = np.zeros((num_patients,5*num_per,5)).astype(np.float32)
-
-    for i in range(num_patients):
-        path = '{}/train/pat_{}.npz'.format(root, start + i)
-        patient = generate_patient_patches(path, num_per, size)
-        patches[i] = patient[0]
-        labels[i] = patient[1]
-    
-    total = num_patients * 5 * num_per
-    patches = patches.reshape(total, size, size, 4)
-    labels = labels.reshape(total, 5)
-    return patches, labels
-
-def batch_wrapper(root):
-    num_batches = 1
-    train_x = np.zeros((num_batches, 2*5*50, 33, 33, 4)).astype(np.float32)
-    train_y = np.zeros((num_batches, 2*5*50, 5)).astype(np.float32)
-    for i in range(num_batches):
-
-        patches, labels = generate_train_batch(
-                        root=root, num_per=50, size=33, 
-                        start=i*num_batches, num_patients=2)
-        shuffle = list(zip(patches, labels))
-        np.random.shuffle(shuffle)
-        x, y = zip(*shuffle)
-        x = np.array(x)
-        y = np.array(y)
-        train_x[i] = x
-        train_y[i] = y # CHECK SHAPE OF LABELS
-    train_x = train_x.reshape(num_batches*2*5*50, 33, 33, 4)
-    print(train_x.shape)
-    print(train_y.shape)
-
-
-
-if __name__=='__main__':
-    with open('config.json') as config_file:
+'''
+if __name__ == "__main__":
+    with open ('config.json') as config_file:
         config = json.load(config_file)
-    root = config['processed']
-    tracemalloc.start()
-    batch_wrapper(root)
+        root = config['processed']
+        x, y = generate_training(root, 5, 33)
+        print(x.shape)
+        print(y.shape)
+
+
+'''
+    
 
 
 
