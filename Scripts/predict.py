@@ -61,7 +61,7 @@ np.save('Outputs/Predictions/{}_{}_{}.npy'.format(model_name, patient_no, slice_
 p = pred.reshape(208, 208)
 prediction = np.pad(p, (16,16), mode='edge')
 
-label_img = io.imread(root+'/test/pat'+str(patient_no)+'_'+str(slice_no)+'_label.png')
+label_img = io.imread(root+'/test/pat_'+str(patient_no)+'_'+str(slice_no)+'_label.png')
 label_img = skimage.img_as_float(label_img)
 label = np.array(label_img)
 
