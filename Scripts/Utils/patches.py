@@ -63,6 +63,7 @@ def generate_class_patches(path, num, size, class_num):
         count += 1
     del data
     del patient
+    gc.collect()
     return patches, labels
 
 
