@@ -25,48 +25,87 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
-@profile
 def generate_class_patches(path, num, size, class_num):
-    patches = np.zeros((num, size, size, 4), dtype='float32')
-    labels = np.full(num, class_num ,'float32')
-    scans = np.memmap(path, dtype='float32', mode='r', shape=(155,240,240,5))
-    slice_label = np.zeros((240, 240), dtype='float32')
-    slice = np.zeros((240,240,4), dtype='float32')
-    count = 0
-    while count < num:
-        idx = random.randint(0,154)
-        slice_label[:,:] = scans[idx,:,:,4]
-        slice[:,:,:] = scans[idx,:,:,:4]
-        if len(np.argwhere(slice_label == class_num)) < 10:
-            continue
-        center = random.choice(np.argwhere(slice_label == class_num))
-        bounds = find_bounds(center, size)
-        patch = slice[bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
-        if patch.shape != (size, size, 4):
-            continue
-        if len(np.argwhere(patch == 0)) > (size * size):
-            continue
-        for mod in range(4):
-            if np.max(patch[:,:,mod]) != 0:
-                patch[:,:,mod] /= np.max(patch[:,:,mod])
-        patches[count,:,:,:] = patch[:,:,:]
-        count += 1
+
+    patches = np.zeros((num, size, size, 4)).astype(np.float32)
+    labels = np.full(num, class_num, 'float').astype(float32)
+
+    with np.load(path) as patient:
+        data = patient['data']
+
+        count = 0
+        while count < num:
+            slice_idx = random.randint(0,154)
+            slice_label = data[slice_idx,:,:,4]
+            if len(np.argwhere(slice_label == class_num)) < 10:
+                continue
+
+            center = random.choice(np.argwhere(slice_label == class_num))
+            bounds = get_bounds(center, size)
+            patch = data[slice_idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
+
+            if patch.shape != (size, size, 4):
+                continue
+            if len(np.argwhere(patch == 0)) > (size * size):
+                continue
+
+            for mod in range(4):
+                if np.max(patch) != 0:
+                    patch[:,:,mod] /= np.max(patch[:,:,mod])
+
+            patches[count] = patch
+            count += 1
     return patches, labels
 
 
-@profile
 def generate_patient_patches(path, num_per, size):
-    patches = np.zeros((5, num_per, size, size, 4), dtype='float32')
-    labels = []
-    for class_num in tqdm(range(5)):
-        class_patches = generate_class_patches(path, num_per, size, class_num)
-        patches[class_num,:,:,:,:] = class_patches[0]
-        labels.append(class_patches[1])
+    patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
+    labels = np.zeros((5, num_per))
+    for i in range(5):
+        class_patches = generate_class_patches(path, num_per, size, i)
+        patches[i] = class_patches[0]
+        labels[i] = class_patches[1]
     patches = patches.reshape(5 * num_per, size, size, 4)
+    # CHECK SIZE TRANSFORMATION
     labels = np_utils.to_categorical(labels)
     return patches, labels
 
+def generate_train_batch(root, num_per, size, start, num_patients):
+    '''
+    output: (num_patients, num_per*5, size, size, 4)
+    '''
+
+    patches = np.zeros((num_patients,5*num_per,size,size,4)).astype(np.float32)
+    labels = np.zeros((num_patients,5*num_per,5)).astype(np.float32)
+
+    for i in range(num_patients):
+        path = '{}/train/pat_{}.npz'.format(root, start + i)
+        patient = generate_patient_patches(path, num_per, size)
+        patches[i] = patient[0]
+        labels[i] = patient[1]
+    
+    total = num_patients * 5 * num_per
+    patches = patches.reshape(total, size, size, 4)
+    labels = labels.reshape(total, 5)
+
+    return patches, labels
+
+if __name__=='__main__':
+    with open('config.json') as config_file:
+        config = json.load(config_file)
+    root = config['processed']
+    test_batch = generate_train_batch(root, 75, 33, 0, 5)  
+    print(test_batch.shape)
+
+
+'''
+
 def generate_train_batch(start, num_patients, num_per, root, size):
+
+
+
+
+
     batch_patches = np.zeros((num_patients,5*num_per,size,size,4),dtype='float32')
     batch_labels = []
     for i in tqdm(range(num_patients)):
@@ -82,9 +121,6 @@ if __name__ == '__main__':
 
     root = config['processed']
     x, y = generate_train_batch(3, 5, 75, root, 33)
-
-
-'''
 
     patches = np.zeros((num_per*5, size, size 4), dtype='float32')
     labels = np.zeros((num_per, size, size), dtype='float32')
@@ -216,7 +252,7 @@ def generate_train(num, num_per_class, root, size):
     return np.array(patches), y
 '''
 
-'''
+'''for
 
     for i in range(5):
         print("Finding patches: " + str(i))

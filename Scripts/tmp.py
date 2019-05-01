@@ -16,7 +16,6 @@ with open('config.json') as config_file:
 
 root = config['processed']
 '''
-@profile
 def my_func():
     with open('config.json') as config_file:
         config = json.load(config_file)

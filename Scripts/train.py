@@ -39,13 +39,56 @@ save_name = sys.argv[4]
 
 print("Generating patches...")
 
-# total patches = 160*75*5 = 60,000
+# total patches = 60,0000
+# 32 (batches) * 5 (patients) * 5 (classes) * 75 (per class)
+train_x = np.zeros((32, 5*5*75, 33, 33, 4)).astype(np.float32)
 
-patches = []
-labels = []
+# need to check shape
+train_y = np.zeros((32, 5*5*75, 5)).astype(np.float32)
 
 for i in range(32):
-    training_patches = patches.generate_train_batch(i*5, 5, 75, root, 33)
+    batch = patches.generate_train_batch(
+          root=root, num_per=75, size=33 
+          start=i*5, num_patients=5)
+    shuffle = list(zip(training_patches))
+    np.random.shuffle(shuffle)
+    x, y = zip(*shuffle)
+    x = np.array(x)
+    y = np.array(y)
+    train_x[i] = x
+    train_y[i] = y # CHECK SHAPE OF LABELS
+
+train_x = train_x.reshape(32*5*5*75, 33, 33, 4)
+train_y = train_y.reshape(32*5*5*75, 33, 33, 4)
+
+model = m1.compile()
+print(model.summary())
+
+# reformat paramters
+es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
+
+checkpointer = ModelCheckpoint(filepath="Outputs/Models/Trained/"+save_name+"{epoch:02d}-{val_loss:.2f}.hdf5", verbose=1)
+history = model.fit(train_x, train_y, batch_size=bs, epochs=training_epochs, validation_split=0.1, verbose=1, callbacks=[checkpointer])
+model.save('Outputs/Models/Trained/' + save_name + '.h5')
+with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
+    json.dump(history.history, f)
+
+
+
+
+'''
+
+
+for i in range(32):
+    
+
+
+
+for i in range(32):
+    patch_group = patches.generate_train_batch(start=i*5,end=5
+for i in range(32):
+
+    training_patches = patches.generate_train_batch(start-i*5, 5, 75, root, 33)
 
 
 training_patches = patches.generate_train(160, 75, root, 33)
@@ -69,7 +112,6 @@ with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
     json.dump(history.history, f)
 
 
-'''
 training_patches = patches.generate_train(num_per, training_path, 33)
 
 patches = training_patches[0]
