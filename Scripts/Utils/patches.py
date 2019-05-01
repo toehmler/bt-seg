@@ -48,6 +48,7 @@ def generate_class_patches(path, num, size, class_num):
         slice_idx = random.randint(0,154)
         slice_label = data[slice_idx,:,:,4]
         if len(np.argwhere(slice_label == class_num)) < 10:
+            del slice_label
             continue
 
         center = random.choice(np.argwhere(slice_label == class_num))
@@ -55,9 +56,11 @@ def generate_class_patches(path, num, size, class_num):
         patch = data[slice_idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
 
         if patch.shape != (size, size, 4):
+            del patch
             continue
 
         if len(np.argwhere(patch == 0)) > (size * size):
+            del patch
             continue
 
         for mod in range(4):
