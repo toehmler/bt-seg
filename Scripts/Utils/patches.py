@@ -30,7 +30,8 @@ def generate_class_patches(path, num, size, class_num):
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
     labels = np.full(num, class_num, 'float').astype(np.float32)
 
-    data = np.load(path)
+    patient = np.load(path)
+    data = patient['data']
     count = 0
     while count < num:
         slice_idx = random.randint(0,154)
