@@ -13,6 +13,7 @@ import json
 import types
 from pympler.tracker import SummaryTracker
 from mem_top import mem_top
+import tracemalloc
 
 def find_bounds(center, size):
     '''
@@ -80,8 +81,6 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     '''
     output: (num_patients, num_per*5, size, size, 4)
     '''
-
-    tracker = SummaryTracker()
     patches = np.zeros((num_patients,5*num_per,size,size,4)).astype(np.float32)
     labels = np.zeros((num_patients,5*num_per,5)).astype(np.float32)
 
@@ -94,7 +93,6 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     total = num_patients * 5 * num_per
     patches = patches.reshape(total, size, size, 4)
     labels = labels.reshape(total, 5)
-    tracker.print_diff()
     return patches, labels
 
 def batch_wrapper(root):
@@ -121,8 +119,15 @@ if __name__=='__main__':
     with open('config.json') as config_file:
         config = json.load(config_file)
     root = config['processed']
-
+    tracemalloc.strart()
     batch_wrapper(root)
+    snapshot = tracemalloc.take_snapshot()
+    top_stats = snapshot.statistics('lineno')
+
+    print("[ Top 10 ]")
+    for stat in top_stats[:10]:
+        print(stat)
+
 
 '''
 
