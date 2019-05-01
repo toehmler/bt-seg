@@ -46,6 +46,7 @@ def generate_class_patches(path, num, size, class_num):
 
             if patch.shape != (size, size, 4):
                 continue
+
             if len(np.argwhere(patch == 0)) > (size * size):
                 continue
 
@@ -91,14 +92,18 @@ def generate_train_batch(root, num_per, size, start, num_patients):
 
     return patches, labels
 
-if __name__=='__main__':
-    with open('config.json') as config_file:
-        config = json.load(config_file)
-    root = config['processed']
+@profile
+def batch_wrapper(root):
     test_batch = generate_train_batch(root, 75, 33, 0, 10)  
     print(test_batch[0].shape)
     print(test_batch[1].shape)
 
+if __name__=='__main__':
+    with open('config.json') as config_file:
+        config = json.load(config_file)
+    root = config['processed']
+    batch_wrapper(root)
+    
 
 '''
 
