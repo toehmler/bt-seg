@@ -32,6 +32,7 @@ def generate_class_patches(path, num, size, class_num):
 
     patient = np.load(path)
     data = patient['data']
+    patient.close()
     count = 0
     while count < num:
         slice_idx = random.randint(0,154)
@@ -93,12 +94,12 @@ def generate_train_batch(root, num_per, size, start, num_patients):
 
 @profile
 def batch_wrapper(root):
-    train_x = np.zeros((5, 5*5*75, 33, 33, 4)).astype(np.float32)
-    train_y = np.zeros((5, 5*5*75, 5)).astype(np.float32)
+    train_x = np.zeros((5, 3*5*50, 33, 33, 4)).astype(np.float32)
+    train_y = np.zeros((5, 3*5*50, 5)).astype(np.float32)
     for i in range(5):
         batch = generate_train_batch(
               root=root, num_per=50, size=33, 
-              start=i*5, num_patients=5)
+              start=i*3, num_patients=3)
         shuffle = list(zip(batch))
         np.random.shuffle(shuffle)
         x, y = zip(*shuffle)
@@ -106,8 +107,8 @@ def batch_wrapper(root):
         y = np.array(y)
         train_x[i] = x
         train_y[i] = y # CHECK SHAPE OF LABELS
-    train_x = train_x.reshape(5*5*5*75, 33, 33, 4)
-    train_y = train_y.reshape(5*5*5*75, 33, 33, 4)
+    train_x = train_x.reshape(5*3*5*50, 33, 33, 4)
+    train_y = train_y.reshape(5*3*5*50, 33, 33, 4)
 
 if __name__=='__main__':
     with open('config.json') as config_file:
