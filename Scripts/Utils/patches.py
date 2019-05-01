@@ -74,7 +74,7 @@ def generate_class_patches(path, num, size, class_num):
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
-    print(sys.getrefcount(patient)
+    print(sys.getrefcount(patient))
 
     return patches, labels
 
