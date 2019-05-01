@@ -1,4 +1,4 @@
-import os, gc
+import os, gc, ctypes
 import random
 import numpy as np
 from skimage import io
@@ -16,6 +16,10 @@ from mem_top import mem_top
 import tracemalloc
 import sys
 import objgraph
+
+
+class PyObject(ctypes.Structure):
+    _fields_ = [("refcnt", ctypes.c_long)]
 
 def find_bounds(center, size):
     '''
@@ -62,9 +66,13 @@ def generate_class_patches(path, num, size, class_num):
 
         patches[count] = patch
         count += 1
-    objgraph.show_backrefs([data], filename='backrefs.png')
-    del data
-    del patient
+
+
+    data_addr = id(data)
+    pat_addr = id(patient)
+    del data, patient
+    print(PyObject.from_address(data_addr).refcnt)
+    print(PyObject.from_address(pat_addr).refcnt)
 
     return patches, labels
 
@@ -119,6 +127,8 @@ def batch_wrapper(root):
     train_x = train_x.reshape(num_batches*2*5*50, 33, 33, 4)
     print(train_x.shape)
     print(train_y.shape)
+
+
 
 if __name__=='__main__':
     with open('config.json') as config_file:
