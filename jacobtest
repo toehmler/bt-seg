@@ -1,11 +1,7 @@
 #!/bin/sh
-python3 Scripts/predict.py m1_7 190 50
-python3 Scripts/predict.py m1_7 191 55
-python3 Scripts/predict.py m1_7 192 60
-python3 Scripts/predict.py m1_7 193 65  
-python3 Scripts/predict.py m1_7 194 60 
-python3 Scripts/predict.py m1_7 195 55 
-python3 Scripts/predict.py m1_7 196 50 
-python3 Scripts/predict.py m1_7 197 55 
-python3 Scripts/predict.py m1_7 198 60 
-python3 Scripts/predict.py m1_7 199 65 
+python3 Scripts/predict.py m1_7 201 65 
+python3 Scripts/predict.py m1_7 202 80 
+python3 Scripts/predict.py m1_7 208 70 
+python3 Scripts/predict.py m1_7 219 55 
+python3 Scripts/predict.py m1_7 211 60 
+python3 Scripts/predict.py m1_7 210 65 
