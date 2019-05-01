@@ -50,12 +50,12 @@ for i in tqdm(range(len(paths))):
             io.imsave('{}/train/pat_{}_{}_strip.png'
                       .format(out, i, j), strip_img)
             io.imsave('{}/train/pat_{}_{}_label.png'
-                      .format(out, i, j), label_img)
+                      .format(out, i, j), label)
         else:
             io.imsave('{}/test/pat_{}_{}_strip.png'
                       .format(out, i, j), strip_img)
             io.imsave('{}/test/pat_{}_{}_label.png'
-                      .format(out, i, j), label_img)
+                      .format(out, i, j), label)
 
 
 
