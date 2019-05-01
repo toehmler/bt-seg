@@ -28,7 +28,7 @@ def find_bounds(center, size):
     return bounds
 
 def generate_class_patches(path, num, size, class_num):
-    print(mem_top(verbose_types=[dict, list]))
+    print(mem_top())
 
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
     labels = np.full(num, class_num, 'float').astype(np.float32)
