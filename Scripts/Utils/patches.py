@@ -71,6 +71,7 @@ def generate_patient_patches(path, num_per, size):
     labels = labels.reshape(5 *75, 5)
     return patches, labels
 
+@profile
 def generate_train_batch(root, num_per, size, start, num_patients):
     '''
     output: (num_patients, num_per*5, size, size, 4)
