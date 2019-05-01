@@ -28,7 +28,7 @@ def find_bounds(center, size):
 def generate_class_patches(path, num, size, class_num):
 
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
-    labels = np.full(num, class_num, 'float').astype(float32)
+    labels = np.full(num, class_num, 'float').astype(np.float32)
 
     with np.load(path) as patient:
         data = patient['data']
@@ -61,7 +61,7 @@ def generate_class_patches(path, num, size, class_num):
 def generate_patient_patches(path, num_per, size):
     patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
     labels = np.zeros((5, num_per))
-    for i in range(5):
+    for i in tqdm(range(5)):
         class_patches = generate_class_patches(path, num_per, size, i)
         patches[i] = class_patches[0]
         labels[i] = class_patches[1]
@@ -78,7 +78,7 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     patches = np.zeros((num_patients,5*num_per,size,size,4)).astype(np.float32)
     labels = np.zeros((num_patients,5*num_per,5)).astype(np.float32)
 
-    for i in range(num_patients):
+    for i in tqdm(range(num_patients)):
         path = '{}/train/pat_{}.npz'.format(root, start + i)
         patient = generate_patient_patches(path, num_per, size)
         patches[i] = patient[0]
