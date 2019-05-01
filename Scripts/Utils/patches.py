@@ -67,8 +67,8 @@ def generate_patient_patches(path, num_per, size):
         labels[i] = class_patches[1]
     patches = patches.reshape(5 * num_per, size, size, 4)
     # CHECK SIZE TRANSFORMATION
-    labels = labels.reshape(5 * num_per, size, size, 4)
     labels = np_utils.to_categorical(labels)
+    labels = labels.reshape(5 *75, 5)
     return patches, labels
 
 def generate_train_batch(root, num_per, size, start, num_patients):
