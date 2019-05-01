@@ -34,8 +34,7 @@ paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
 out = config['processed']
 
 
-#for i in tqdm(range(len(paths))):
-for i in tqdm(range(2)):
+for i in tqdm(range(len(paths))):
     scans = patient.load_scans(paths[i]) # (5, 155, 240, 240)
     patient_data = patient.normalize(scans) # (155, 5, 240, 240)
     for j in tqdm(range(155)):
