@@ -69,7 +69,7 @@ def generate_patient_patches(path, num_per, size):
     patches = patches.reshape(5 * num_per, size, size, 4)
     # CHECK SIZE TRANSFORMATION
     labels = np_utils.to_categorical(labels)
-    labels = labels.reshape(5 *75, 5)
+    labels = labels.reshape(5*num_per, 5)
     return patches, labels
 
 def generate_train_batch(root, num_per, size, start, num_patients):
@@ -97,7 +97,7 @@ def batch_wrapper(root):
     train_x = np.zeros((5, 5*5*75, 33, 33, 4)).astype(np.float32)
     train_y = np.zeros((5, 5*5*75, 5)).astype(np.float32)
     for i in range(5):
-        batch = generate_train_batch(
+        batch = .generate_train_batch(
               root=root, num_per=50, size=33, 
               start=i*5, num_patients=5)
         shuffle = list(zip(batch))
