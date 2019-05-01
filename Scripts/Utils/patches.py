@@ -65,8 +65,6 @@ def generate_class_patches(path, num, size, class_num):
     print (sys.getrefcount(patient))
     del data
     del patient
-    print (sys.getrefcount(data))
-    print (sys.getrefcount(patient))
 
     return patches, labels
 
