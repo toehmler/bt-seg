@@ -68,12 +68,11 @@ def generate_class_patches(path, num, size, class_num):
         patches[count] = patch
         count += 1
 
-
+    data_addr = id(data)
     data = None
     patient = None
     print('data ref count:')
-    print(sys.getrefcount(data))
-#    print(PyObject.from_address(data_addr).refcnt)
+    print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
     print(sys.getrefcount(patient))
 
