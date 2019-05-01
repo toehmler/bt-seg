@@ -14,6 +14,7 @@ import types
 from pympler.tracker import SummaryTracker
 from mem_top import mem_top
 import tracemalloc
+import sys
 
 def find_bounds(center, size):
     '''
@@ -28,7 +29,6 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
-@profile
 def generate_class_patches(path, num, size, class_num):
 
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
@@ -61,13 +61,16 @@ def generate_class_patches(path, num, size, class_num):
 
         patches[count] = patch
         count += 1
+    print (sys.getrefcount(data))
+    print (sys.getrefcount(patient))
     del data
     del patient
-    gc.collect()
+    print (sys.getrefcount(data))
+    print (sys.getrefcount(patient))
+
     return patches, labels
 
 
-@profile
 def generate_patient_patches(path, num_per, size):
     patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
     labels = np.zeros((5, num_per))
@@ -81,7 +84,6 @@ def generate_patient_patches(path, num_per, size):
     labels = labels.reshape(5*num_per, 5)
     return patches, labels
 
-@profile
 def generate_train_batch(root, num_per, size, start, num_patients):
     '''
     output: (num_patients, num_per*5, size, size, 4)
@@ -100,7 +102,6 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     labels = labels.reshape(total, 5)
     return patches, labels
 
-@profile
 def batch_wrapper(root):
     num_batches = 1
     train_x = np.zeros((num_batches, 2*5*50, 33, 33, 4)).astype(np.float32)
