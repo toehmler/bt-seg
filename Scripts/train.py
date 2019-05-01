@@ -47,10 +47,11 @@ train_x = np.zeros((32, 5*5*75, 33, 33, 4)).astype(np.float32)
 train_y = np.zeros((32, 5*5*75, 5)).astype(np.float32)
 
 for i in range(32):
-    batch = patches.generate_train_batch(
+    batch = generate_train_batch(
           root=root, num_per=75, size=33 
           start=i*5, num_patients=5)
-    shuffle = list(zip(training_patches))
+
+    shuffle = list(zip(atches))
     np.random.shuffle(shuffle)
     x, y = zip(*shuffle)
     x = np.array(x)
