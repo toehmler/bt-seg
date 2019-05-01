@@ -36,9 +36,11 @@ def generate_class_patches(path, num, size, class_num):
 
     patient = np.load(path)
     data = patient['data']
-    patient.close()
     count = 0
     while count < num:
+
+        snapshot = tracemalloc.take_snapshot()
+
         slice_idx = random.randint(0,154)
         slice_label = data[slice_idx,:,:,4]
         if len(np.argwhere(slice_label == class_num)) < 10:
@@ -60,7 +62,8 @@ def generate_class_patches(path, num, size, class_num):
 
         patches[count] = patch
         count += 1
-    
+    del patient.f
+    patient.close()
     return patches, labels
 
 
@@ -121,7 +124,6 @@ if __name__=='__main__':
     root = config['processed']
     tracemalloc.start()
     batch_wrapper(root)
-    snapshot = tracemalloc.take_snapshot()
     top_stats = snapshot.statistics('lineno')
 
     print("[ Top 10 ]")
