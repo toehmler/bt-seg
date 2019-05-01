@@ -119,7 +119,7 @@ if __name__=='__main__':
     with open('config.json') as config_file:
         config = json.load(config_file)
     root = config['processed']
-    tracemalloc.strart()
+    tracemalloc.start()
     batch_wrapper(root)
     snapshot = tracemalloc.take_snapshot()
     top_stats = snapshot.statistics('lineno')
