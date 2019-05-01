@@ -98,7 +98,7 @@ def batch_wrapper(root):
     train_y = np.zeros((5, 5*5*75, 5)).astype(np.float32)
     for i in range(5):
         batch = patches.generate_train_batch(
-              root=root, num_per=50, size=33 
+              root=root, num_per=50, size=33, 
               start=i*5, num_patients=5)
         shuffle = list(zip(training_patches))
         np.random.shuffle(shuffle)
