@@ -70,12 +70,11 @@ def generate_class_patches(path, num, size, class_num):
 
     data_addr = id(data)
     data = None
-    patient = None
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
     print(sys.getrefcount(patient))
-    objgraph.show_refs(patient, filename='patient-refs.png')
+    objgraph.show_backrefs(patient, filename='patient-refs.png')
 
     return patches, labels
 
