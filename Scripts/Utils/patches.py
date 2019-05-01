@@ -68,13 +68,13 @@ def generate_class_patches(path, num, size, class_num):
         patches[count] = patch
         count += 1
 
-    data_addr = id(data)
-    patient_addr = id(patient)
     del data, patient
+    '''
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
     print(PyObject.from_address(patient_addr).refcnt)
+    '''
     #print(sys.getrefcount(patient))
     #objgraph.show_backrefs(patient, filename='patient-refs.png')
 
@@ -114,13 +114,13 @@ def generate_train_batch(root, num_per, size, start, num_patients):
 
 def batch_wrapper(root):
     num_batches = 1
-    train_x = np.zeros((num_batches, 2*5*50, 33, 33, 4)).astype(np.float32)
-    train_y = np.zeros((num_batches, 2*5*50, 5)).astype(np.float32)
+    train_x = np.zeros((num_batches, 5*5*50, 33, 33, 4)).astype(np.float32)
+    train_y = np.zeros((num_batches, 5*5*50, 5)).astype(np.float32)
     for i in range(num_batches):
 
         patches, labels = generate_train_batch(
                         root=root, num_per=50, size=33, 
-                        start=i*num_batches, num_patients=2)
+                        start=i*num_batches, num_patients=5)
         shuffle = list(zip(patches, labels))
         np.random.shuffle(shuffle)
         x, y = zip(*shuffle)
