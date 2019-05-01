@@ -77,7 +77,7 @@ def generate_class_patches(path, num, size, class_num):
 
     print("[ Top 10 differences ]")
     for stat in top_stats[:10]:
-    print(stat)
+        print(stat)
     '''
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
