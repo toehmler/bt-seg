@@ -25,7 +25,6 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
-@profile
 def generate_class_patches(path, num, size, class_num):
 
     patches = np.zeros((num, size, size, 4)).astype(np.float32)
@@ -59,7 +58,6 @@ def generate_class_patches(path, num, size, class_num):
     return patches, labels
 
 
-@profile
 def generate_patient_patches(path, num_per, size):
     patches = np.zeros((5, num_per, size, size, 4)).astype(np.float32)
     labels = np.zeros((5, num_per))
@@ -73,7 +71,6 @@ def generate_patient_patches(path, num_per, size):
     labels = labels.reshape(5 *75, 5)
     return patches, labels
 
-@profile
 def generate_train_batch(root, num_per, size, start, num_patients):
     '''
     output: (num_patients, num_per*5, size, size, 4)
