@@ -56,11 +56,9 @@ def generate_class_patches(path, num, size, class_num):
         patch = data[slice_idx,bounds[0]:bounds[1],bounds[2]:bounds[3],:4]
 
         if patch.shape != (size, size, 4):
-            del patch
             continue
 
         if len(np.argwhere(patch == 0)) > (size * size):
-            del patch
             continue
 
         for mod in range(4):
@@ -73,7 +71,7 @@ def generate_class_patches(path, num, size, class_num):
 
     data_addr = id(data)
     pat_addr = id(patient)
-    del data, patient
+    del data
     print('data ref count:')
     print(PyObject.from_address(data_addr).refcnt)
     print('patient ref count:')
