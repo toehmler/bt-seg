@@ -97,10 +97,12 @@ def batch_wrapper(root):
     train_x = np.zeros((5, 3*5*50, 33, 33, 4)).astype(np.float32)
     train_y = np.zeros((5, 3*5*50, 5)).astype(np.float32)
     for i in range(5):
-        batch = generate_train_batch(
-              root=root, num_per=50, size=33, 
-              start=i*3, num_patients=3)
-        shuffle = list(zip(batch))
+
+        patches, labels = generate_train_batch(
+                        root=root, num_per=50, size=33, 
+                        start=i*3, num_patients=3)
+
+        shuffle = list(zip(patches, labels)
         np.random.shuffle(shuffle)
         x, y = zip(*shuffle)
         x = np.array(x)
