@@ -44,7 +44,7 @@ model_name = sys.argv[1]
 patient_no = sys.argv[2]
 slice_no = sys.argv[3]
 
-slice_img = io.imread(root+'/test/pat'+str(patient_no)+'_'+str(slice_no)+'_data.png')
+slice_img = io.imread(root+'/test/pat_'+str(patient_no)+'_'+str(slice_no)+'_data.png')
 slice_img = skimage.img_as_float(slice_img)
 slice = np.array(slice_img)
 slice = slice.reshape(4,240,240)
