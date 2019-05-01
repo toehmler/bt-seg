@@ -96,7 +96,7 @@ if __name__=='__main__':
     with open('config.json') as config_file:
         config = json.load(config_file)
     root = config['processed']
-    test_batch = generate_train_batch(root, 75, 33, 0, 5)  
+    test_batch = generate_train_batch(root, 75, 33, 0, 2)  
     print(test_batch.shape)
 
 
