@@ -80,6 +80,7 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     output: (num_patients, num_per*5, size, size, 4)
     '''
 
+    tracker = SummaryTracker()
     patches = np.zeros((num_patients,5*num_per,size,size,4)).astype(np.float32)
     labels = np.zeros((num_patients,5*num_per,5)).astype(np.float32)
 
@@ -92,19 +93,18 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     total = num_patients * 5 * num_per
     patches = patches.reshape(total, size, size, 4)
     labels = labels.reshape(total, 5)
-
+    tracker.print_diff()
     return patches, labels
 
 def batch_wrapper(root):
-    train_x = np.zeros((1, 1*5*50, 33, 33, 4)).astype(np.float32)
-    train_y = np.zeros((1, 1*5*50, 5)).astype(np.float32)
-    for i in range(1):
+    num_batches = 1
+    train_x = np.zeros((num_batches, 2*5*50, 33, 33, 4)).astype(np.float32)
+    train_y = np.zeros((num_batches, 2*5*50, 5)).astype(np.float32)
+    for i in range(num_batches):
 
-        tracker = SummaryTracker()
         patches, labels = generate_train_batch(
                         root=root, num_per=50, size=33, 
-                        start=i*1, num_patients=1)
-        tracker.print_diff()
+                        start=i*num_batches, num_patients=2)
         shuffle = list(zip(patches, labels))
         np.random.shuffle(shuffle)
         x, y = zip(*shuffle)
@@ -112,15 +112,15 @@ def batch_wrapper(root):
         y = np.array(y)
         train_x[i] = x
         train_y[i] = y # CHECK SHAPE OF LABELS
-    train_x = train_x.reshape(1*1*5*50, 33, 33, 4)
-    train_y = train_y.reshape(1*1*5*50, 33, 33, 4)
+    train_x = train_x.reshape(num_batches*2*5*50, 33, 33, 4)
+    train_y = train_y.reshape(num_batches*2*5*50, 33, 33, 4)
 
 if __name__=='__main__':
     with open('config.json') as config_file:
         config = json.load(config_file)
     root = config['processed']
+
     batch_wrapper(root)
-    
 
 '''
 
