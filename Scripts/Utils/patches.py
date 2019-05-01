@@ -97,13 +97,13 @@ def generate_train_batch(root, num_per, size, start, num_patients):
     return patches, labels
 
 def batch_wrapper(root):
-    train_x = np.zeros((5, 3*5*50, 33, 33, 4)).astype(np.float32)
-    train_y = np.zeros((5, 3*5*50, 5)).astype(np.float32)
+    train_x = np.zeros((1, 1*5*50, 33, 33, 4)).astype(np.float32)
+    train_y = np.zeros((1, 1*5*50, 5)).astype(np.float32)
     for i in range(1):
 
         patches, labels = generate_train_batch(
                         root=root, num_per=50, size=33, 
-                        start=i*3, num_patients=3)
+                        start=i*1, num_patients=1)
 
         shuffle = list(zip(patches, labels))
         np.random.shuffle(shuffle)
@@ -112,8 +112,8 @@ def batch_wrapper(root):
         y = np.array(y)
         train_x[i] = x
         train_y[i] = y # CHECK SHAPE OF LABELS
-    train_x = train_x.reshape(5*3*5*50, 33, 33, 4)
-    train_y = train_y.reshape(5*3*5*50, 33, 33, 4)
+    train_x = train_x.reshape(1*1*5*50, 33, 33, 4)
+    train_y = train_y.reshape(1*1*5*50, 33, 33, 4)
 
 if __name__=='__main__':
     with open('config.json') as config_file:
