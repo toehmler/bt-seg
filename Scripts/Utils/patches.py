@@ -69,11 +69,10 @@ def generate_class_patches(path, num, size, class_num):
         count += 1
 
 
-    data_addr = id(data)
     pat_addr = id(patient)
     del patient
     print('data ref count:')
-    print(PyObject.from_address(data_addr).refcnt)
+    print(PyObject.from_address(id(data)).refcnt)
     print('patient ref count:')
     print(PyObject.from_address(pat_addr).refcnt)
 
