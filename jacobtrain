@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 Scripts/train.py 12000 128 8 m1_8
+python3 Scripts/train.py 12000 128 8 m1_9
