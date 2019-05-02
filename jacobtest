@@ -1,4 +1,2 @@
 #!/bin/sh
-python3 Scripts/predict.py m1_7 211 65 
-python3 Scripts/predict.py m1_7 209 67 
-python3 Scripts/predict.py m1_7 208 70 
+python3 Scripts/predict.py m1_7 196 112
