@@ -3,8 +3,8 @@ import numpy as np
 import imageio
 
 
-root = '/storage/data'
-out_path = '/storage/patches/1'
+root = '/storage/s12qr5ep/data/s'
+out_path = '/storage/s12qr5ep/patches/1'
 
 
 #root = '/Users/treyoehmler/dev/tumors/data/tmp'
