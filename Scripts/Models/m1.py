@@ -94,7 +94,8 @@ def dave(input_shape):
 
     dave.add(Flatten())
     dave.add(Dense(5, activation='softmax'))
-    dave.compile(loss='categorical_crossentropy', optimizer='adam')
+    sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
+    dave.compile(loss='categorical_crossentropy', optimizer='sgd')
 
     return dave
 
