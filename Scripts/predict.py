@@ -12,7 +12,6 @@ import imageio
 from skimage import io
 import skimage
 from sklearn.metrics import classification_report
-from keras_tqdm import TQDMCallback
 from tqdm import tqdm
 import Utils.eval as Eval
 
