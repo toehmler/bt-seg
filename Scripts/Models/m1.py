@@ -51,7 +51,7 @@ def dave(input_shape):
                       input_shape=input_shape))
     dave.add(BatchNormalization())
 #    dave.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
-    dave.add(Dropout(rate=0.5))
+ #   dave.add(Dropout(rate=0.5))
 
     dave.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
@@ -65,7 +65,7 @@ def dave(input_shape):
 
     dave.add(BatchNormalization())
 #    dave.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
-    dave.add(Dropout(rate=0.5))
+#    dave.add(Dropout(rate=0.5))
 
     dave.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
@@ -79,7 +79,7 @@ def dave(input_shape):
 
     dave.add(BatchNormalization())
 #    dave.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
-    dave.add(Dropout(rate=0.25))
+ #   dave.add(Dropout(rate=0.25))
 
     dave.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
@@ -90,7 +90,7 @@ def dave(input_shape):
     dave.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
                       activation='relu'))
-    dave.add(Dropout(rate=0.25))
+ #   dave.add(Dropout(rate=0.25))
 
     dave.add(Flatten())
     dave.add(Dense(5, activation='softmax'))
