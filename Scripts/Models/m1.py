@@ -70,6 +70,8 @@ def two_path(input_shape):
     X = Activation('softmax')(X)
 
     model = Model(inputs = X_input, outputs = X)
+    sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
+    model.compile(loss='categorical_crossentropy', optimizer='sgd')
     return model
 
 if __name__ == '__main__':
