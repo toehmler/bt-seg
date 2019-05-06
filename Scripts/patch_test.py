@@ -6,7 +6,7 @@ import imageio
 root = '/storage/data'
 out_path = '/storage/patches/1'
 
-patches.save_training(root, 5, 33, out_path)
+patches.save_training(root, 10000, 33, out_path)
 
 '''
 x, y = patches.load_training(out_path, 33)
