@@ -3,7 +3,7 @@ import numpy as np
 import imageio
 
 
-root = '/storage/s12qr5ep/data/s'
+root = '/storage/s12qr5ep/data'
 out_path = '/storage/s12qr5ep/patches/1'
 
 
