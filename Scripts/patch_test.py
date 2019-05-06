@@ -15,9 +15,9 @@ out_path = '/Users/treyoehmler/dev/tumors/patches/1'
 
 x, y = patches.load_training(out_path, 33)
 print(y.shape)
-print
 
-
+for i in range(10):
+    print(y[i])
 
 
 

@@ -42,8 +42,9 @@ save_name = sys.argv[4]
 print("Generating patches...")
 
 x, y = patches.generate_training(root, num_per, 33)
+#x, y = patches.load_training(root, 33)
 
-model = m1.two_path((33, 33, 4))
+model = m1.dave((33, 33, 4))
 print(model.summary())
 
 # reformat paramters

@@ -66,8 +66,8 @@ def load_training(root, size):
         label = paths[i][-5]
         labels.append(label)
     labels = np.array(labels)
-#    y = np_utils.to_categorical(labels)
-    return np.array(patches), labels 
+    y = np_utils.to_categorical(labels)
+    return np.array(patches), y
 
 
 def save_training(root, num, size, out_path):
