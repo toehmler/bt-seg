@@ -11,7 +11,7 @@ import imageio
 #out_path = '/Users/treyoehmler/dev/tumors/patches/1'
 
 root = '/home/yb/soup/data'
-out_path = '/home/yb.soup/patches'
+out_path = '/home/ybsoup/patches'
 
 patches.save_training(root, 10000, 33, out_path)
 
