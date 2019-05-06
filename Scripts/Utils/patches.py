@@ -70,7 +70,6 @@ def load_training(root, size):
 
 def save_training(root, num, size, out_path):
     label_paths = glob(root + '/train/*_label.png')
-    print(label_paths)
     for i in tqdm(range(num)):
         class_label = 0
         while class_label < 5:
