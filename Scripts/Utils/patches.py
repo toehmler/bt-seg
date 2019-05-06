@@ -62,7 +62,10 @@ def load_training(root, size):
         patch = imageio.imread(paths[i])
         patch = skimage.img_as_float(patch)
         patch = patch.reshape(4, size, size)
-        patches.append(patch)
+        patch_input = np.zeros((size, size, 4))
+        for mod in range(4):
+            patch_input[:,:,mod] = patch[mod,:,:]
+        patches.append(patch_input)
         label = paths[i][-5]
         labels.append(label)
     labels = np.array(labels)

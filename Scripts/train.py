@@ -24,12 +24,13 @@ Usage: train.py [num_per] [batch_size] [epochs] [name]
 ================================================== 
 '''
 
-with open('config.json') as config_file:
-    config = json.load(config_file)
+#with open('config.json') as config_file:
+#    config = json.load(config_file)
 
-root = config['processed']
+#root = config['processed']
 
 #root = '/storage/patches/1'
+root = '/home/yb/soup/patches'
 
 if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
@@ -41,8 +42,8 @@ save_name = sys.argv[4]
 
 print("Generating patches...")
 
-x, y = patches.generate_training(root, num_per, 33)
-#x, y = patches.load_training(root, 33)
+#x, y = patches.generate_training(root, num_per, 33)
+x, y = patches.load_training(root, 33)
 
 model = m1.compile()
 print(model.summary())
