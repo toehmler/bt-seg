@@ -7,7 +7,7 @@ import imageio
 from tqdm import tqdm
 from glob import glob
 import skimage
-from keras.utils import np_utils
+#from keras.utils import np_utils
 import json
 
 def find_bounds(center, size):
@@ -51,9 +51,7 @@ def generate_training(root, num, size):
             patches.append(patch)
             labels.append(class_label)
             class_label += 1
-    labels = np.array(labels)
-    y = np_utils.to_categorical(labels)
-    return np.array(patches), y
+    return np.array(patches), np.array(labels )
 
 def load_training(root, size):
     patches, labels = [], []
@@ -66,8 +64,8 @@ def load_training(root, size):
         label = paths[i][-5]
         labels.append(label)
     labels = np.array(labels)
-    y = np_utils.to_categorical(labels)
-    return np.array(patches), y
+#    y = np_utils.to_categorical(labels)
+    return np.array(patches), labels 
 
 
 def save_training(root, num, size, out_path):
