@@ -18,15 +18,15 @@ def compile():
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', 
-                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
-                      activation='relu'))
+                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01)))
     single.add(BatchNormalization())
+    single.add(Activation('relu'))
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', 
-                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
-                      activation='relu'))
+                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01)))
     single.add(BatchNormalization())
+    single.add(Activation('relu'))
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
@@ -133,8 +133,8 @@ def two_path(input_shape):
     return model
 
 if __name__ == '__main__':
-#    model = two_path((33, 33, 4))
-    model = dave((33, 33, 4))
+    model = two_path((33, 33, 4))
+#    model = dave((33, 33, 4))
     print(model.summary())
 
 
