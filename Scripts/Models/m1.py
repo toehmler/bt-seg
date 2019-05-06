@@ -133,8 +133,9 @@ def two_path(input_shape):
     return model
 
 if __name__ == '__main__':
-    model = two_path((33, 33, 4))
+#    model = two_path((33, 33, 4))
 #    model = dave((33, 33, 4))
+    model = compile()
     print(model.summary())
 
 
