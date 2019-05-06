@@ -24,10 +24,12 @@ Usage: train.py [num_per] [batch_size] [epochs] [name]
 ================================================== 
 '''
 
-with open('config.json') as config_file:
-    config = json.load(config_file)
+#with open('config.json') as config_file:
+#    config = json.load(config_file)
 
-root = config['processed']
+#root = config['processed']
+
+root = '/storage/patches/1'
 
 if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
@@ -41,7 +43,7 @@ print("Generating patches...")
 
 x, y = patches.generate_training(root, num_per, 33)
 
-model = m1.compile()
+model = m1.two_path()
 print(model.summary())
 
 # reformat paramters
@@ -49,7 +51,12 @@ es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
 
 checkpointer = ModelCheckpoint(filepath="Outputs/Models/Trained/"+save_name+"{epoch:02d}-{val_loss:.2f}.hdf5", verbose=1)
 
-history = model.fit(x, y, batch_size=bs, epochs=training_epochs, validation_split=0.1, verbose=1, callbacks=[checkpointer])
+history = model.fit(x, y, 
+                    batch_size=bs, 
+                    epochs=training_epochs, 
+                    validation_split=0.1, 
+                    verbose=1, 
+                    callbacks=[checkpointer])
 
 model.save('Outputs/Models/Trained/' + save_name + '.h5')
 
