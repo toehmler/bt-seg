@@ -67,6 +67,7 @@ def two_path(input_shape):
 
     X = Concatenate()([X2,X])
     X = Conv2D(5,(21,21),strides=(1,1),padding='valid')(X)
+    X = Flatten()(X)
     X = Activation('softmax')(X)
 
     model = Model(inputs = X_input, outputs = X)
@@ -76,6 +77,7 @@ def two_path(input_shape):
 
 if __name__ == '__main__':
     model = two_path((33, 33, 4))
+    #model = compile()
     print(model.summary())
 
 
