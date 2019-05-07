@@ -88,7 +88,6 @@ if __name__ == '__main__':
     root = config['processed']
     show_slice_dice(root, 211, 66, root)
 
-    '''
     if len(sys.argv) == 1:
         print('[model name] [patient_no] [slice_no]')
 
@@ -105,7 +104,6 @@ if __name__ == '__main__':
     prediction = np.pad(prediction, (16, 16), mode='edge')
     generate_prediction_img(model_name, pat_no, slice_no, prediction) 
     show_slice_dice(root, pat_no, slice_no, prediction)
-    '''
 
 '''
 slice_img = io.imread(root+'/test/pat_'+str(patient_no)+'_'+str(slice_no)+'_strip.png')
