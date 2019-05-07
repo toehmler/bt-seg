@@ -36,9 +36,9 @@ if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
 
 num_per = int(sys.argv[1])
-#bs = int(sys.argv[2])
-#training_epochs = int(sys.argv[3])
-#save_name = sys.argv[4]
+bs = int(sys.argv[2])
+training_epochs = int(sys.argv[3])
+save_name = sys.argv[4]
 
 print("Generating patches...")
 
@@ -47,8 +47,8 @@ x, y = patches.generate_training(root, num_per, 33)
 
 print(x[1])
 print(y[1])
-#model = m1.compile()
-#print(model.summary())
+model = m1.compile()
+print(model.summary())
 
 # reformat paramters
 #es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
@@ -59,13 +59,13 @@ print(y[1])
 
 
 # -----------
-#history = model.fit(x, y, 
-#                    batch_size=bs, 
-#                    epochs=training_epochs, 
-#                    validation_split=0.1, 
-#                    verbose=1)
+history = model.fit(x, y, 
+                    batch_size=bs, 
+                    epochs=training_epochs, 
+                    validation_split=0.1, 
+                    verbose=1)
 
-#model.save('Outputs/Models/Trained/' + save_name + '.h5')
+model.save('Outputs/Models/Trained/' + save_name + '.h5')
 # -----------
 
 
