@@ -36,30 +36,40 @@ if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
 
 num_per = int(sys.argv[1])
-bs = int(sys.argv[2])
-training_epochs = int(sys.argv[3])
-save_name = sys.argv[4]
+#bs = int(sys.argv[2])
+#training_epochs = int(sys.argv[3])
+#save_name = sys.argv[4]
 
 print("Generating patches...")
 
 x, y = patches.generate_training(root, num_per, 33)
 #x, y = patches.load_training(root, 33)
 
-model = m1.compile()
-print(model.summary())
+print(x[1])
+print(y[1])
+#model = m1.compile()
+#print(model.summary())
 
 # reformat paramters
 #es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
 
 #checkpointer = ModelCheckpoint(filepath="Outputs/Models/Trained/"+save_name+"{epoch:02d}-{val_loss:.2f}.hdf5", verbose=1)
 
-history = model.fit(x, y, 
-                    batch_size=bs, 
-                    epochs=training_epochs, 
-                    validation_split=0.1, 
-                    verbose=1)
 
-model.save('Outputs/Models/Trained/' + save_name + '.h5')
+
+
+# -----------
+#history = model.fit(x, y, 
+#                    batch_size=bs, 
+#                    epochs=training_epochs, 
+#                    validation_split=0.1, 
+#                    verbose=1)
+
+#model.save('Outputs/Models/Trained/' + save_name + '.h5')
+# -----------
+
+
+
 
 #with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
 #    json.dump(history.history, f)
