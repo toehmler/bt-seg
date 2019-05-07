@@ -95,7 +95,7 @@ if __name__ == '__main__':
     slice_no = sys.argv[3]
 
     patches = generate_test_patches(root, pat_no, slice_no)
-    model = load('Outputs/Models/Trained/{}.h5'.format(model_name))
+    model = load_model('Outputs/Models/Trained/{}.h5'.format(model_name))
     prediction = model.predict(patches, verbose=1)
     np.save('Outputs/Predictions/{}_{}_{}.npy'
             .format(model_name, pat_no, slice_no))
