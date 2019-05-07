@@ -13,7 +13,7 @@ def compile():
                       strides=(1,1), padding='valid',
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01), 
                       input_shape=(33,33,4)))
-    single.add(BatchNormlization())
+    single.add(BatchNormalization())
     single.add(Activation('relu'))
     single.add(Dropout(0.5))
 
