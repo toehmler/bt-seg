@@ -1,5 +1,5 @@
 #!/bin/sh
-python3 Scripts/predict.py m1_001 211 65 
-python3 Scripts/predict.py m1_001 200 70  
-python3 Scripts/predict.py m1_001 198 65 
+python3 Scripts/predict.py jacob 211 65 
+python3 Scripts/predict.py jacob 200 70  
+python3 Scripts/predict.py jacob 198 65 
 
