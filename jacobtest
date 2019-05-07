@@ -1,3 +1,3 @@
 #!/bin/sh
-python3 Scripts/predict.py trey 211 60
+python3 Scripts/predict.py trey_2 211 60
 
