@@ -86,7 +86,6 @@ if __name__ == '__main__':
         config = json.load(config_file)
 
     root = config['processed']
-    show_slice_dice(root, 211, 66, root)
 
     if len(sys.argv) == 1:
         print('[model name] [patient_no] [slice_no]')
