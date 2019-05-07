@@ -35,10 +35,10 @@ Usage:  predict.py [model_name] [patient_no] [slice_no]
 '''
 
 def load_test_slice(root, pat_no, slice_no):
-    slice = io.imread('{}/test/pat_{}_{}_strip.png'
+    slice_img = io.imread('{}/test/pat_{}_{}_strip.png'
                       .format(root, pat_no, slice_no))
-    slice = skimage.img_as_float(slice)
-    slice = np.array(slice)
+    slice_img = skimage.img_as_float(slice_img)
+    slice = np.array(slice_img)
     slice = slice.reshape(4, 240, 240)
     return slice
 

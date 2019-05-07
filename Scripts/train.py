@@ -49,21 +49,20 @@ model = m1.compile()
 print(model.summary())
 
 # reformat paramters
-es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
+#es = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
 
-checkpointer = ModelCheckpoint(filepath="Outputs/Models/Trained/"+save_name+"{epoch:02d}-{val_loss:.2f}.hdf5", verbose=1)
+#checkpointer = ModelCheckpoint(filepath="Outputs/Models/Trained/"+save_name+"{epoch:02d}-{val_loss:.2f}.hdf5", verbose=1)
 
 history = model.fit(x, y, 
                     batch_size=bs, 
                     epochs=training_epochs, 
                     validation_split=0.1, 
-                    verbose=1, 
-                    callbacks=[checkpointer])
+                    verbose=1)
 
 model.save('Outputs/Models/Trained/' + save_name + '.h5')
 
-with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
-    json.dump(history.history, f)
+#with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
+#    json.dump(history.history, f)
 
 
 
