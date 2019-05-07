@@ -1,4 +1,4 @@
 #!/bin/sh
-python3 Scripts/train.py 10000 128 6 jacob 
+python3 Scripts/train.py 10000 128 6 tre
 
 
