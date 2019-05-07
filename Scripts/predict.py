@@ -98,7 +98,7 @@ if __name__ == '__main__':
     model = load_model('Outputs/Models/Trained/{}.h5'.format(model_name))
     prediction = model.predict(patches, verbose=1)
     np.save('Outputs/Predictions/{}_{}_{}.npy'
-            .format(model_name, pat_no, slice_no))
+            .format(model_name, pat_no, slice_no), prediction)
     prediction = prediction.reshape(208, 208)
     prediction = np.pad(prediction, (16, 16), mode='edge')
     generate_prediction_img(model_name, pat_no, slice_no, prediction) 
