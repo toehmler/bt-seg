@@ -1,5 +1,3 @@
-# @author: Trey Oehmler
-
 from glob import glob
 import numpy as np
 from Utils import patches
@@ -14,12 +12,10 @@ import json
 '''
 ==================== train.py ==================== 
 Trains a model on processed data and save .h5 file
-
 Args:   (1) number of patches per class to train on
         (2) batch size
         (3) number of epochs to train for
         (4) name to save model under
-
 Usage: train.py [num_per] [batch_size] [epochs] [name]
 ================================================== 
 '''
@@ -28,9 +24,6 @@ with open('config.json') as config_file:
     config = json.load(config_file)
 
 root = config['processed']
-
-#root = '/storage/patches/1'
-#root = '/home/yb/soup/patches'
 
 if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
@@ -43,10 +36,7 @@ save_name = sys.argv[4]
 print("Generating patches...")
 
 x, y = patches.generate_training(root, num_per, 33)
-#x, y = patches.load_training(root, 33)
 
-print(x[1])
-print(y[1])
 model = m1.compile()
 print(model.summary())
 
@@ -61,6 +51,9 @@ model.save('Outputs/Models/Trained/' + save_name + '.h5')
 
 with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
     json.dump(history.history, f)
+
+
+
 
 
 '''

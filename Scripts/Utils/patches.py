@@ -23,6 +23,7 @@ def find_bounds(center, size):
     bounds = np.array([top, bottom, left, right], dtype = int)
     return bounds
 
+
 def generate_training(root, num, size):
     label_paths = glob(root + '/train/*_label.png')
     patches = []
@@ -51,54 +52,9 @@ def generate_training(root, num, size):
             patches.append(patch)
             labels.append(class_label)
             class_label += 1
-    label = np.array(labels)
-    y = np_utils.to_categorical(labels)
-    return np.array(patches), y
-
-def load_training(root, size):
-    patches, labels = [], []
-    paths = glob(root + '/*.png')
-    for i in tqdm(range(len(paths))):
-        patch = imageio.imread(paths[i])
-        patch = skimage.img_as_float(patch)
-        patch = patch.reshape(4, size, size)
-        patch_input = np.zeros((size, size, 4))
-        for mod in range(4):
-            patch_input[:,:,mod] = patch[mod,:,:]
-        patches.append(patch_input)
-        label = paths[i][-5]
-        labels.append(label)
     labels = np.array(labels)
     y = np_utils.to_categorical(labels)
     return np.array(patches), y
-
-
-def save_training(root, num, size, out_path):
-    label_paths = glob(root + '/train/*_label.png')
-    for i in tqdm(range(num)):
-        class_label = 0
-        while class_label < 5:
-            path = random.choice(label_paths)
-            label = imageio.imread(path)
-            if len(np.argwhere(label == class_label)) < 10:
-                continue
-            strip_path = path.replace('_label.png', '_strip.png')
-            strip = imageio.imread(strip_path)
-            strip = strip.reshape(4, 240, 240)
-            center = random.choice(np.argwhere(label == class_label))
-            bounds = find_bounds(center, size)
-            sample = strip[:,bounds[0]:bounds[1], bounds[2]:bounds[3]]
-            if sample.shape != (4, size, size):
-                continue
-            if len(np.argwhere(sample == 0)) > (size * size):
-                continue
-            sample = sample.reshape(4 * size, size)
-            io.imsave(out_path + '/patch_{}_{}.png'
-                      .format(i, class_label), sample)
-            class_label += 1
-
-
-
 
 '''
 if __name__ == "__main__":
