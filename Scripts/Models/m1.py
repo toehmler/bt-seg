@@ -88,8 +88,8 @@ def jeb():
     single.add(Flatten())
     single.add(Dense(5, activation='softmax'))
 
-#    sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
-    single.compile(loss='categorical_crossentropy', optimizer='adam')
+    sgd = SGD(lr=0.0005, decay=0.01, momentum=0.9)
+    single.compile(loss='categorical_crossentropy', optimizer='sgd')
 
     return single
 
