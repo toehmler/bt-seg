@@ -56,17 +56,42 @@ def generate_training(root, num, size):
     y = np_utils.to_categorical(labels)
     return np.array(patches), y
 
-'''
-if __name__ == "__main__":
-    with open ('config.json') as config_file:
-        config = json.load(config_file)
-        root = config['processed']
-        x, y = generate_training(root, 5, 33)
-        print(x.shape)
-        print(y.shape)
+def load_training(root, num):
+    paths = glob(root + '/*.png')
+    patches = []
+    labels = []
+    for i in tqdm(range(num)):
+        path = paths[i]
+        label = float(path[-5])
+        patch_img = imageio.imread(path)
+        patch_img = skimage.img_as_float(patch_img)
+        size = patch_img.shape[1]
+        patch_img = patch_img.reshape(4, size, size)
+        patch = np.zeros((size, size, 4)) 
+        for mod in range(4):
+            patch[:,:,mod] = patch_img[mod,:,:]
+        patches.append(patch)
+        labels.append(label)
+    labels = np.array(labels)
+    y = np_utils.to_categorical(labels)
+    return np.array(patches), y
+       
+if __name__ == '__main__':
+    root = '/Users/treyoehmler/dev/tumors/patches/1/1';
+    x, y = load_training(root, 10)
+    for label in y:
+        print(label)
+    for patch in x:
+        print(patch)
+
+    new = '/Users/treyoehmler/dev/tumors/data/tmp';
+    a, b = generate_training(new, 2, 33)
+    for label in b:
+        print(label)
+    for patch in a:
+        print(patch)
 
 
-'''
     
 
 

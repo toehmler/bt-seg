@@ -20,10 +20,13 @@ Usage: train.py [num_per] [batch_size] [epochs] [name]
 ================================================== 
 '''
 
-with open('config.json') as config_file:
-    config = json.load(config_file)
+#with open('config.json') as config_file:
+#    config = json.load(config_file)
 
-root = config['processed']
+#root = config['processed']
+
+
+# TODO: define path to patches to load
 
 if len(sys.argv) == 1:
     print('num_per bs epochs save_name')
