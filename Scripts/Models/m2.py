@@ -1,8 +1,8 @@
-
-
-
-
-
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten, BatchNormalization
+from keras.layers import Conv2D, MaxPooling2D
+from keras.optimizers import SGD
+from keras.regularizers import l1_l2
 
 def compile():
     single = Sequential()
@@ -30,6 +30,18 @@ def compile():
     single.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
                       activation='relu'))
+    single.add(BatchNormalization())
+    single.add(Dropout(0.25))
+
+    single.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
+                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
+                      activation='relu'))
+    single.add(Dropout(0.25))
+
+    single.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
+                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
+                      activation='relu'))
+    single.add(BatchNormalization())
     single.add(Dropout(0.25))
 
     single.add(Flatten())
@@ -39,3 +51,5 @@ def compile():
     single.compile(loss='categorical_crossentropy', optimizer='sgd')
 
     return single
+
+

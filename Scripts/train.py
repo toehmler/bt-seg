@@ -40,7 +40,7 @@ x, y = patches.generate_training(root, num_per, 33)
 
 print('using basic model')
 
-model = m1.compile()
+model = m1.jeb()
 print(model.summary())
 
 # reformat paramters
