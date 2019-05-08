@@ -1,4 +1,0 @@
-#!/bin/sh
-python3 Scripts/train.py 10000 128 6 trey_4
-
-
