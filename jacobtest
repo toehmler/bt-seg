@@ -1,8 +1,4 @@
 #!/bin/sh
-<<<<<<< HEAD
-python3 Scripts/predict.py jeb_2 211 60
-=======
-python3 Scripts/predict.py jeb_1 201 60 
-python3 Scripts/predict.py jeb_1 201 70 
->>>>>>> c0ca5f3ba9d95e7521650f72183fbff5424d29ad
+python3 Scripts/predict.py jeb_4 211 60
+
 
