@@ -1,3 +1,8 @@
 #!/bin/sh
+<<<<<<< HEAD
 python3 Scripts/predict.py jeb_5 211 60
+=======
+python3 Scripts/predict.py jeb_4 211 60
+
+>>>>>>> c378025cf83c3ce4126c290f5d338287b6377bfd
 
