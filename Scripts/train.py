@@ -37,6 +37,9 @@ print("Generating patches...")
 
 x, y = patches.generate_training(root, num_per, 33)
 
+
+print('using basic model')
+
 model = m1.compile()
 print(model.summary())
 
