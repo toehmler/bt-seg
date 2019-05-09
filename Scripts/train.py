@@ -39,7 +39,7 @@ num_per = int(sys.argv[1])
 bs = int(sys.argv[2])
 training_epochs = int(sys.argv[3])
 save_name = sys.argv[4]
-num_iters = sys.argv[5]
+num_iters = int(sys.argv[5])
 
 for i in range(num_iters):
     model = load_model('Outputs/Models/Trained/{}.h5'.format(save_name))
