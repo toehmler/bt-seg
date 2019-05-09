@@ -89,7 +89,7 @@ if __name__ == "__main__":
         config = json.load(config_file)
     
     root = config['processed']
-    pred = np.load('m1_7_211_60.npy')
+    pred = np.load('trey_4_211_60.npy')
     pred = pred.reshape(208,208)
     pred = np.pad(pred, (16, 16), mode='edge')
     label = imageio.imread('/Users/treyoehmler/dev/tumors/data/tmp/test/pat_211_60_label.png'.format(root))
