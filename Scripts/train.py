@@ -26,6 +26,8 @@ with open('config.json') as config_file:
 root = config['processed']
 
 #root = '/home/yb/soup/patches'
+root = '/storage/s12qr5ep/patches/1'
+
 
 
 if len(sys.argv) == 1:
@@ -38,8 +40,8 @@ save_name = sys.argv[4]
 
 print("Generating patches...")
 
-x, y = patches.generate_training(root, num_per, 33)
-#x, y = patches.load_training(root, 50000)
+#x, y = patches.generate_training(root, num_per, 33)
+x, y = patches.load_training(root, 2000)
 
 
 print('using basic model')
