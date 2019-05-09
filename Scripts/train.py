@@ -41,7 +41,7 @@ save_name = sys.argv[4]
 print("Generating patches...")
 
 #x, y = patches.generate_training(root, num_per, 33)
-x, y = patches.load_training(root, 2000)
+x, y = patches.load_training(root, 10000)
 
 
 print('using basic model')
