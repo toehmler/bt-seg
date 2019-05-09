@@ -4,7 +4,7 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.optimizers import SGD
 from keras.regularizers import l1_l2
 
-def compile():
+def compile(name):
     single = Sequential()
 
     single.add(Conv2D(64, (7,7), 
@@ -38,7 +38,8 @@ def compile():
     sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
     single.compile(loss='categorical_crossentropy', optimizer='sgd')
 
-    return single
+    single.save('{}.h5'.format(name))
+
 
 def jeb():
     single = Sequential()
@@ -94,8 +95,8 @@ def jeb():
     return single
 
 if __name__ == '__main__':
-    m = jeb()
-    print(m.summary())
+    model = compile('frank')
+    print(model.summary())
 
 
 

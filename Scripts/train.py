@@ -8,6 +8,8 @@ import random
 import sys
 import configparser
 import json
+from keras.models import load_model
+
 
 '''
 ==================== train.py ==================== 
@@ -26,26 +28,37 @@ with open('config.json') as config_file:
 root = config['processed']
 
 #root = '/home/yb/soup/patches'
-root = '/storage/s12qr5ep/patches/1'
+#root = '/storage/s12qr5ep/patches/1'
 
 
 
 if len(sys.argv) == 1:
-    print('num_per bs epochs save_name')
+    print('num_per bs epochs model_name')
 
 num_per = int(sys.argv[1])
 bs = int(sys.argv[2])
 training_epochs = int(sys.argv[3])
 save_name = sys.argv[4]
+num_iters = sys.argv[5]
 
-print("Generating patches...")
+for i in range(num_iters):
+    model = load_model('Outputs/Models/Trained/{}.h5'.format(save_name))
+    x, y = patches.generate_training(root, num_per, 33)
+    model.fit(x, y, batch_size=bs, 
+              epochs=training_epochs,
+              validation_split=0.1,
+              verbose=1)
+    model.save('Outputs/Models/Trained/{}.h5'.format(save_name))
 
+
+'''
 #x, y = patches.generate_training(root, num_per, 33)
 x, y = patches.load_training(root, 10000)
 
 
 print('using basic model')
 
+model = load_model
 model = m1.compile()
 print(model.summary())
 
@@ -64,6 +77,7 @@ with open('Outputs/Models/Trained/' + save_name + '.json', 'w') as f:
 
 
 
+'''
 
 '''
 

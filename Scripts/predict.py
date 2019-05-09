@@ -35,7 +35,7 @@ Usage:  predict.py [model_name] [patient_no] [slice_no]
 '''
 
 def load_test_slice(root, pat_no, slice_no):
-    slice_img = io.imread('{}/test/pat_{}_{}_strip.png'
+    slice_img = imageio.imread('{}/test/pat_{}_{}_strip.png'
                       .format(root, pat_no, slice_no))
     slice_img = skimage.img_as_float(slice_img)
     slice = np.array(slice_img)
@@ -43,7 +43,7 @@ def load_test_slice(root, pat_no, slice_no):
     return slice
 
 def load_test_label(root, pat_no, slice_no):
-    label = io.imread('{}/test/pat_{}_{}_label.png'
+    label = imageio.imread('{}/test/pat_{}_{}_label.png'
                       .format(root, pat_no, slice_no))
     label = skimage.img_as_float(label)
     label = np.array(label)
@@ -77,7 +77,8 @@ def generate_prediction_img(model_name, pat_no, slice_no, prediction):
                 bbox_inches='tight')
 
 def show_slice_dice(root, pat_no, slice_no, prediction):
-    label = load_test_label(root, pat_no, slice_no)
+    label = imageio.imread('{}/test/pat_{}_{}_label.png'
+                      .format(root, pat_no, slice_no))
     Eval.slice_dice(prediction, label)
 
 
