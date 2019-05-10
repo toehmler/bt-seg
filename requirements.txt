@@ -1,8 +1,11 @@
-imageio
+0mageio
 glob3
 scikit-image
 Pillow
 tqdm
 keras
 tensorflow
+simpleitk
+nipype
+scikit-learn
 

@@ -77,12 +77,14 @@ def load_training(root, num):
     return np.array(patches), y
        
 if __name__ == '__main__':
+    '''
     root = '/Users/treyoehmler/dev/tumors/patches/1/1';
     x, y = load_training(root, 10)
     for label in y:
         print(label)
     for patch in x:
         print(patch)
+    '''
 
     new = '/Users/treyoehmler/dev/tumors/data/tmp';
     a, b = generate_training(new, 2, 33)
