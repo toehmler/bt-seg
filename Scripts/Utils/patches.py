@@ -56,12 +56,12 @@ def generate_training(root, num, size):
     y = np_utils.to_categorical(labels)
     return np.array(patches), y
 
-def load_training(root, num):
+def load_training(root, start, num):
     paths = glob(root + '/*.png')
     patches = []
     labels = []
     for i in tqdm(range(num)):
-        path = paths[i]
+        path = paths[start+i]
         label = float(path[-5])
         patch_img = imageio.imread(path)
         patch_img = skimage.img_as_float(patch_img)

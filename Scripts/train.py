@@ -43,7 +43,8 @@ num_iters = int(sys.argv[5])
 
 for i in range(num_iters):
     model = load_model('Outputs/Models/Trained/{}.h5'.format(save_name))
-    x, y = patches.generate_training(root, num_per, 33)
+    #x, y = patches.generate_training(root, num_per, 33)
+    x, y = patches.load_training(root, num_per, i)
     model.fit(x, y, batch_size=bs, 
               epochs=training_epochs,
               validation_split=0.1,
