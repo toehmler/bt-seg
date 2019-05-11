@@ -39,7 +39,7 @@ def compile():
     single.add(Flatten())
     single.add(Dense(5, activation='softmax'))
 
-    sgd = SGD(lr=0.01, decay=0.01, momentum=0.9)
+    sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
     single.compile(loss='categorical_crossentropy', optimizer='sgd')
 
     return single
