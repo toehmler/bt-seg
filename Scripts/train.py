@@ -48,8 +48,7 @@ for i in range(num_iters):
     model.fit(x, y, batch_size=bs, 
               epochs=training_epochs,
               validation_split=0.1,
-              verbose=1,
-              metrics=['accuracy'])
+              verbose=1)
     model.save('Outputs/Models/Trained/{}.h5'.format(save_name))
 
 
