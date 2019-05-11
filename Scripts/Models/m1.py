@@ -15,6 +15,13 @@ def compile():
 
     single.add(BatchNormalization(axis=-1))
     single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
+    #single.add(Dropout(0.5))
+
+    single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', 
+                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
+                      activation='relu'))
+    single.add(BatchNormalization(axis=-1))
+    #single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
     single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', 
@@ -22,14 +29,7 @@ def compile():
                       activation='relu'))
     single.add(BatchNormalization(axis=-1))
     single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
-    single.add(Dropout(0.5))
-
-    single.add(Conv2D(128, (5,5), strides=(1,1), padding='valid', 
-                      kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
-                      activation='relu'))
-    single.add(BatchNormalization(axis=-1))
-    single.add(MaxPooling2D(pool_size=(2,2), strides=(1,1)))
-    single.add(Dropout(0.5))
+    #single.add(Dropout(0.5))
 
     single.add(Conv2D(128, (3,3), strides=(1,1), padding='valid', 
                       kernel_regularizer=l1_l2(l1=0.01, l2=0.01),
