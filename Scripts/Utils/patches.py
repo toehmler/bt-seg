@@ -54,7 +54,7 @@ def generate_training(root, num, size):
             class_label += 1
     labels = np.array(labels)
     y = np_utils.to_categorical(labels)
-    return np.array(patches), labels 
+    return np.array(patches), y 
 
 def load_training(root, start, num):
     paths = glob(root + '/*.png')
