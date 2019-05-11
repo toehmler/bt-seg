@@ -44,7 +44,12 @@ num_iters = int(sys.argv[5])
 for i in range(num_iters):
 #    model = load_model('Outputs/Models/Trained/{}.h5'.format(save_name))
     model = m1.compile()
-    x, y = patches.generate_training(root, num_per, 33)
+    training_patches = patches.generate_training(root, num_per, 33)
+    shuffle = list(zip(training_patches))
+    np.random.shuffle(shuffle)
+    x_train, y_train = zip(*shuffle)
+    x = np.array(x_train)
+    y = np.array(y_train)
     #x, y = patches.load_training(root, num_per, i)
     model.fit(x, y, batch_size=bs, 
               epochs=training_epochs,
