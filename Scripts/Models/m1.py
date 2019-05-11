@@ -33,7 +33,7 @@ def compile(name):
     single.add(Flatten())
     single.add(Dense(5, activation='softmax'))
 
-    sgd = SGD(lr=0.01, decay=0.01, momentum=0.9)
+    sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
     single.compile(loss='categorical_crossentropy', optimizer='sgd')
 
     single.save('{}.h5'.format(name))
@@ -93,8 +93,7 @@ def jeb():
     return single
 
 if __name__ == '__main__':
-#    model = load_model('/Users/treyoehmler/dev/tumors/seg/Outputs/Models/Trained/m1_7.h5')
-#    print(model.summary())
+    model = load_model('/Users/treyoehmler/dev/tumors/seg/Outputs/Models/Trained/m1_7.h5')
     compile('bill')
 
 
