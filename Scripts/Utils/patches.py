@@ -54,7 +54,7 @@ def generate_training(root, num, size):
             class_label += 1
     labels = np.array(labels)
     y = np_utils.to_categorical(labels)
-    return np.array(patches), y
+    return np.array(patches), labels 
 
 def load_training(root, start, num):
     paths = glob(root + '/*.png')
@@ -73,18 +73,19 @@ def load_training(root, start, num):
         patches.append(patch)
         labels.append(label)
     labels = np.array(labels)
-    y = np_utils.to_categorical(labels)
-    return np.array(patches), y
+#    y = np_utils.to_categorical(labels)
+    return np.array(patches), labels 
        
 if __name__ == '__main__':
     '''
     root = '/Users/treyoehmler/dev/tumors/patches/1/1';
-    x, y = load_training(root, 10)
+    x, y = load_training(root, 2, 10)
     for label in y:
         print(label)
     for patch in x:
         print(patch)
-    '''
+        '''
+
 
     new = '/Users/treyoehmler/dev/tumors/data/tmp';
     a, b = generate_training(new, 2, 33)
@@ -94,12 +95,7 @@ if __name__ == '__main__':
         print(patch)
 
 
-    
-
-
-
 '''
-
 def generate_train_batch(start, num_patients, num_per, root, size):
 
 
