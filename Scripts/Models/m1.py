@@ -5,7 +5,7 @@ from keras.optimizers import SGD
 from keras.regularizers import l1_l2
 from keras.models import load_model
 
-def compile(name):
+def compile():
     single = Sequential()
 
     single.add(Conv2D(64, (7,7), 
@@ -39,8 +39,7 @@ def compile(name):
     sgd = SGD(lr=0.001, decay=0.01, momentum=0.9)
     single.compile(loss='categorical_crossentropy', optimizer='sgd')
 
-    single.save('{}.h5'.format(name))
-
+    return single
 
 def jeb():
     single = Sequential()
