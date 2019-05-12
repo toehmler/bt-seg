@@ -1,7 +1,4 @@
 #!/bin/sh
-python3 Scripts/predict.py lucy 190 70
-python3 Scripts/predict.py lucy 191 70 
-python3 Scripts/predict.py lucy 195 70 
-python3 Scripts/predict.py lucy 200 65 
-python3 Scripts/predict.py lucy 215 70
+python3 Scripts/predict.py ivy 191 70 
+python3 Scripts/predict.py ivy 215 70
 
