@@ -32,8 +32,8 @@ def load_scans(path):
     output shape: (5, 155, 240, 240)
     '''
     flair = glob(path + '/*Flair*/*.mha')
-    t1 = glob(path + '/*T1.*/*.mha')
-    t1c = glob(path + '/*T1c.*/*.mha')
+    t1 = glob(path + '/*T1.*/*_n4.mha')
+    t1c = glob(path + '/*T1c.*/*_n4.mha')
     t2 = glob(path + '/*T2*/*.mha')
     gt = glob(path + '/*OT*/*.mha')
 
