@@ -8,10 +8,6 @@ import os
 from skimage import io
 from nipype.interfaces.ants.segmentation import N4BiasFieldCorrection
 from tqdm import tqdm 
-'''
-==================================================
-NOT USING
---------------------------------------------------
 
 def apply_n4(path):
     t1 = glob(path + '/*T1.*/*.mha')
@@ -30,8 +26,6 @@ def n4_bfc(input_path):
     n4.inputs.n_iterations = [50, 50, 30, 20]
     n4.inputs.output_image = input_path.replace('.mha', '_n4.mha')
     n4.run()
-==================================================
-'''
 
 def load_scans(path):
     '''
