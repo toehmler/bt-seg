@@ -3,6 +3,7 @@ from Utils import patient
 import configparser
 import os
 import json
+from tqdm import tqdm
 '''
 ==================== n4.py ====================  
 Applies n4 bias field correction to t1 and t1c
@@ -25,9 +26,8 @@ root = config['brats']
 paths = os.listdir(root)
 paths = [os.path.join(root, name) for name in paths if 'pat' in name.lower()]
 
-for patient_no, path in enumerate(paths):
-    patient.apply_n4(path)
-    break
+for i in tqdm(range(len(paths))):
+    patient.apply_n4(paths[i])
 
 
 
