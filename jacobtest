@@ -1,4 +1,4 @@
 #!/bin/sh
-python3 Scripts/predict.py bird 191 70 
-python3 Scripts/predict.py bird 215 70
+python3 Scripts/predict.py floop 191 70 
+python3 Scripts/predict.py floop 215 70
 
