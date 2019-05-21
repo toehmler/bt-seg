@@ -53,6 +53,12 @@ for i in range(num_iters):
     x = np.array(x_train)
     y = np.array(y_train)
 
+    two_path_y = np.zeros((num_per*5,1,1,5))
+    for j in range(num_per*5):
+        two_path_y[j,:,:,y[j]] = 1
+
+
+
     print(model.summary())
     #x, y = patches.load_training(root, num_per, i)
     model.fit(x, y, batch_size=bs, 

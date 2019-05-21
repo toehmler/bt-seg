@@ -25,6 +25,7 @@ def find_bounds(center, size):
 
 
 def generate_training(root, num, size):
+
     label_paths = glob(root + '/train/*_label.png')
     patches = []
     labels = []
@@ -52,9 +53,11 @@ def generate_training(root, num, size):
             patches.append(patch)
             labels.append(class_label)
             class_label += 1
-    labels = np.array(labels)
-    y = np_utils.to_categorical(labels)
-    return np.array(patches), y 
+    return np.array(patches), np.array(labels)
+#    labels = np.array(labels)
+#    y = np_utils.to_categorical(labels)
+#    return np.array(patches), y 
+        
 
 def load_training(root, start, num):
     paths = glob(root + '/*.png')
