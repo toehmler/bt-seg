@@ -9,7 +9,7 @@ import sys
 import configparser
 import json
 from keras.models import load_model
-
+from Models import 2path
 
 '''
 ==================== train.py ==================== 
@@ -43,7 +43,9 @@ num_iters = int(sys.argv[5])
 
 for i in range(num_iters):
 #    model = load_model('Outputs/Models/Trained/{}.h5'.format(save_name))
-    model = m1.compile()
+
+#    model = m1.compile()
+    model = 2path.compile((33,33,4))
     patches, labels = patches.generate_training(root, num_per, 33)
     shuffle = list(zip(patches, labels))
     np.random.shuffle(shuffle)
