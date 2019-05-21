@@ -52,12 +52,13 @@ for i in range(num_iters):
     x_train, y_train = zip(*shuffle)
     x = np.array(x_train)
     y = np.array(y_train)
+
+    print(model.summary())
     #x, y = patches.load_training(root, num_per, i)
     model.fit(x, y, batch_size=bs, 
               epochs=training_epochs,
               validation_split=0.1,
               verbose=1)
-    print(model.summary())
     model.save('Outputs/Models/Trained/{}.h5'.format(save_name))
 
 
