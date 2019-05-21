@@ -61,7 +61,7 @@ for i in range(num_iters):
 
     print(model.summary())
     #x, y = patches.load_training(root, num_per, i)
-    model.fit(x, y, batch_size=bs, 
+    model.fit(x, two_path_y, batch_size=bs, 
               epochs=training_epochs,
               validation_split=0.1,
               verbose=1)
