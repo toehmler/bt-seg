@@ -1,4 +1,4 @@
 #!/bin/sh
-python3 Scripts/predict.py betty 191 70 
-python3 Scripts/predict.py betty 215 70
+python3 Scripts/predict.py 2path 191 70 
+python3 Scripts/predict.py 2path 215 70
 
