@@ -58,9 +58,9 @@ for i in range(num_iters):
         two_path_y[j,:,:,y[j]] = 1
 
 
-    print(two_path_y.shape)
-
-    print(model.summary())
+    for b in range(10):
+        print(two_path_y[b])
+    #print(model.summary())
     #x, y = patches.load_training(root, num_per, i)
     '''
     model.fit(x, two_path_y, batch_size=bs, 
