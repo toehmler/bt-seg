@@ -97,7 +97,10 @@ if __name__ == '__main__':
 
     patches = generate_test_patches(root, pat_no, slice_no)
     model = load_model('Outputs/Models/Trained/{}.h5'.format(model_name))
-    prediction = model.predict_classes(patches, verbose=1)
+#    prediction = model.predict_classes(patches, verbose=1)
+    prediction = model.predict(patches, verbose=1)
+    prediction = np.argmax(prediction, axis=-1)
+    prediction = prediction.astype(np.uint8)
     np.save('Outputs/Predictions/{}_{}_{}.npy'
             .format(model_name, pat_no, slice_no), prediction)
     prediction = prediction.reshape(208, 208)
