@@ -58,7 +58,7 @@ for i in range(num_iters):
         two_path_y[j,:,:,y[j]] = 1
 
 
-    print(two_path_y.shape())
+    print(two_path_y.shape)
 
     print(model.summary())
     #x, y = patches.load_training(root, num_per, i)
