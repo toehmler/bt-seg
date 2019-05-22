@@ -100,7 +100,6 @@ if __name__ == '__main__':
 #    prediction = model.predict_classes(patches, verbose=1)
     prediction = model.predict(patches, verbose=1)
     prediction = np.argmax(prediction, axis=-1)
-    prediction = prediction.astype(np.uint8)
     np.save('Outputs/Predictions/{}_{}_{}.npy'
             .format(model_name, pat_no, slice_no), prediction)
     prediction = prediction.reshape(208, 208)
